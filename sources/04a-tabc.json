@@ -1,0 +1,127 @@
+{
+  "domain": "data.texas.gov",
+  "dataset_id": "kguh-7q9z",
+  "name": "TABCLicenses",
+  "description": "For Help: https://data.texas.gov/videos  For more information, go to <a href=\"https://www.tabc.texas.gov/static/sites/default/files/2021-03/tabc-sept-2021-license-consolidation-explained-chart.pdf\" target=\"_blank\">TABC Sept. 1, 2021 License Consolidation Explained chart</a><br>\nContains information ",
+  "row_count": "65175",
+  "rows_updated_at": "2026-08-15T12:02:11+00:00",
+  "days_since_update": 0,
+  "fields": [
+    {
+      "name": "aimsownername",
+      "label": "AIMSOwnerName",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "aimstradename",
+      "label": "AIMSTradeName",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "aimslicensetype",
+      "label": "AIMSLicenseType",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "aimslicenseid",
+      "label": "AIMSLicenseID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "65172"
+    },
+    {
+      "name": "legacylicenseclass",
+      "label": "LegacyLicenseClass",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "legacylicensenumber",
+      "label": "LegacyLicenseNumber",
+      "type": "text",
+      "null_count": "1839",
+      "non_null_count": "63336"
+    },
+    {
+      "name": "locationaddress",
+      "label": "LocationAddress",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "city",
+      "label": "City",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "state",
+      "label": "State",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "zip",
+      "label": "ZIP",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    },
+    {
+      "name": "txcounty",
+      "label": "TXCounty",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "65175"
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "aimsownername": " 8924 ALTO BUSINESS, LLC",
+      "aimstradename": "Shop n Go",
+      "aimslicensetype": "BQ",
+      "aimslicenseid": "200069113.0",
+      "legacylicenseclass": "",
+      "locationaddress": "6001 Bissonnet St Ste A ",
+      "city": "Houston",
+      "state": "TX",
+      "zip": "770816967",
+      "txcounty": "Harris"
+    },
+    {
+      "aimsownername": " CHARRO ALVAREZ CORPORATION LLC",
+      "aimstradename": "EL CHARRO MEXICAN RESTAURANT",
+      "aimslicensetype": "BG",
+      "aimslicenseid": "200150865.0",
+      "legacylicenseclass": "",
+      "locationaddress": "1200 F M 78   ",
+      "city": "Schertz",
+      "state": "TX",
+      "zip": "781542413",
+      "txcounty": "Guadalupe"
+    },
+    {
+      "aimsownername": " GRAPES AND RYE, LLC",
+      "aimstradename": "Grapes and Rye",
+      "aimslicensetype": "MB",
+      "aimslicenseid": "200150251.0",
+      "legacylicenseclass": "",
+      "locationaddress": "3333 Co Rd 119 STE 28 and STE 29 ",
+      "city": "Hutto",
+      "state": "TX",
+      "zip": "786343102",
+      "txcounty": "Williamson"
+    }
+  ]
+}

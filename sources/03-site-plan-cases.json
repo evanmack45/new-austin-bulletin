@@ -1,0 +1,612 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "mavg-96ck",
+  "name": "Site Plan Cases",
+  "description": "<a href=\"https://data.austintexas.gov/stories/s/ranj-cccq\" target=\"_blank\">View the City of Austin Open Data Terms of Use</a>\n\nThis data set contains information about the site plan case applications submitted for review to the City of Austin. The data set includes information about case status in t",
+  "row_count": "23630",
+  "rows_updated_at": "2026-07-23T10:05:08+00:00",
+  "days_since_update": 23,
+  "fields": [
+    {
+      "name": "folderrsn",
+      "label": "FOLDERRSN",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "case_type",
+      "label": "CASE_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "case_name",
+      "label": "CASE_NAME",
+      "type": "text",
+      "null_count": "110",
+      "non_null_count": "23520"
+    },
+    {
+      "name": "permit_number",
+      "label": "PERMIT_NUMBER",
+      "type": "text",
+      "null_count": "373",
+      "non_null_count": "23257"
+    },
+    {
+      "name": "sub_type",
+      "label": "SUB_TYPE",
+      "type": "text",
+      "null_count": "6349",
+      "non_null_count": "17281"
+    },
+    {
+      "name": "work",
+      "label": "WORK",
+      "type": "text",
+      "null_count": "6454",
+      "non_null_count": "17176"
+    },
+    {
+      "name": "status",
+      "label": "STATUS",
+      "type": "text",
+      "null_count": "2",
+      "non_null_count": "23628"
+    },
+    {
+      "name": "description_of_work",
+      "label": "DESCRIPTION_OF_WORK",
+      "type": "text",
+      "null_count": "12116",
+      "non_null_count": "11514"
+    },
+    {
+      "name": "proposed_land_use",
+      "label": "PROPOSED_LAND_USE",
+      "type": "text",
+      "null_count": "4638",
+      "non_null_count": "18992"
+    },
+    {
+      "name": "link",
+      "label": "LINK",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "case_manager",
+      "label": "CASE_MANAGER",
+      "type": "text",
+      "null_count": "838",
+      "non_null_count": "22792"
+    },
+    {
+      "name": "status_date",
+      "label": "STATUS_DATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "approval_date",
+      "label": "APPROVAL_DATE",
+      "type": "calendar_date",
+      "null_count": "17098",
+      "non_null_count": "6532"
+    },
+    {
+      "name": "final_date",
+      "label": "FINAL_DATE",
+      "type": "calendar_date",
+      "null_count": "18576",
+      "non_null_count": "5054"
+    },
+    {
+      "name": "application_start_date",
+      "label": "APPLICATION_START_DATE",
+      "type": "calendar_date",
+      "null_count": "411",
+      "non_null_count": "23219"
+    },
+    {
+      "name": "day_approved",
+      "label": "DAY_APPROVED",
+      "type": "text",
+      "null_count": "17098",
+      "non_null_count": "6532"
+    },
+    {
+      "name": "calendar_year_folder_created",
+      "label": "CALENDAR_YEAR_FOLDER_CREATED",
+      "type": "text",
+      "null_count": "411",
+      "non_null_count": "23219"
+    },
+    {
+      "name": "approved_in_last_30_days",
+      "label": "APPROVED_IN_LAST_30_DAYS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "calendar_year_folder_issued",
+      "label": "CALENDAR_YEAR_FOLDER_ISSUED",
+      "type": "text",
+      "null_count": "17098",
+      "non_null_count": "6532"
+    },
+    {
+      "name": "fiscal_year_folder_created",
+      "label": "FISCAL_YEAR_FOLDER_CREATED",
+      "type": "text",
+      "null_count": "411",
+      "non_null_count": "23219"
+    },
+    {
+      "name": "fiscal_year_folder_issued",
+      "label": "FISCAL_YEAR_FOLDER_ISSUED",
+      "type": "text",
+      "null_count": "17098",
+      "non_null_count": "6532"
+    },
+    {
+      "name": "street_number",
+      "label": "STREET_NUMBER",
+      "type": "text",
+      "null_count": "4250",
+      "non_null_count": "19380"
+    },
+    {
+      "name": "street_prefix",
+      "label": "STREET_PREFIX",
+      "type": "text",
+      "null_count": "15651",
+      "non_null_count": "7979"
+    },
+    {
+      "name": "street_direction",
+      "label": "STREET_DIRECTION",
+      "type": "text",
+      "null_count": "21171",
+      "non_null_count": "2459"
+    },
+    {
+      "name": "street_name",
+      "label": "STREET_NAME",
+      "type": "text",
+      "null_count": "328",
+      "non_null_count": "23302"
+    },
+    {
+      "name": "street_type",
+      "label": "STREET_TYPE",
+      "type": "text",
+      "null_count": "754",
+      "non_null_count": "22876"
+    },
+    {
+      "name": "unit_type",
+      "label": "UNIT_TYPE",
+      "type": "text",
+      "null_count": "22811",
+      "non_null_count": "819"
+    },
+    {
+      "name": "unit",
+      "label": "UNIT",
+      "type": "text",
+      "null_count": "22811",
+      "non_null_count": "819"
+    },
+    {
+      "name": "propertyrsn",
+      "label": "PROPERTYRSN",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "latitude",
+      "label": "LATITUDE",
+      "type": "number",
+      "null_count": "4389",
+      "non_null_count": "19241"
+    },
+    {
+      "name": "longitude",
+      "label": "LONGITUDE",
+      "type": "number",
+      "null_count": "4389",
+      "non_null_count": "19241"
+    },
+    {
+      "name": "city",
+      "label": "CITY",
+      "type": "text",
+      "null_count": "2122",
+      "non_null_count": "21508"
+    },
+    {
+      "name": "zip_code",
+      "label": "ZIP_CODE",
+      "type": "text",
+      "null_count": "4408",
+      "non_null_count": "19222"
+    },
+    {
+      "name": "neighborhood_plan_name",
+      "label": "NEIGHBORHOOD_PLAN_NAME",
+      "type": "text",
+      "null_count": "22839",
+      "non_null_count": "791"
+    },
+    {
+      "name": "council_district",
+      "label": "COUNCIL_DISTRICT",
+      "type": "text",
+      "null_count": "7767",
+      "non_null_count": "15863"
+    },
+    {
+      "name": "school_district",
+      "label": "SCHOOL_DISTRICT",
+      "type": "text",
+      "null_count": "15459",
+      "non_null_count": "8171"
+    },
+    {
+      "name": "watershed_class",
+      "label": "WATERSHED_CLASS",
+      "type": "text",
+      "null_count": "11930",
+      "non_null_count": "11700"
+    },
+    {
+      "name": "smart_growth_zone",
+      "label": "SMART_GROWTH_ZONE",
+      "type": "text",
+      "null_count": "9000",
+      "non_null_count": "14630"
+    },
+    {
+      "name": "watershed",
+      "label": "WATERSHED",
+      "type": "text",
+      "null_count": "22795",
+      "non_null_count": "835"
+    },
+    {
+      "name": "legal_description",
+      "label": "LEGAL_DESCRIPTION",
+      "type": "text",
+      "null_count": "6828",
+      "non_null_count": "16802"
+    },
+    {
+      "name": "existing_zoning",
+      "label": "EXISTING_ZONING",
+      "type": "text",
+      "null_count": "11656",
+      "non_null_count": "11974"
+    },
+    {
+      "name": "existing_land_use",
+      "label": "EXISTING_LAND_USE",
+      "type": "text",
+      "null_count": "11194",
+      "non_null_count": "12436"
+    },
+    {
+      "name": "existing_no_of_units",
+      "label": "EXISTING_NO_OF_UNITS",
+      "type": "number",
+      "null_count": "23216",
+      "non_null_count": "414"
+    },
+    {
+      "name": "proposed_no_of_units",
+      "label": "PROPOSED_NO_OF_UNITS",
+      "type": "number",
+      "null_count": "23168",
+      "non_null_count": "462"
+    },
+    {
+      "name": "tcad_id",
+      "label": "TCAD_ID",
+      "type": "text",
+      "null_count": "5059",
+      "non_null_count": "18571"
+    },
+    {
+      "name": "related_cases",
+      "label": "RELATED_CASES",
+      "type": "text",
+      "null_count": "19490",
+      "non_null_count": "4140"
+    },
+    {
+      "name": "smart_housing",
+      "label": "SMART_HOUSING",
+      "type": "text",
+      "null_count": "15619",
+      "non_null_count": "8011"
+    },
+    {
+      "name": "gross_site_area_acres",
+      "label": "GROSS_SITE_AREA_ACRES",
+      "type": "number",
+      "null_count": "17326",
+      "non_null_count": "6304"
+    },
+    {
+      "name": "proposed_bldg_sq_footage",
+      "label": "PROPOSED_BLDG_SQ_FOOTAGE",
+      "type": "number",
+      "null_count": "23258",
+      "non_null_count": "372"
+    },
+    {
+      "name": "tia_required",
+      "label": "TIA_REQUIRED",
+      "type": "text",
+      "null_count": "23628",
+      "non_null_count": "2"
+    },
+    {
+      "name": "tia_submitted",
+      "label": "TIA_SUBMITTED",
+      "type": "text",
+      "null_count": "13940",
+      "non_null_count": "9690"
+    },
+    {
+      "name": "prop_impervious_cover_percent",
+      "label": "PROP_IMPERVIOUS_COVER_PERCENT",
+      "type": "number",
+      "null_count": "17968",
+      "non_null_count": "5662"
+    },
+    {
+      "name": "applicant_fullname",
+      "label": "APPLICANT_FULLNAME",
+      "type": "text",
+      "null_count": "7717",
+      "non_null_count": "15913"
+    },
+    {
+      "name": "applicant_organization_name",
+      "label": "APPLICANT_ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "8170",
+      "non_null_count": "15460"
+    },
+    {
+      "name": "applicant_address",
+      "label": "APPLICANT_ADDRESS",
+      "type": "text",
+      "null_count": "14424",
+      "non_null_count": "9206"
+    },
+    {
+      "name": "applicant_addrcity",
+      "label": "APPLICANT_ADDRCITY",
+      "type": "text",
+      "null_count": "7166",
+      "non_null_count": "16464"
+    },
+    {
+      "name": "applicant_phone1",
+      "label": "APPLICANT_PHONE1",
+      "type": "text",
+      "null_count": "7123",
+      "non_null_count": "16507"
+    },
+    {
+      "name": "owner_fullname",
+      "label": "OWNER_FULLNAME",
+      "type": "text",
+      "null_count": "6771",
+      "non_null_count": "16859"
+    },
+    {
+      "name": "owner_organization_name",
+      "label": "OWNER_ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "11780",
+      "non_null_count": "11850"
+    },
+    {
+      "name": "owner_address",
+      "label": "OWNER_ADDRESS",
+      "type": "text",
+      "null_count": "12003",
+      "non_null_count": "11627"
+    },
+    {
+      "name": "owner_addrcity",
+      "label": "OWNER_ADDRCITY",
+      "type": "text",
+      "null_count": "9402",
+      "non_null_count": "14228"
+    },
+    {
+      "name": "owner_phone1",
+      "label": "OWNER_PHONE1",
+      "type": "text",
+      "null_count": "6068",
+      "non_null_count": "17562"
+    },
+    {
+      "name": "update_date",
+      "label": "UPDATE_DATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "23630"
+    },
+    {
+      "name": "location",
+      "label": "Location",
+      "type": "point",
+      "null_count": "4389",
+      "non_null_count": "19241"
+    },
+    {
+      "name": "jurisdiction",
+      "label": "Jurisdiction",
+      "type": "text",
+      "null_count": "4397",
+      "non_null_count": "19233"
+    },
+    {
+      "name": ":@computed_region_rxpj_nzrk",
+      "label": "Zipcodes 2",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_xzeg_zdjk",
+      "label": "Neighborhood Planning Areas Dissolved 2",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_q9nd_rr82",
+      "label": "BOUNDARIES_single_member_districts 2",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "folderrsn": "155510",
+      "case_type": "Site Plan",
+      "case_name": "MURCHISON MIDDLE SCHOOL",
+      "permit_number": "SP-97-0478CX",
+      "status": "Approved and Released",
+      "proposed_land_use": "999",
+      "link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=155510",
+      "case_manager": "Tammie Williamson",
+      "status_date": "2007-03-02T06:10:13.000",
+      "application_start_date": "1997-12-03T00:00:00.000",
+      "calendar_year_folder_created": "1997",
+      "approved_in_last_30_days": "Yes",
+      "fiscal_year_folder_created": "1998",
+      "street_number": "3700",
+      "street_name": "NORTH HILLS",
+      "street_type": "DR",
+      "propertyrsn": "192860",
+      "latitude": "30.35410058",
+      "longitude": "-97.75836017",
+      "city": "AUSTIN",
+      "zip_code": "78731",
+      "council_district": "10",
+      "legal_description": "ABS 217 SUR 15 DAVIS G W ACR 30.5630",
+      "tcad_id": "0138040701",
+      "tia_submitted": "No",
+      "owner_fullname": "Bill Mulane",
+      "owner_phone1": "5124991700",
+      "update_date": "2026-07-23T05:02:56.000",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -97.75836017,
+          30.35410058
+        ]
+      },
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      ":@computed_region_rxpj_nzrk": "66",
+      ":@computed_region_q9nd_rr82": "5"
+    },
+    {
+      "folderrsn": "146185",
+      "case_type": "Site Plan",
+      "case_name": "NAPA AUTO PARTS",
+      "permit_number": "86-06-4760",
+      "status": "Approved and Released",
+      "link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=146185",
+      "case_manager": "Shaw Hamilton",
+      "status_date": "2007-03-02T06:10:13.000",
+      "application_start_date": "1986-06-02T00:00:00.000",
+      "calendar_year_folder_created": "1986",
+      "approved_in_last_30_days": "Yes",
+      "fiscal_year_folder_created": "1986",
+      "street_number": "826",
+      "street_name": "KRAMER",
+      "street_type": "LN",
+      "propertyrsn": "527122",
+      "latitude": "30.38078374",
+      "longitude": "-97.68870539",
+      "city": "AUSTIN",
+      "zip_code": "78758",
+      "council_district": "4",
+      "legal_description": "LOT 1 D & B SUBD",
+      "tcad_id": "0248200708",
+      "owner_fullname": "John Blitch",
+      "owner_phone1": "5128363258",
+      "update_date": "2026-07-23T05:02:57.000",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -97.68870539,
+          30.38078374
+        ]
+      },
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      ":@computed_region_rxpj_nzrk": "18",
+      ":@computed_region_q9nd_rr82": "9"
+    },
+    {
+      "folderrsn": "155395",
+      "case_type": "Site Plan",
+      "case_name": "SPYGLASS OFFICE",
+      "permit_number": "SP-97-0361C",
+      "status": "Approved and Released",
+      "proposed_land_use": "999",
+      "link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=155395",
+      "case_manager": "Debra Williams",
+      "status_date": "2007-03-02T06:10:13.000",
+      "application_start_date": "1999-05-04T00:00:00.000",
+      "calendar_year_folder_created": "1999",
+      "approved_in_last_30_days": "Yes",
+      "fiscal_year_folder_created": "1999",
+      "street_number": "1801",
+      "street_prefix": "S",
+      "street_direction": "NB",
+      "street_name": "MOPAC EXPY",
+      "street_type": "SVRD",
+      "propertyrsn": "65995",
+      "latitude": "30.25937636",
+      "longitude": "-97.79349686",
+      "city": "AUSTIN",
+      "zip_code": "78746",
+      "council_district": "8",
+      "smart_growth_zone": "DWPZ",
+      "legal_description": "LOT 3 WALLINGWOOD SEC II",
+      "tcad_id": "0102130301",
+      "tia_submitted": "No",
+      "owner_fullname": "Robert Heise",
+      "owner_phone1": "5124597624",
+      "update_date": "2026-07-23T05:02:57.000",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -97.79349686,
+          30.25937636
+        ]
+      },
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      ":@computed_region_rxpj_nzrk": "29",
+      ":@computed_region_xzeg_zdjk": "2",
+      ":@computed_region_q9nd_rr82": "2"
+    }
+  ]
+}

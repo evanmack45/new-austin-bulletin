@@ -1,0 +1,468 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "qa7j-3tey",
+  "name": "Site Plan Cases",
+  "description": "Test dataset for Dev Tracker",
+  "row_count": "0",
+  "rows_updated_at": "2026-08-15T10:03:27+00:00",
+  "days_since_update": 0,
+  "fields": [
+    {
+      "name": "folderrsn",
+      "label": "FOLDERRSN",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "case_type",
+      "label": "CASE_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "case_name",
+      "label": "CASE_NAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "permit_number",
+      "label": "PERMIT_NUMBER",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "sub_type",
+      "label": "SUB_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "work",
+      "label": "WORK",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "status",
+      "label": "STATUS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "description_of_work",
+      "label": "DESCRIPTION_OF_WORK",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "proposed_land_use",
+      "label": "PROPOSED_LAND_USE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "link",
+      "label": "LINK",
+      "type": "url",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": "case_manager",
+      "label": "CASE_MANAGER",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "status_date",
+      "label": "STATUS_DATE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "approval_date",
+      "label": "APPROVAL_DATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "final_date",
+      "label": "FINAL_DATE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "application_start_date",
+      "label": "APPLICATION_START_DATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "day_approved",
+      "label": "DAY_APPROVED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "calendar_year_folder_created",
+      "label": "CALENDAR_YEAR_FOLDER_CREATED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "approved_in_last_30_days",
+      "label": "APPROVED_IN_LAST_30_DAYS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "calendar_year_folder_issued",
+      "label": "CALENDAR_YEAR_FOLDER_ISSUED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "fiscal_year_folder_created",
+      "label": "FISCAL_YEAR_FOLDER_CREATED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "fiscal_year_folder_issued",
+      "label": "FISCAL_YEAR_FOLDER_ISSUED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "street_number",
+      "label": "STREET_NUMBER",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "street_prefix",
+      "label": "STREET_PREFIX",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "street_direction",
+      "label": "STREET_DIRECTION",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "street_name",
+      "label": "STREET_NAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "street_type",
+      "label": "STREET_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "unit_type",
+      "label": "UNIT_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "unit",
+      "label": "UNIT",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "propertyrsn",
+      "label": "PROPERTYRSN",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "latitude",
+      "label": "LATITUDE",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "longitude",
+      "label": "LONGITUDE",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "city",
+      "label": "CITY",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "zip_code",
+      "label": "ZIP_CODE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "neighborhood_plan_name",
+      "label": "NEIGHBORHOOD_PLAN_NAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "council_district",
+      "label": "COUNCIL_DISTRICT",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "school_district",
+      "label": "SCHOOL_DISTRICT",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "watershed_class",
+      "label": "WATERSHED_CLASS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "smart_growth_zone",
+      "label": "SMART_GROWTH_ZONE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "watershed",
+      "label": "WATERSHED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "legal_description",
+      "label": "LEGAL_DESCRIPTION",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "existing_zoning",
+      "label": "EXISTING_ZONING",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "existing_land_use",
+      "label": "EXISTING_LAND_USE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "existing_no_of_units",
+      "label": "EXISTING_NO_OF_UNITS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "proposed_no_of_units",
+      "label": "PROPOSED_NO_OF_UNITS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "tcad_id",
+      "label": "TCAD_ID",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "related_cases",
+      "label": "RELATED_CASES",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "smart_housing",
+      "label": "SMART_HOUSING",
+      "type": "checkbox",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "gross_site_area_acres",
+      "label": "GROSS_SITE_AREA_ACRES",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "proposed_bldg_sq_footage",
+      "label": "PROPOSED_BLDG_SQ_FOOTAGE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "tia_required",
+      "label": "TIA_REQUIRED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "tia_submitted",
+      "label": "TIA_SUBMITTED",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "prop_impervious_cover_percent",
+      "label": "PROP_IMPERVIOUS_COVER_PERCENT",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "applicant_fullname",
+      "label": "APPLICANT_FULLNAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "applicant_organization_name",
+      "label": "APPLICANT_ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "applicant_address",
+      "label": "APPLICANT_ADDRESS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "applicant_addrcity",
+      "label": "APPLICANT_ADDRCITY",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "applicant_phone1",
+      "label": "APPLICANT_PHONE1",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "owner_fullname",
+      "label": "OWNER_FULLNAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "owner_organization_name",
+      "label": "OWNER_ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "owner_address",
+      "label": "OWNER_ADDRESS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "owner_addrcity",
+      "label": "OWNER_ADDRCITY",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "owner_phone1",
+      "label": "OWNER_PHONE1",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "update_date",
+      "label": "UPDATE_DATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "location",
+      "label": "Location",
+      "type": "point",
+      "null_count": "0",
+      "non_null_count": "0"
+    },
+    {
+      "name": "jurisdiction",
+      "label": "Jurisdiction",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "0"
+    }
+  ],
+  "sample_status": 200,
+  "sample": []
+}

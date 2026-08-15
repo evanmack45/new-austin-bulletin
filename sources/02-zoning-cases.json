@@ -1,0 +1,631 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "edir-dcnf",
+  "name": "Zoning Cases",
+  "description": "This data set contains information about zoning cases submitted for review to the City of Austin where records existed.  It includes information about case status, case number, proposed use, applicant, owner, and location.  Another version of this data in the form of a location dataset exists, showi",
+  "row_count": "6926",
+  "rows_updated_at": "2026-08-15T08:40:19+00:00",
+  "days_since_update": 0,
+  "fields": [
+    {
+      "name": "folderrsn",
+      "label": "FOLDERRSN",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "case_number",
+      "label": "CASE_NUMBER",
+      "type": "text",
+      "null_count": "79",
+      "non_null_count": "6847"
+    },
+    {
+      "name": "permit_number",
+      "label": "PERMIT_NUMBER",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "case_name",
+      "label": "CASE_NAME",
+      "type": "text",
+      "null_count": "2",
+      "non_null_count": "6924"
+    },
+    {
+      "name": "case_type",
+      "label": "CASE_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "work_type",
+      "label": "WORK_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "sub_type",
+      "label": "SUB_TYPE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "detailed_status",
+      "label": "DETAILED_STATUS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "description_of_work",
+      "label": "DESCRIPTION_OF_WORK",
+      "type": "text",
+      "null_count": "2682",
+      "non_null_count": "4244"
+    },
+    {
+      "name": "proposed_zoning",
+      "label": "PROPOSED_ZONING",
+      "type": "text",
+      "null_count": "816",
+      "non_null_count": "6110"
+    },
+    {
+      "name": "existing_zoning",
+      "label": "EXISTING_ZONING",
+      "type": "text",
+      "null_count": "776",
+      "non_null_count": "6150"
+    },
+    {
+      "name": "proposed_land_use",
+      "label": "PROPOSED_LAND_USE",
+      "type": "text",
+      "null_count": "4858",
+      "non_null_count": "2068"
+    },
+    {
+      "name": "existing_land_use",
+      "label": "EXISTING_LAND_USE",
+      "type": "text",
+      "null_count": "5632",
+      "non_null_count": "1294"
+    },
+    {
+      "name": "gross_site_area_acres",
+      "label": "GROSS_SITE_AREA_ACRES",
+      "type": "text",
+      "null_count": "5415",
+      "non_null_count": "1511"
+    },
+    {
+      "name": "case_manager",
+      "label": "CASE_MANAGER",
+      "type": "text",
+      "null_count": "18",
+      "non_null_count": "6908"
+    },
+    {
+      "name": "tia_required",
+      "label": "TIA_REQUIRED",
+      "type": "text",
+      "null_count": "3250",
+      "non_null_count": "3676"
+    },
+    {
+      "name": "tia_submitted",
+      "label": "TIA_SUBMITTED",
+      "type": "text",
+      "null_count": "4846",
+      "non_null_count": "2080"
+    },
+    {
+      "name": "site_address",
+      "label": "SITE_ADDRESS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "council_district",
+      "label": "COUNCIL_DISTRICT",
+      "type": "number",
+      "null_count": "1207",
+      "non_null_count": "5719"
+    },
+    {
+      "name": "watershed",
+      "label": "WATERSHED",
+      "type": "text",
+      "null_count": "6411",
+      "non_null_count": "515"
+    },
+    {
+      "name": "watershed_class",
+      "label": "WATERSHED_CLASS",
+      "type": "text",
+      "null_count": "3251",
+      "non_null_count": "3675"
+    },
+    {
+      "name": "smart_housing",
+      "label": "SMART_HOUSING",
+      "type": "text",
+      "null_count": "2738",
+      "non_null_count": "4188"
+    },
+    {
+      "name": "related_cases",
+      "label": "RELATED_CASES",
+      "type": "text",
+      "null_count": "6912",
+      "non_null_count": "14"
+    },
+    {
+      "name": "status_date",
+      "label": "STATUS_DATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "application_start_date",
+      "label": "APPLICATION_START_DATE",
+      "type": "calendar_date",
+      "null_count": "5",
+      "non_null_count": "6921"
+    },
+    {
+      "name": "approval_date",
+      "label": "APPROVAL_DATE",
+      "type": "calendar_date",
+      "null_count": "5384",
+      "non_null_count": "1542"
+    },
+    {
+      "name": "approved_in_last_30_days",
+      "label": "APPROVED_IN_LAST_30_DAYS",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "calendar_year_folder_created",
+      "label": "CALENDAR_YEAR_FOLDER_CREATED",
+      "type": "text",
+      "null_count": "5",
+      "non_null_count": "6921"
+    },
+    {
+      "name": "calendar_year_folder_issued",
+      "label": "CALENDAR_YEAR_FOLDER_ISSUED",
+      "type": "text",
+      "null_count": "5384",
+      "non_null_count": "1542"
+    },
+    {
+      "name": "day_approved",
+      "label": "DAY_APPROVED",
+      "type": "text",
+      "null_count": "5384",
+      "non_null_count": "1542"
+    },
+    {
+      "name": "final_date",
+      "label": "FINAL_DATE",
+      "type": "calendar_date",
+      "null_count": "4681",
+      "non_null_count": "2245"
+    },
+    {
+      "name": "fiscal_year_folder_created",
+      "label": "FISCAL_YEAR_FOLDER_CREATED",
+      "type": "text",
+      "null_count": "5",
+      "non_null_count": "6921"
+    },
+    {
+      "name": "fiscal_year_folder_issued",
+      "label": "FISCAL_YEAR_FOLDER_ISSUED",
+      "type": "text",
+      "null_count": "5384",
+      "non_null_count": "1542"
+    },
+    {
+      "name": "peoplecode",
+      "label": "PEOPLECODE",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "peoplersn",
+      "label": "PEOPLERSN",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "propertyrsn",
+      "label": "PROPERTYRSN",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "applicant_peoplecode",
+      "label": "APPLICANT_PEOPLECODE",
+      "type": "text",
+      "null_count": "1054",
+      "non_null_count": "5872"
+    },
+    {
+      "name": "applicant_fullname",
+      "label": "APPLICANT_FULLNAME",
+      "type": "text",
+      "null_count": "1309",
+      "non_null_count": "5617"
+    },
+    {
+      "name": "applicant_organization_name",
+      "label": "APPLICANT_ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "1957",
+      "non_null_count": "4969"
+    },
+    {
+      "name": "applicant_address",
+      "label": "APPLICANT_ADDRESS",
+      "type": "text",
+      "null_count": "3279",
+      "non_null_count": "3647"
+    },
+    {
+      "name": "applicant_peoplersn",
+      "label": "APPLICANT_PEOPLERSN",
+      "type": "text",
+      "null_count": "1054",
+      "non_null_count": "5872"
+    },
+    {
+      "name": "applicant_phone",
+      "label": "APPLICANT_PHONE",
+      "type": "text",
+      "null_count": "1123",
+      "non_null_count": "5803"
+    },
+    {
+      "name": "owner_peoplecode",
+      "label": "OWNER_PEOPLECODE",
+      "type": "text",
+      "null_count": "6926",
+      "non_null_count": "0"
+    },
+    {
+      "name": "owner_peoplersn",
+      "label": "OWNER_PEOPLERSN",
+      "type": "text",
+      "null_count": "957",
+      "non_null_count": "5969"
+    },
+    {
+      "name": "owner_fullname",
+      "label": "OWNER_FULLNAME",
+      "type": "text",
+      "null_count": "2202",
+      "non_null_count": "4724"
+    },
+    {
+      "name": "owner_organization_name",
+      "label": "OWNER_ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "3211",
+      "non_null_count": "3715"
+    },
+    {
+      "name": "owner_address",
+      "label": "OWNER_ADDRESS",
+      "type": "text",
+      "null_count": "2686",
+      "non_null_count": "4240"
+    },
+    {
+      "name": "owner_phone",
+      "label": "OWNER_PHONE",
+      "type": "text",
+      "null_count": "1910",
+      "non_null_count": "5016"
+    },
+    {
+      "name": "organization_name",
+      "label": "ORGANIZATION_NAME",
+      "type": "text",
+      "null_count": "2005",
+      "non_null_count": "4921"
+    },
+    {
+      "name": "organization_address",
+      "label": "ORGANIZATION_ADDRESS",
+      "type": "text",
+      "null_count": "2630",
+      "non_null_count": "4296"
+    },
+    {
+      "name": "organization_contact",
+      "label": "ORGANIZATION_CONTACT",
+      "type": "text",
+      "null_count": "702",
+      "non_null_count": "6224"
+    },
+    {
+      "name": "latitude",
+      "label": "LATITUDE",
+      "type": "text",
+      "null_count": "1019",
+      "non_null_count": "5907"
+    },
+    {
+      "name": "longitude",
+      "label": "LONGITUDE",
+      "type": "text",
+      "null_count": "1019",
+      "non_null_count": "5907"
+    },
+    {
+      "name": "neighborhood_plan_name",
+      "label": "NEIGHBORHOOD_PLAN_NAME",
+      "type": "text",
+      "null_count": "6124",
+      "non_null_count": "802"
+    },
+    {
+      "name": "link",
+      "label": "LINK",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "phone",
+      "label": "PHONE",
+      "type": "text",
+      "null_count": "523",
+      "non_null_count": "6403"
+    },
+    {
+      "name": "school_district",
+      "label": "SCHOOL_DISTRICT",
+      "type": "text",
+      "null_count": "4567",
+      "non_null_count": "2359"
+    },
+    {
+      "name": "tcad_id",
+      "label": "TCAD_ID",
+      "type": "text",
+      "null_count": "1171",
+      "non_null_count": "5755"
+    },
+    {
+      "name": "legal_description",
+      "label": "LEGAL_DESCRIPTION",
+      "type": "text",
+      "null_count": "1606",
+      "non_null_count": "5320"
+    },
+    {
+      "name": "data_portal_update",
+      "label": "DATA_PORTAL_UPDATE",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "6926"
+    },
+    {
+      "name": "location",
+      "label": "LOCATION",
+      "type": "location",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_8spj_utxs",
+      "label": "Single Member Council Districts",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_q9nd_rr82",
+      "label": "BOUNDARIES_single_member_districts",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_e9j2_6w3z",
+      "label": "Neighborhood Planning Areas",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_m2th_e4b7",
+      "label": "Community Registry",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_rxpj_nzrk",
+      "label": "Zipcodes",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_xzeg_zdjk",
+      "label": "Neighborhood Planning Areas Dissolved",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "folderrsn": "148742",
+      "case_number": "C14-97-0107",
+      "permit_number": "1997-000107 ZC",
+      "case_name": "HEB AUSTIN STORE NO. 1",
+      "case_type": "Zoning",
+      "work_type": "Zoning",
+      "sub_type": "Zoning/Rezoning",
+      "detailed_status": "Closed",
+      "proposed_zoning": "999",
+      "existing_zoning": "999",
+      "proposed_land_use": "999",
+      "existing_land_use": "999",
+      "case_manager": "Ivan Naranjo",
+      "site_address": "2701 E 7TH   , AUSTIN,TX 78702",
+      "council_district": "3",
+      "status_date": "2007-03-02T06:10:13.000",
+      "application_start_date": "1997-07-24T00:00:00.000",
+      "approved_in_last_30_days": "Yes",
+      "calendar_year_folder_created": "1997",
+      "fiscal_year_folder_created": "1997",
+      "peoplecode": "2",
+      "peoplersn": "6161",
+      "propertyrsn": "879764",
+      "owner_peoplersn": "6161",
+      "owner_fullname": "Charles Blackburn",
+      "owner_phone": "5122468200",
+      "organization_contact": "Charles Blackburn",
+      "latitude": "30.25955655",
+      "longitude": "-97.71137458",
+      "link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=148742",
+      "phone": "5122468200",
+      "tcad_id": "0203110803",
+      "legal_description": "LOT 1 BLK A HEB/AUSTIN NO 1 SUBD",
+      "data_portal_update": "2026-08-15T03:37:46.000",
+      "location": {
+        "latitude": "30.25955655",
+        "longitude": "-97.71137458",
+        "human_address": "{\"address\": \"\", \"city\": \"\", \"state\": \"\", \"zip\": \"\"}"
+      },
+      ":@computed_region_8spj_utxs": "3",
+      ":@computed_region_q9nd_rr82": "3",
+      ":@computed_region_e9j2_6w3z": "66",
+      ":@computed_region_m2th_e4b7": "309",
+      ":@computed_region_rxpj_nzrk": "1",
+      ":@computed_region_xzeg_zdjk": "23"
+    },
+    {
+      "folderrsn": "269001",
+      "case_number": "C14-06-0097",
+      "permit_number": "2006-000097 ZC",
+      "case_name": "CODY POOLS",
+      "case_type": "Zoning",
+      "work_type": "Zoning",
+      "sub_type": "Zoning/Rezoning",
+      "detailed_status": "Closed",
+      "proposed_zoning": "GR",
+      "existing_zoning": "999",
+      "proposed_land_use": "999",
+      "existing_land_use": "999",
+      "case_manager": "Sherri Sirwaitis",
+      "site_address": "2300 W PARMER   , AUSTIN,TX 78727",
+      "council_district": "7",
+      "status_date": "2007-03-02T06:10:13.000",
+      "application_start_date": "2006-04-27T00:00:00.000",
+      "approved_in_last_30_days": "Yes",
+      "calendar_year_folder_created": "2006",
+      "final_date": "2006-10-06T13:44:38.000",
+      "fiscal_year_folder_created": "2006",
+      "peoplecode": "2",
+      "peoplersn": "2474",
+      "propertyrsn": "419678",
+      "applicant_peoplecode": "1",
+      "applicant_fullname": "Maureen Morphew",
+      "applicant_organization_name": "Permit Me",
+      "applicant_address": "401 ARROWHEAD POINT RD, TX, Belton , 76513",
+      "applicant_peoplersn": "86539",
+      "applicant_phone": "2547802383",
+      "owner_peoplersn": "2474",
+      "owner_fullname": "Mike Church",
+      "owner_organization_name": "Cody Pools, Inc.  **MAIN",
+      "owner_phone": "5128354966",
+      "organization_name": "Cody Pools, Inc.  **MAIN",
+      "organization_contact": "Mike Church",
+      "latitude": "30.41800594",
+      "longitude": "-97.69946412",
+      "link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=269001",
+      "phone": "5128354966",
+      "tcad_id": "0262160906",
+      "legal_description": "LOT 1 LESS .214A TOMANET ESTATES SEC 1A",
+      "data_portal_update": "2026-08-15T03:37:46.000",
+      "location": {
+        "latitude": "30.41800594",
+        "longitude": "-97.69946412",
+        "human_address": "{\"address\": \"\", \"city\": \"\", \"state\": \"\", \"zip\": \"\"}"
+      },
+      ":@computed_region_8spj_utxs": "7",
+      ":@computed_region_q9nd_rr82": "7",
+      ":@computed_region_m2th_e4b7": "540",
+      ":@computed_region_rxpj_nzrk": "36"
+    },
+    {
+      "folderrsn": "148173",
+      "case_number": "C14-94-0072",
+      "permit_number": "1994-000072 ZC",
+      "case_name": "CLAYTON HOMES",
+      "case_type": "Zoning",
+      "work_type": "Zoning",
+      "sub_type": "Zoning/Rezoning",
+      "detailed_status": "Closed",
+      "proposed_zoning": "999",
+      "existing_zoning": "999",
+      "proposed_land_use": "999",
+      "existing_land_use": "999",
+      "case_manager": "Don Perryman",
+      "site_address": "6925 E BEN WHITE BLVD EB  , AUSTIN,TX 78744",
+      "council_district": "2",
+      "status_date": "2007-03-02T06:10:13.000",
+      "application_start_date": "1994-05-09T00:00:00.000",
+      "approved_in_last_30_days": "Yes",
+      "calendar_year_folder_created": "1994",
+      "fiscal_year_folder_created": "1994",
+      "peoplecode": "2",
+      "peoplersn": "7689",
+      "propertyrsn": "206298",
+      "owner_peoplersn": "7689",
+      "owner_fullname": "Dwayne Bacon",
+      "owner_phone": "5123858698",
+      "organization_contact": "Dwayne Bacon",
+      "latitude": "30.21412169",
+      "longitude": "-97.70189782",
+      "link": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=148173",
+      "phone": "5123858698",
+      "tcad_id": "0315110811",
+      "legal_description": "LOT 2 BLK A BACON SUBD",
+      "data_portal_update": "2026-08-15T03:37:46.000",
+      "location": {
+        "latitude": "30.21412169",
+        "longitude": "-97.70189782",
+        "human_address": "{\"address\": \"\", \"city\": \"\", \"state\": \"\", \"zip\": \"\"}"
+      },
+      ":@computed_region_8spj_utxs": "2",
+      ":@computed_region_q9nd_rr82": "4",
+      ":@computed_region_e9j2_6w3z": "3",
+      ":@computed_region_m2th_e4b7": "484",
+      ":@computed_region_rxpj_nzrk": "20",
+      ":@computed_region_xzeg_zdjk": "48"
+    }
+  ]
+}

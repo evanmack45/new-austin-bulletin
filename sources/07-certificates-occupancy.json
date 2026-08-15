@@ -1,0 +1,654 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "f9mz-m6dy",
+  "name": "Certificates Of Occupancy",
+  "description": "<a href=\"https://data.austintexas.gov/stories/s/ranj-cccq\" target=\"_blank\">View the City of Austin Open Data Terms of Use</a>\n\nBuilding, Electrical, Mechanical, and Plumbing Permits and Driveway/Sidewalk Permits issued by the City of Austin.  Includes relevant details such as issue date, location, c",
+  "row_count": "291231",
+  "rows_updated_at": "2026-08-14T11:53:16+00:00",
+  "days_since_update": 1,
+  "fields": [
+    {
+      "name": "permittype",
+      "label": "Permit Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "permit_type_desc",
+      "label": "Permit Type Desc",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "permit_number",
+      "label": "Permit Num",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "permit_class_mapped",
+      "label": "Permit Class Mapped",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "permit_class",
+      "label": "Permit Class",
+      "type": "text",
+      "null_count": "725",
+      "non_null_count": "290506"
+    },
+    {
+      "name": "work_class",
+      "label": "Work Class",
+      "type": "text",
+      "null_count": "779",
+      "non_null_count": "290452"
+    },
+    {
+      "name": "condominium",
+      "label": "Condominium",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "permit_location",
+      "label": "Project Name",
+      "type": "text",
+      "null_count": "2797",
+      "non_null_count": "288434"
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "type": "text",
+      "null_count": "7",
+      "non_null_count": "291224"
+    },
+    {
+      "name": "tcad_id",
+      "label": "TCAD ID",
+      "type": "text",
+      "null_count": "7049",
+      "non_null_count": "284182"
+    },
+    {
+      "name": "legal_description",
+      "label": "Property Legal Description",
+      "type": "text",
+      "null_count": "36560",
+      "non_null_count": "254671"
+    },
+    {
+      "name": "applieddate",
+      "label": "Applied Date",
+      "type": "calendar_date",
+      "null_count": "4",
+      "non_null_count": "291227"
+    },
+    {
+      "name": "issue_date",
+      "label": "Issued Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "day_issued",
+      "label": "Day Issued",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "calendar_year_issued",
+      "label": "Calendar Year Issued",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "fiscal_year_issued",
+      "label": "Fiscal Year Issued",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "issued_in_last_30_days",
+      "label": "Issued In Last 30 Days",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "issue_method",
+      "label": "Issuance Method",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "status_current",
+      "label": "Status Current",
+      "type": "text",
+      "null_count": "1",
+      "non_null_count": "291230"
+    },
+    {
+      "name": "statusdate",
+      "label": "Status Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "expiresdate",
+      "label": "Expires Date",
+      "type": "calendar_date",
+      "null_count": "16",
+      "non_null_count": "291215"
+    },
+    {
+      "name": "completed_date",
+      "label": "Completed Date",
+      "type": "calendar_date",
+      "null_count": "19495",
+      "non_null_count": "271736"
+    },
+    {
+      "name": "total_existing_bldg_sqft",
+      "label": "Total Existing Bldg SQFT",
+      "type": "number",
+      "null_count": "291147",
+      "non_null_count": "84"
+    },
+    {
+      "name": "remodel_repair_sqft",
+      "label": "Remodel Repair SQFT",
+      "type": "number",
+      "null_count": "239325",
+      "non_null_count": "51906"
+    },
+    {
+      "name": "total_new_add_sqft",
+      "label": "Total New Add SQFT",
+      "type": "number",
+      "null_count": "184208",
+      "non_null_count": "107023"
+    },
+    {
+      "name": "total_valuation_remodel",
+      "label": "Total Valuation Remodel",
+      "type": "number",
+      "null_count": "234089",
+      "non_null_count": "57142"
+    },
+    {
+      "name": "total_job_valuation",
+      "label": "Total Job Valuation",
+      "type": "number",
+      "null_count": "49598",
+      "non_null_count": "241633"
+    },
+    {
+      "name": "number_of_floors",
+      "label": "Number Of Floors",
+      "type": "number",
+      "null_count": "44698",
+      "non_null_count": "246533"
+    },
+    {
+      "name": "housing_units",
+      "label": "Housing Units",
+      "type": "number",
+      "null_count": "26452",
+      "non_null_count": "264779"
+    },
+    {
+      "name": "building_valuation",
+      "label": "Building Valuation",
+      "type": "number",
+      "null_count": "272530",
+      "non_null_count": "18701"
+    },
+    {
+      "name": "building_valuation_remodel",
+      "label": "Building Valuation Remodel",
+      "type": "number",
+      "null_count": "233914",
+      "non_null_count": "57317"
+    },
+    {
+      "name": "electrical_valuation",
+      "label": "Electrical Valuation",
+      "type": "number",
+      "null_count": "272531",
+      "non_null_count": "18700"
+    },
+    {
+      "name": "electrical_valuation_remodel",
+      "label": "Electrical Valuation Remodel",
+      "type": "number",
+      "null_count": "233926",
+      "non_null_count": "57305"
+    },
+    {
+      "name": "mechanical_valuation",
+      "label": "Mechanical Valuation",
+      "type": "number",
+      "null_count": "272532",
+      "non_null_count": "18699"
+    },
+    {
+      "name": "mechanical_valuation_remodel",
+      "label": "Mechanical Valuation Remodel",
+      "type": "number",
+      "null_count": "233927",
+      "non_null_count": "57304"
+    },
+    {
+      "name": "plumbing_valuation",
+      "label": "Plumbing Valuation",
+      "type": "number",
+      "null_count": "272533",
+      "non_null_count": "18698"
+    },
+    {
+      "name": "plumbing_valuation_remodel",
+      "label": "Plumbing Valuation Remodel",
+      "type": "number",
+      "null_count": "233927",
+      "non_null_count": "57304"
+    },
+    {
+      "name": "medgas_valuation",
+      "label": "MedGas Valuation",
+      "type": "number",
+      "null_count": "291231",
+      "non_null_count": "0"
+    },
+    {
+      "name": "medgas_valuation_remodel",
+      "label": "MedGas Valuation Remodel",
+      "type": "number",
+      "null_count": "250037",
+      "non_null_count": "41194"
+    },
+    {
+      "name": "original_address1",
+      "label": "Original Address 1",
+      "type": "text",
+      "null_count": "259",
+      "non_null_count": "290972"
+    },
+    {
+      "name": "original_city",
+      "label": "Original City",
+      "type": "text",
+      "null_count": "1904",
+      "non_null_count": "289327"
+    },
+    {
+      "name": "original_state",
+      "label": "Original State",
+      "type": "text",
+      "null_count": "257",
+      "non_null_count": "290974"
+    },
+    {
+      "name": "original_zip",
+      "label": "Original Zip",
+      "type": "number",
+      "null_count": "3268",
+      "non_null_count": "287963"
+    },
+    {
+      "name": "council_district",
+      "label": "Council District",
+      "type": "number",
+      "null_count": "6479",
+      "non_null_count": "284752"
+    },
+    {
+      "name": "jurisdiction",
+      "label": "Jurisdiction",
+      "type": "text",
+      "null_count": "2641",
+      "non_null_count": "288590"
+    },
+    {
+      "name": "link",
+      "label": "Link",
+      "type": "url",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": "project_id",
+      "label": "Project ID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "masterpermitnum",
+      "label": "Master Permit Num",
+      "type": "number",
+      "null_count": "105096",
+      "non_null_count": "186135"
+    },
+    {
+      "name": "latitude",
+      "label": "Latitude",
+      "type": "number",
+      "null_count": "46741",
+      "non_null_count": "244490"
+    },
+    {
+      "name": "longitude",
+      "label": "Longitude",
+      "type": "number",
+      "null_count": "46741",
+      "non_null_count": "244490"
+    },
+    {
+      "name": "location",
+      "label": "Location",
+      "type": "point",
+      "null_count": "46741",
+      "non_null_count": "244490"
+    },
+    {
+      "name": "contractor_trade",
+      "label": "Contractor Trade",
+      "type": "text",
+      "null_count": "103663",
+      "non_null_count": "187568"
+    },
+    {
+      "name": "contractor_company_name",
+      "label": "Contractor Company Name",
+      "type": "text",
+      "null_count": "117145",
+      "non_null_count": "174086"
+    },
+    {
+      "name": "contractor_full_name",
+      "label": "Contractor Full Name",
+      "type": "text",
+      "null_count": "156068",
+      "non_null_count": "135163"
+    },
+    {
+      "name": "contractor_phone",
+      "label": "Contractor Phone",
+      "type": "text",
+      "null_count": "106481",
+      "non_null_count": "184750"
+    },
+    {
+      "name": "contractor_address1",
+      "label": "Contractor Address 1",
+      "type": "text",
+      "null_count": "231287",
+      "non_null_count": "59944"
+    },
+    {
+      "name": "contractor_address2",
+      "label": "Contractor Address 2",
+      "type": "text",
+      "null_count": "120860",
+      "non_null_count": "170371"
+    },
+    {
+      "name": "contractor_city",
+      "label": "Contractor City",
+      "type": "text",
+      "null_count": "107513",
+      "non_null_count": "183718"
+    },
+    {
+      "name": "contractor_zip",
+      "label": "Contractor Zip",
+      "type": "text",
+      "null_count": "113258",
+      "non_null_count": "177973"
+    },
+    {
+      "name": "applicant_full_name",
+      "label": "Applicant Full Name",
+      "type": "text",
+      "null_count": "186326",
+      "non_null_count": "104905"
+    },
+    {
+      "name": "applicant_org",
+      "label": "Applicant Organization",
+      "type": "text",
+      "null_count": "170177",
+      "non_null_count": "121054"
+    },
+    {
+      "name": "applicant_phone",
+      "label": "Applicant Phone",
+      "type": "text",
+      "null_count": "162313",
+      "non_null_count": "128918"
+    },
+    {
+      "name": "applicant_address1",
+      "label": "Applicant Address 1",
+      "type": "text",
+      "null_count": "260555",
+      "non_null_count": "30676"
+    },
+    {
+      "name": "applicant_address2",
+      "label": "Applicant Address 2",
+      "type": "text",
+      "null_count": "168844",
+      "non_null_count": "122387"
+    },
+    {
+      "name": "applicant_city",
+      "label": "Applicant City",
+      "type": "text",
+      "null_count": "161668",
+      "non_null_count": "129563"
+    },
+    {
+      "name": "applicantzip",
+      "label": "Applicant Zip",
+      "type": "text",
+      "null_count": "166057",
+      "non_null_count": "125174"
+    },
+    {
+      "name": "certificate_of_occupancy",
+      "label": "Certificate Of Occupancy",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "291231"
+    },
+    {
+      "name": "total_lot_sq_ft",
+      "label": "Total Lot SQFT",
+      "type": "number",
+      "null_count": "210445",
+      "non_null_count": "80786"
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "fiscal_year_issued": "2026",
+      "applicant_phone": "2103715843",
+      "housing_units": "1",
+      "contractor_full_name": "Daniel Dwyer",
+      "original_state": "TX",
+      "contractor_address2": "17325  Bell",
+      "issued_in_last_30_days": "Yes",
+      "applicantzip": "78154",
+      "condominium": "No",
+      "electrical_valuation_remodel": "0",
+      "contractor_phone": "2103715843",
+      "permit_class": "C-1000 Commercial Remodel",
+      "tcad_id": "0105001601",
+      "project_id": "13750216",
+      "total_valuation_remodel": "0",
+      "link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13750216"
+      },
+      "masterpermitnum": "13743963",
+      "description": "Remodel to pre loss condition: like to like replacement of existing HVAC plumbing electrical and interior finish with no structural modification. Existing multifamily unit.",
+      "expiresdate": "2027-02-10T00:00:00.000",
+      "applicant_city": "Austin",
+      "contractor_trade": "General Contractor",
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      "permit_type_desc": "Building Permit",
+      "status_current": "Active",
+      "original_city": "AUSTIN",
+      "mechanical_valuation_remodel": "0",
+      "number_of_floors": "1",
+      "medgas_valuation_remodel": "0",
+      "plumbing_valuation_remodel": "0",
+      "contractor_city": "Austin",
+      "statusdate": "2026-08-13T00:00:00.000",
+      "day_issued": "THURSDAY",
+      "contractor_company_name": "Dwyer Restoration",
+      "applicant_full_name": "Daniel Dwyer",
+      "permit_number": "2026-101432 BP",
+      "calendar_year_issued": "2026",
+      "certificate_of_occupancy": "Yes",
+      "work_class": "Remodel",
+      "issue_method": "Permit Center",
+      "original_zip": "78701",
+      "applicant_address2": "17325  Bell",
+      "original_address1": "202 NUECES ST UNIT 1202",
+      "permittype": "BP",
+      "applieddate": "2026-07-24T00:00:00.000",
+      "issue_date": "2026-08-13T00:00:00.000",
+      "permit_location": "202 NUECES ST UNIT 1202",
+      "permit_class_mapped": "Commercial",
+      "contractor_zip": "78154",
+      "applicant_org": "Dwyer Restoration",
+      "council_district": "9",
+      "building_valuation_remodel": "0",
+      "remodel_repair_sqft": "1545"
+    },
+    {
+      "fiscal_year_issued": "2026",
+      "applicant_phone": "5128487535",
+      "housing_units": "7",
+      "location": "POINT (-97.70675032 30.29886897)",
+      "contractor_full_name": "Chase Moser",
+      "original_state": "TX",
+      "issued_in_last_30_days": "Yes",
+      "condominium": "No",
+      "electrical_valuation_remodel": "0",
+      "contractor_phone": "5128487535",
+      "permit_class": "C-1000 Commercial Remodel",
+      "tcad_id": "0217131601",
+      "project_id": "13755389",
+      "total_valuation_remodel": "0",
+      "latitude": "30.29886897",
+      "link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13755389"
+      },
+      "masterpermitnum": "13740592",
+      "description": "Creating 2 office spaces with a common hall and 2 restrooms and a janitor closet.  \n\n[Office]",
+      "expiresdate": "2027-02-10T00:00:00.000",
+      "applicant_city": "Austin",
+      "contractor_trade": "General Contractor",
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      "permit_type_desc": "Building Permit",
+      "status_current": "Active",
+      "original_city": "AUSTIN",
+      "mechanical_valuation_remodel": "0",
+      "number_of_floors": "6",
+      "medgas_valuation_remodel": "0",
+      "plumbing_valuation_remodel": "0",
+      "contractor_city": "Austin",
+      "statusdate": "2026-08-13T00:00:00.000",
+      "day_issued": "THURSDAY",
+      "contractor_company_name": "CHX2 LLC",
+      "applicant_full_name": "Chase Moser",
+      "longitude": "-97.70675032",
+      "permit_number": "2026-105868 BP",
+      "calendar_year_issued": "2026",
+      "certificate_of_occupancy": "Yes",
+      "work_class": "Remodel",
+      "issue_method": "Permit Center",
+      "original_zip": "78723",
+      "original_address1": "1701 SIMOND AVE UNIT 106",
+      "permittype": "BP",
+      "applieddate": "2026-07-20T00:00:00.000",
+      "issue_date": "2026-08-13T00:00:00.000",
+      "permit_location": "1701 SIMOND AVE UNIT 106",
+      "permit_class_mapped": "Commercial",
+      "applicant_org": "CHX2 LLC",
+      "council_district": "9",
+      "building_valuation_remodel": "0",
+      "remodel_repair_sqft": "1802"
+    },
+    {
+      "fiscal_year_issued": "2026",
+      "applicant_phone": "5125331445",
+      "legal_description": "PARKSIDE SEC 1 AT WILDHORSE RANCH BLK C LOT 23",
+      "housing_units": "1",
+      "total_lot_sq_ft": "5783",
+      "contractor_full_name": "Mark Ferguson",
+      "original_state": "TX",
+      "contractor_address2": "10700  PECAN",
+      "issued_in_last_30_days": "Yes",
+      "applicantzip": "78750",
+      "condominium": "No",
+      "contractor_phone": "5125331445",
+      "permit_class": "R- 101 Single Family Houses",
+      "tcad_id": "0229490321",
+      "total_job_valuation": "0",
+      "project_id": "13750096",
+      "total_new_add_sqft": "2364",
+      "link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13750096"
+      },
+      "masterpermitnum": "13731681",
+      "description": "New 1-story single family residence 4 bed/2.5 bath with attached garage covered porch and covered patio Green Building",
+      "expiresdate": "2027-02-10T00:00:00.000",
+      "applicant_city": "AUSTIN",
+      "contractor_trade": "General Contractor",
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      "permit_type_desc": "Building Permit",
+      "status_current": "Active",
+      "original_city": "AUSTIN",
+      "number_of_floors": "1",
+      "contractor_city": "AUSTIN",
+      "statusdate": "2026-08-13T00:00:00.000",
+      "day_issued": "THURSDAY",
+      "contractor_company_name": "D R Horton Homes",
+      "applicant_full_name": "Mark Ferguson",
+      "permit_number": "2026-101320 BP",
+      "calendar_year_issued": "2026",
+      "certificate_of_occupancy": "Yes",
+      "work_class": "New",
+      "issue_method": "Permit Center",
+      "original_zip": "78724",
+      "applicant_address2": "10700  PECAN",
+      "original_address1": "9412 BRAIDED REIN DR",
+      "permittype": "BP",
+      "applieddate": "2026-07-02T00:00:00.000",
+      "issue_date": "2026-08-13T00:00:00.000",
+      "permit_location": "9412 BRAIDED REIN DR",
+      "permit_class_mapped": "Residential",
+      "contractor_zip": "78750",
+      "applicant_org": "D R Horton Homes",
+      "council_district": "1"
+    }
+  ]
+}

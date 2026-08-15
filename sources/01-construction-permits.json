@@ -1,0 +1,665 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "3syk-w9eu",
+  "name": "Issued Construction Permits",
+  "description": "<a href=\"https://data.austintexas.gov/stories/s/ranj-cccq\" target=\"_blank\">View the City of Austin Open Data Terms of Use</a>\n\nBuilding, Electrical, Mechanical, and Plumbing Permits and Driveway/Sidewalk Permits issued by the City of Austin.  Includes relevant details such as issue date, location, c",
+  "row_count": "2370558",
+  "rows_updated_at": "2026-08-14T11:53:16+00:00",
+  "days_since_update": 1,
+  "fields": [
+    {
+      "name": "permittype",
+      "label": "Permit Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "permit_type_desc",
+      "label": "Permit Type Desc",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "permit_number",
+      "label": "Permit Num",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "permit_class_mapped",
+      "label": "Permit Class Mapped",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "permit_class",
+      "label": "Permit Class",
+      "type": "text",
+      "null_count": "47947",
+      "non_null_count": "2322611"
+    },
+    {
+      "name": "work_class",
+      "label": "Work Class",
+      "type": "text",
+      "null_count": "42355",
+      "non_null_count": "2328203"
+    },
+    {
+      "name": "condominium",
+      "label": "Condominium",
+      "type": "text",
+      "null_count": "169725",
+      "non_null_count": "2200833"
+    },
+    {
+      "name": "permit_location",
+      "label": "Project Name",
+      "type": "text",
+      "null_count": "14844",
+      "non_null_count": "2355714"
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "type": "text",
+      "null_count": "84",
+      "non_null_count": "2370474"
+    },
+    {
+      "name": "tcad_id",
+      "label": "TCAD ID",
+      "type": "text",
+      "null_count": "63063",
+      "non_null_count": "2307495"
+    },
+    {
+      "name": "legal_description",
+      "label": "Property Legal Description",
+      "type": "text",
+      "null_count": "244793",
+      "non_null_count": "2125765"
+    },
+    {
+      "name": "applieddate",
+      "label": "Applied Date",
+      "type": "calendar_date",
+      "null_count": "29",
+      "non_null_count": "2370529"
+    },
+    {
+      "name": "issue_date",
+      "label": "Issued Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "day_issued",
+      "label": "Day Issued",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "calendar_year_issued",
+      "label": "Calendar Year Issued",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "fiscal_year_issued",
+      "label": "Fiscal Year Issued",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "issued_in_last_30_days",
+      "label": "Issued In Last 30 Days",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "issue_method",
+      "label": "Issuance Method",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "status_current",
+      "label": "Status Current",
+      "type": "text",
+      "null_count": "14",
+      "non_null_count": "2370544"
+    },
+    {
+      "name": "statusdate",
+      "label": "Status Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "expiresdate",
+      "label": "Expires Date",
+      "type": "calendar_date",
+      "null_count": "786",
+      "non_null_count": "2369772"
+    },
+    {
+      "name": "completed_date",
+      "label": "Completed Date",
+      "type": "calendar_date",
+      "null_count": "197460",
+      "non_null_count": "2173098"
+    },
+    {
+      "name": "total_existing_bldg_sqft",
+      "label": "Total Existing Bldg SQFT",
+      "type": "number",
+      "null_count": "2304274",
+      "non_null_count": "66284"
+    },
+    {
+      "name": "remodel_repair_sqft",
+      "label": "Remodel Repair SQFT",
+      "type": "number",
+      "null_count": "1908974",
+      "non_null_count": "461584"
+    },
+    {
+      "name": "total_new_add_sqft",
+      "label": "Total New Add SQFT",
+      "type": "number",
+      "null_count": "1913200",
+      "non_null_count": "457358"
+    },
+    {
+      "name": "total_valuation_remodel",
+      "label": "Total Valuation Remodel",
+      "type": "number",
+      "null_count": "2224340",
+      "non_null_count": "146218"
+    },
+    {
+      "name": "total_job_valuation",
+      "label": "Total Job Valuation",
+      "type": "number",
+      "null_count": "1182288",
+      "non_null_count": "1188270"
+    },
+    {
+      "name": "number_of_floors",
+      "label": "Number Of Floors",
+      "type": "number",
+      "null_count": "1033335",
+      "non_null_count": "1337223"
+    },
+    {
+      "name": "housing_units",
+      "label": "Housing Units",
+      "type": "number",
+      "null_count": "548600",
+      "non_null_count": "1821958"
+    },
+    {
+      "name": "building_valuation",
+      "label": "Building Valuation",
+      "type": "number",
+      "null_count": "2347898",
+      "non_null_count": "22660"
+    },
+    {
+      "name": "building_valuation_remodel",
+      "label": "Building Valuation Remodel",
+      "type": "number",
+      "null_count": "2220034",
+      "non_null_count": "150524"
+    },
+    {
+      "name": "electrical_valuation",
+      "label": "Electrical Valuation",
+      "type": "number",
+      "null_count": "2330590",
+      "non_null_count": "39968"
+    },
+    {
+      "name": "electrical_valuation_remodel",
+      "label": "Electrical Valuation Remodel",
+      "type": "number",
+      "null_count": "2011067",
+      "non_null_count": "359491"
+    },
+    {
+      "name": "mechanical_valuation",
+      "label": "Mechanical Valuation",
+      "type": "number",
+      "null_count": "2337404",
+      "non_null_count": "33154"
+    },
+    {
+      "name": "mechanical_valuation_remodel",
+      "label": "Mechanical Valuation Remodel",
+      "type": "number",
+      "null_count": "2124760",
+      "non_null_count": "245798"
+    },
+    {
+      "name": "plumbing_valuation",
+      "label": "Plumbing Valuation",
+      "type": "number",
+      "null_count": "2327217",
+      "non_null_count": "43341"
+    },
+    {
+      "name": "plumbing_valuation_remodel",
+      "label": "Plumbing Valuation Remodel",
+      "type": "number",
+      "null_count": "2090908",
+      "non_null_count": "279650"
+    },
+    {
+      "name": "medgas_valuation",
+      "label": "MedGas Valuation",
+      "type": "number",
+      "null_count": "2370558",
+      "non_null_count": "0"
+    },
+    {
+      "name": "medgas_valuation_remodel",
+      "label": "MedGas Valuation Remodel",
+      "type": "number",
+      "null_count": "2305638",
+      "non_null_count": "64920"
+    },
+    {
+      "name": "original_address1",
+      "label": "Original Address 1",
+      "type": "text",
+      "null_count": "1645",
+      "non_null_count": "2368913"
+    },
+    {
+      "name": "original_city",
+      "label": "Original City",
+      "type": "text",
+      "null_count": "16183",
+      "non_null_count": "2354375"
+    },
+    {
+      "name": "original_state",
+      "label": "Original State",
+      "type": "text",
+      "null_count": "1694",
+      "non_null_count": "2368864"
+    },
+    {
+      "name": "original_zip",
+      "label": "Original Zip",
+      "type": "number",
+      "null_count": "31804",
+      "non_null_count": "2338754"
+    },
+    {
+      "name": "council_district",
+      "label": "Council District",
+      "type": "number",
+      "null_count": "200545",
+      "non_null_count": "2170013"
+    },
+    {
+      "name": "jurisdiction",
+      "label": "Jurisdiction",
+      "type": "text",
+      "null_count": "25630",
+      "non_null_count": "2344928"
+    },
+    {
+      "name": "link",
+      "label": "Link",
+      "type": "url",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": "project_id",
+      "label": "Project ID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "2370558"
+    },
+    {
+      "name": "masterpermitnum",
+      "label": "Master Permit Num",
+      "type": "number",
+      "null_count": "810681",
+      "non_null_count": "1559877"
+    },
+    {
+      "name": "latitude",
+      "label": "Latitude",
+      "type": "number",
+      "null_count": "333640",
+      "non_null_count": "2036918"
+    },
+    {
+      "name": "longitude",
+      "label": "Longitude",
+      "type": "number",
+      "null_count": "333640",
+      "non_null_count": "2036918"
+    },
+    {
+      "name": "location",
+      "label": "Location",
+      "type": "location",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": "contractor_trade",
+      "label": "Contractor Trade",
+      "type": "text",
+      "null_count": "948174",
+      "non_null_count": "1422384"
+    },
+    {
+      "name": "contractor_company_name",
+      "label": "Contractor Company Name",
+      "type": "text",
+      "null_count": "1186520",
+      "non_null_count": "1184038"
+    },
+    {
+      "name": "contractor_full_name",
+      "label": "Contractor Full Name",
+      "type": "text",
+      "null_count": "1136618",
+      "non_null_count": "1233940"
+    },
+    {
+      "name": "contractor_phone",
+      "label": "Contractor Phone",
+      "type": "text",
+      "null_count": "1014443",
+      "non_null_count": "1356115"
+    },
+    {
+      "name": "contractor_address1",
+      "label": "Contractor Address 1",
+      "type": "text",
+      "null_count": "1883952",
+      "non_null_count": "486606"
+    },
+    {
+      "name": "contractor_address2",
+      "label": "Contractor Address 2",
+      "type": "text",
+      "null_count": "1172236",
+      "non_null_count": "1198322"
+    },
+    {
+      "name": "contractor_city",
+      "label": "Contractor City",
+      "type": "text",
+      "null_count": "1041362",
+      "non_null_count": "1329196"
+    },
+    {
+      "name": "contractor_zip",
+      "label": "Contractor Zip",
+      "type": "text",
+      "null_count": "1056607",
+      "non_null_count": "1313951"
+    },
+    {
+      "name": "applicant_full_name",
+      "label": "Applicant Full Name",
+      "type": "text",
+      "null_count": "2174837",
+      "non_null_count": "195721"
+    },
+    {
+      "name": "applicant_org",
+      "label": "Applicant Organization",
+      "type": "text",
+      "null_count": "2145473",
+      "non_null_count": "225085"
+    },
+    {
+      "name": "applicant_phone",
+      "label": "Applicant Phone",
+      "type": "text",
+      "null_count": "2127965",
+      "non_null_count": "242593"
+    },
+    {
+      "name": "applicant_address1",
+      "label": "Applicant Address 1",
+      "type": "text",
+      "null_count": "2310457",
+      "non_null_count": "60101"
+    },
+    {
+      "name": "applicant_address2",
+      "label": "Applicant Address 2",
+      "type": "text",
+      "null_count": "2141729",
+      "non_null_count": "228829"
+    },
+    {
+      "name": "applicant_city",
+      "label": "Applicant City",
+      "type": "text",
+      "null_count": "2127346",
+      "non_null_count": "243212"
+    },
+    {
+      "name": "applicantzip",
+      "label": "Applicant Zip",
+      "type": "text",
+      "null_count": "2134674",
+      "non_null_count": "235884"
+    },
+    {
+      "name": "certificate_of_occupancy",
+      "label": "Certificate Of Occupancy",
+      "type": "text",
+      "null_count": "169725",
+      "non_null_count": "2200833"
+    },
+    {
+      "name": "total_lot_sq_ft",
+      "label": "Total Lot SQFT",
+      "type": "number",
+      "null_count": "2271157",
+      "non_null_count": "99401"
+    },
+    {
+      "name": ":@computed_region_8spj_utxs",
+      "label": "Single Member Council Districts",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_q9nd_rr82",
+      "label": "BOUNDARIES_single_member_districts",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_e9j2_6w3z",
+      "label": "Neighborhood Planning Areas",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_m2th_e4b7",
+      "label": "Community Registry",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_rxpj_nzrk",
+      "label": "Zipcodes",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_a3it_2a2z",
+      "label": "Zip Codes",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_qwte_z96m",
+      "label": "Zoning Review Cases_data",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_i2aj_cj5t",
+      "label": "Zipcode Boundaries (Snapshot)",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_xzeg_zdjk",
+      "label": "Neighborhood Planning Areas Dissolved",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_6gig_z43c",
+      "label": "Council Districts Fill - TESTING DO NOT USE (Adrianne)",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "permittype": "PP",
+      "permit_type_desc": "Plumbing Permit",
+      "permit_number": "2026-103525 PP",
+      "permit_class_mapped": "Residential",
+      "permit_class": "Residential",
+      "work_class": "Irrigation",
+      "permit_location": "804 BOLEY DR",
+      "description": "irrigation for lawn",
+      "tcad_id": "0451150901",
+      "applieddate": "2026-04-15T00:00:00.000",
+      "issue_date": "2026-08-13T00:00:00.000",
+      "day_issued": "THURSDAY",
+      "calendar_year_issued": "2026",
+      "fiscal_year_issued": "2026",
+      "issued_in_last_30_days": "Yes",
+      "issue_method": "Permit Center",
+      "status_current": "Active",
+      "statusdate": "2026-08-13T00:00:00.000",
+      "expiresdate": "2027-02-03T00:00:00.000",
+      "original_address1": "804 BOLEY DR",
+      "original_city": "AUSTIN",
+      "original_state": "TX",
+      "original_zip": "78652",
+      "council_district": "5",
+      "jurisdiction": "AUSTIN LTD",
+      "link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13752639"
+      },
+      "project_id": "13752639",
+      "masterpermitnum": "13694611"
+    },
+    {
+      "permittype": "EP",
+      "permit_type_desc": "Electrical Permit",
+      "permit_number": "2026-083226 EP",
+      "permit_class_mapped": "Commercial",
+      "permit_class": "Sign Permit",
+      "work_class": "Wall",
+      "permit_location": "9220 W PARMER LN",
+      "description": "Install front lit channel letters reading Brake and Tire Since 1968 on south elevation",
+      "tcad_id": "R401740",
+      "legal_description": "S7354 - Davis Spring Sec 10-b",
+      "applieddate": "2026-08-13T00:00:00.000",
+      "issue_date": "2026-08-13T00:00:00.000",
+      "day_issued": "THURSDAY",
+      "calendar_year_issued": "2026",
+      "fiscal_year_issued": "2026",
+      "issued_in_last_30_days": "Yes",
+      "issue_method": "Permit Center",
+      "status_current": "Active",
+      "statusdate": "2026-08-13T00:00:00.000",
+      "expiresdate": "2027-02-09T00:00:00.000",
+      "original_address1": "9220 W PARMER LN",
+      "original_city": "AUSTIN",
+      "original_state": "TX",
+      "original_zip": "78717",
+      "council_district": "6",
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      "link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13755262"
+      },
+      "project_id": "13755262",
+      "masterpermitnum": "13729191"
+    },
+    {
+      "permittype": "DS",
+      "permit_type_desc": "Driveway / Sidewalks",
+      "permit_number": "2026-099956 DS",
+      "permit_class_mapped": "Residential",
+      "permit_class": "Res. Driveway & Sidewalk",
+      "work_class": "New",
+      "permit_location": "11201 GOLDEN CLOUD BND",
+      "description": "Construct new driveway approach of 17 FT and sidewalk of 20.65 LF",
+      "tcad_id": "0231570146",
+      "legal_description": "SADDLE RIDGE AT WILDHORSE RANCH BLK F LOT 23",
+      "applieddate": "2026-07-16T00:00:00.000",
+      "issue_date": "2026-08-13T00:00:00.000",
+      "day_issued": "THURSDAY",
+      "calendar_year_issued": "2026",
+      "fiscal_year_issued": "2026",
+      "issued_in_last_30_days": "Yes",
+      "issue_method": "Permit Center",
+      "status_current": "Active",
+      "statusdate": "2026-08-13T00:00:00.000",
+      "expiresdate": "2027-02-01T00:00:00.000",
+      "original_address1": "11201 GOLDEN CLOUD BND",
+      "original_city": "MANOR",
+      "original_state": "TX",
+      "original_zip": "78653",
+      "council_district": "1",
+      "jurisdiction": "AUSTIN FULL PURPOSE",
+      "link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13748578"
+      },
+      "project_id": "13748578",
+      "masterpermitnum": "13748577",
+      "contractor_trade": "General Contractor",
+      "contractor_company_name": "Milestone Community Builders, LLC(MAIN)",
+      "contractor_full_name": "Garrett Martin",
+      "contractor_phone": "5126864986",
+      "contractor_address2": "2100  NORTHL",
+      "contractor_city": "AUSTIN",
+      "contractor_zip": "78756-____"
+    }
+  ]
+}

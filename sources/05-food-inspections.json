@@ -1,0 +1,90 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "ecmv-9xxi",
+  "name": "Food Establishment Inspection Scores",
+  "description": "Provides food establishment inspection scores performed within the last 3 years. Inspections are conducted in accordance with the Texas Food Establishment Rules (TFER) and City of Austin Codes. Inspections are completed by Environmental Health Officers working for Austin Public Health (APH) Environm",
+  "row_count": "20964",
+  "rows_updated_at": "2026-06-15T17:01:29+00:00",
+  "days_since_update": 60,
+  "fields": [
+    {
+      "name": "restaurant_name",
+      "label": "Restaurant Name",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "20964"
+    },
+    {
+      "name": "zip_code",
+      "label": "Zip Code",
+      "type": "text",
+      "null_count": "14",
+      "non_null_count": "20950"
+    },
+    {
+      "name": "inspection_date",
+      "label": "Inspection Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "20964"
+    },
+    {
+      "name": "score",
+      "label": "Score",
+      "type": "number",
+      "null_count": "53",
+      "non_null_count": "20911"
+    },
+    {
+      "name": "address",
+      "label": "Address",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "20964"
+    },
+    {
+      "name": "facility_id",
+      "label": "Facility ID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "20964"
+    },
+    {
+      "name": "process_description",
+      "label": "Process Description",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "20964"
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "restaurant_name": "PF - Pflugerville Nursing and Rehabilitation Ctr",
+      "zip_code": "78660-2630",
+      "inspection_date": "2026-05-22T00:00:00.000",
+      "score": "97.000000",
+      "address": "104 Rex Kerwin Ct Pflugerville",
+      "facility_id": "12392891",
+      "process_description": "Routine Inspection"
+    },
+    {
+      "restaurant_name": "Blenders and Bowls",
+      "zip_code": "78702-3307",
+      "inspection_date": "2026-05-22T00:00:00.000",
+      "score": "91.000000",
+      "address": "1625 E 6th St Austin",
+      "facility_id": "11687295",
+      "process_description": "Routine Inspection"
+    },
+    {
+      "restaurant_name": "Jersey Mike's Subs",
+      "zip_code": "78751-4857",
+      "inspection_date": "2026-05-22T00:00:00.000",
+      "score": "96.000000",
+      "address": "1000 E 41st St Ste 235 Austin",
+      "facility_id": "11250082",
+      "process_description": "Routine Inspection"
+    }
+  ]
+}

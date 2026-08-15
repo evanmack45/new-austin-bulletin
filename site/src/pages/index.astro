@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+
+const modules = import.meta.glob('../stories/*.md', { eager: true });
+const stories = Object.values(modules)
+  .map((m) => m.frontmatter)
+  .filter(Boolean)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+---
+<Base title="Austin development news">
+  {stories.length === 0 ? (
+    <p>No stories published yet.</p>
+  ) : (
+    <ul>
+      {stories.map((s) => (
+        <li>
+          <a href={s.slug}>{s.title}</a>
+          <span>{s.district} · {s.date}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

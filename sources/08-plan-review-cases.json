@@ -1,0 +1,587 @@
+{
+  "domain": "data.austintexas.gov",
+  "dataset_id": "n8ck-xkda",
+  "name": "Plan Review Cases",
+  "description": "<a href=\"https://data.austintexas.gov/stories/s/ranj-cccq\" target=\"_blank\">View the City of Austin Open Data Terms of Use</a>\n\nThis dataset was created to compile information about Plan Review (PR) cases filed with the City of Austin. The information is retrieved daily from the City's Application Ma",
+  "row_count": "153578",
+  "rows_updated_at": "2026-08-14T17:18:31+00:00",
+  "days_since_update": 0,
+  "fields": [
+    {
+      "name": "permit_type",
+      "label": "Case_Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "folder_type",
+      "label": "Folder_Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "sub_type",
+      "label": "Sub_Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "work_class",
+      "label": "Work_Class",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "permit_number",
+      "label": "Permit_Number",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "referencefile",
+      "label": "Referencefile",
+      "type": "text",
+      "null_count": "3227",
+      "non_null_count": "150351"
+    },
+    {
+      "name": "project_name",
+      "label": "Project_Name",
+      "type": "text",
+      "null_count": "2",
+      "non_null_count": "153576"
+    },
+    {
+      "name": "folder_description",
+      "label": "Folder_Description",
+      "type": "text",
+      "null_count": "34",
+      "non_null_count": "153544"
+    },
+    {
+      "name": "express_permit",
+      "label": "Express_Permit",
+      "type": "text",
+      "null_count": "153578",
+      "non_null_count": "0"
+    },
+    {
+      "name": "folder_section",
+      "label": "Folder_Section",
+      "type": "text",
+      "null_count": "153578",
+      "non_null_count": "0"
+    },
+    {
+      "name": "folderrsn",
+      "label": "Folderrsn",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "web_link",
+      "label": "Web_Link",
+      "type": "url",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": "status_current",
+      "label": "Status_Current",
+      "type": "text",
+      "null_count": "6",
+      "non_null_count": "153572"
+    },
+    {
+      "name": "status_date",
+      "label": "Status_Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "applicant_full_name",
+      "label": "Applicant_Full_Name",
+      "type": "text",
+      "null_count": "58922",
+      "non_null_count": "94656"
+    },
+    {
+      "name": "applicant_organization_name",
+      "label": "Applicant_Organization_Name",
+      "type": "text",
+      "null_count": "82750",
+      "non_null_count": "70828"
+    },
+    {
+      "name": "applicant_address",
+      "label": "Applicant_Address",
+      "type": "text",
+      "null_count": "132623",
+      "non_null_count": "20955"
+    },
+    {
+      "name": "applicant_phone",
+      "label": "Applicant_Phone",
+      "type": "text",
+      "null_count": "54750",
+      "non_null_count": "98828"
+    },
+    {
+      "name": "owner_full_name",
+      "label": "Owner_Full_Name",
+      "type": "text",
+      "null_count": "150067",
+      "non_null_count": "3511"
+    },
+    {
+      "name": "owner_organization_name",
+      "label": "Owner_Organization_Name",
+      "type": "text",
+      "null_count": "127783",
+      "non_null_count": "25795"
+    },
+    {
+      "name": "owner_address",
+      "label": "Owner_Address",
+      "type": "text",
+      "null_count": "128790",
+      "non_null_count": "24788"
+    },
+    {
+      "name": "owner_phone",
+      "label": "Owner_Phone",
+      "type": "text",
+      "null_count": "149324",
+      "non_null_count": "4254"
+    },
+    {
+      "name": "other_full_name",
+      "label": "Other_Full_Name",
+      "type": "text",
+      "null_count": "27697",
+      "non_null_count": "125881"
+    },
+    {
+      "name": "other_organization_name",
+      "label": "Other_Organization_Name",
+      "type": "text",
+      "null_count": "26146",
+      "non_null_count": "127432"
+    },
+    {
+      "name": "other_address",
+      "label": "Other_Address",
+      "type": "text",
+      "null_count": "116670",
+      "non_null_count": "36908"
+    },
+    {
+      "name": "other_phone",
+      "label": "Other_Phone",
+      "type": "text",
+      "null_count": "13719",
+      "non_null_count": "139859"
+    },
+    {
+      "name": "condominium",
+      "label": "Condominium",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "appraisal_id",
+      "label": "Appraisal_Id",
+      "type": "text",
+      "null_count": "801",
+      "non_null_count": "152777"
+    },
+    {
+      "name": "issued_date",
+      "label": "Issued_Date",
+      "type": "calendar_date",
+      "null_count": "9768",
+      "non_null_count": "143810"
+    },
+    {
+      "name": "issued_in_last_30_days",
+      "label": "Issued_In_Last_30_Days",
+      "type": "checkbox",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "day_issued",
+      "label": "Day_Issued",
+      "type": "text",
+      "null_count": "9768",
+      "non_null_count": "143810"
+    },
+    {
+      "name": "calendar_year_issued",
+      "label": "Calendar_Year_Issued",
+      "type": "text",
+      "null_count": "9768",
+      "non_null_count": "143810"
+    },
+    {
+      "name": "fiscal_year_issued",
+      "label": "Fiscal_Year_Issued",
+      "type": "text",
+      "null_count": "9768",
+      "non_null_count": "143810"
+    },
+    {
+      "name": "applied_date",
+      "label": "Applied_Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "fiscal_year_indate",
+      "label": "Fiscal_Year_InDate",
+      "type": "text",
+      "null_count": "153578",
+      "non_null_count": "0"
+    },
+    {
+      "name": "expires_date",
+      "label": "Expires_Date",
+      "type": "calendar_date",
+      "null_count": "5766",
+      "non_null_count": "147812"
+    },
+    {
+      "name": "final_date",
+      "label": "Final_Date",
+      "type": "calendar_date",
+      "null_count": "8221",
+      "non_null_count": "145357"
+    },
+    {
+      "name": "building_valuation",
+      "label": "Building_Valuation",
+      "type": "number",
+      "null_count": "151518",
+      "non_null_count": "2060"
+    },
+    {
+      "name": "building_valuation_remodel",
+      "label": "Building_Valuation_Remodel",
+      "type": "number",
+      "null_count": "82365",
+      "non_null_count": "71213"
+    },
+    {
+      "name": "electrical_valuation",
+      "label": "Electrical_Valuation",
+      "type": "number",
+      "null_count": "151628",
+      "non_null_count": "1950"
+    },
+    {
+      "name": "electrical_valuation_remodel",
+      "label": "Electrical_Valuation_Remodel",
+      "type": "number",
+      "null_count": "82365",
+      "non_null_count": "71213"
+    },
+    {
+      "name": "mechanical_valuation",
+      "label": "Mechanical_Valuation",
+      "type": "number",
+      "null_count": "151629",
+      "non_null_count": "1949"
+    },
+    {
+      "name": "mechanical_valuation_remodel",
+      "label": "Mechanical_Valuation_Remodel",
+      "type": "number",
+      "null_count": "48921",
+      "non_null_count": "104657"
+    },
+    {
+      "name": "medgas_valuation",
+      "label": "Medgas_Valuation",
+      "type": "number",
+      "null_count": "153578",
+      "non_null_count": "0"
+    },
+    {
+      "name": "medgas_valuation_remodel",
+      "label": "Medgas_Valuation_Remodel",
+      "type": "number",
+      "null_count": "128016",
+      "non_null_count": "25562"
+    },
+    {
+      "name": "number_of_floors",
+      "label": "Number_Of_Floors",
+      "type": "number",
+      "null_count": "85072",
+      "non_null_count": "68506"
+    },
+    {
+      "name": "number_of_units",
+      "label": "Number_Of_Units",
+      "type": "number",
+      "null_count": "84350",
+      "non_null_count": "69228"
+    },
+    {
+      "name": "plumbing_valuation",
+      "label": "Plumbing_Valuation",
+      "type": "number",
+      "null_count": "151629",
+      "non_null_count": "1949"
+    },
+    {
+      "name": "plumbing_valuation_remodel",
+      "label": "Plumbing_Valuation_Remodel",
+      "type": "number",
+      "null_count": "82366",
+      "non_null_count": "71212"
+    },
+    {
+      "name": "remodel_repair_footage",
+      "label": "Remodel_Repair_Footage",
+      "type": "number",
+      "null_count": "122515",
+      "non_null_count": "31063"
+    },
+    {
+      "name": "total_existing_bldg_footage",
+      "label": "Total_Existing_Bldg_Footage",
+      "type": "number",
+      "null_count": "130619",
+      "non_null_count": "22959"
+    },
+    {
+      "name": "total_job_valuation",
+      "label": "Total_Job_Valuation",
+      "type": "number",
+      "null_count": "90970",
+      "non_null_count": "62608"
+    },
+    {
+      "name": "total_new_add_footage",
+      "label": "Total_New_Add_Footage",
+      "type": "number",
+      "null_count": "85666",
+      "non_null_count": "67912"
+    },
+    {
+      "name": "total_valuation_remodel",
+      "label": "Total_Valuation_Remodel",
+      "type": "number",
+      "null_count": "94847",
+      "non_null_count": "58731"
+    },
+    {
+      "name": "council_district",
+      "label": "Council_District",
+      "type": "number",
+      "null_count": "1246",
+      "non_null_count": "152332"
+    },
+    {
+      "name": "legal_description",
+      "label": "Legal_Description",
+      "type": "text",
+      "null_count": "18789",
+      "non_null_count": "134789"
+    },
+    {
+      "name": "propx",
+      "label": "Propx",
+      "type": "number",
+      "null_count": "32",
+      "non_null_count": "153546"
+    },
+    {
+      "name": "propy",
+      "label": "Propy",
+      "type": "number",
+      "null_count": "32",
+      "non_null_count": "153546"
+    },
+    {
+      "name": "propertyrsn",
+      "label": "Propertyrsn",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "153578"
+    },
+    {
+      "name": "update_date",
+      "label": "Update_Date",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "153568"
+    },
+    {
+      "name": "location",
+      "label": "Location",
+      "type": "point",
+      "null_count": "32",
+      "non_null_count": "153536"
+    },
+    {
+      "name": ":@computed_region_8spj_utxs",
+      "label": "Single Member Council Districts",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_jcrc_4uuy",
+      "label": "Boundaries: Zip Code Tabulation Areas, 2017",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_q9nd_rr82",
+      "label": "BOUNDARIES_single_member_districts",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_e9j2_6w3z",
+      "label": "Neighborhood Planning Areas",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_m2th_e4b7",
+      "label": "Community Registry",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_rxpj_nzrk",
+      "label": "Zipcodes",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    },
+    {
+      "name": ":@computed_region_xzeg_zdjk",
+      "label": "Neighborhood Planning Areas Dissolved",
+      "type": "number",
+      "null_count": null,
+      "non_null_count": null
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "permit_type": "Plan Review",
+      "folder_type": "PR",
+      "sub_type": "C-1000 Commercial Remodel",
+      "work_class": "Remodel",
+      "permit_number": "2024-133105 PR",
+      "referencefile": "2024-133105 PR",
+      "project_name": "1914 W HOWARD LN",
+      "folder_description": "VOID - ADDRESS IN ETJ",
+      "folderrsn": "13409654",
+      "web_link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=13409654"
+      },
+      "status_current": "VOID",
+      "status_date": "2024-10-02T10:06:28.000",
+      "condominium": "No",
+      "appraisal_id": "0268200327",
+      "issued_in_last_30_days": true,
+      "applied_date": "2024-10-02T00:00:00.000",
+      "expires_date": "2025-10-02T00:00:00.000",
+      "legal_description": "LOT 45-47 TURBINE WEST",
+      "propx": "3131623",
+      "propy": "10130264",
+      "propertyrsn": "133985",
+      "update_date": "2026-08-14T12:06:28.3720436",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -97.68349995,
+          30.43052987
+        ]
+      },
+      ":@computed_region_jcrc_4uuy": "28",
+      ":@computed_region_m2th_e4b7": "540",
+      ":@computed_region_rxpj_nzrk": "48"
+    },
+    {
+      "permit_type": "Plan Review",
+      "folder_type": "PR",
+      "sub_type": "R- 101 Single Family Houses",
+      "work_class": "New",
+      "permit_number": "2021-048288 PR",
+      "project_name": "200 CONGRESS AVENUE",
+      "folder_description": "VOID",
+      "folderrsn": "12669411",
+      "web_link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=12669411"
+      },
+      "status_current": "VOID",
+      "status_date": "2021-05-04T11:00:00.000",
+      "condominium": "No",
+      "appraisal_id": "0205011201",
+      "issued_in_last_30_days": true,
+      "applied_date": "2021-04-02T00:00:00.000",
+      "expires_date": "2022-04-04T00:00:00.000",
+      "council_district": "9",
+      "propx": "3113830",
+      "propy": "10069481",
+      "propertyrsn": "3152487",
+      "update_date": "2026-08-14T12:06:31.2745118",
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          -97.74442999,
+          30.26459903
+        ]
+      },
+      ":@computed_region_8spj_utxs": "9",
+      ":@computed_region_jcrc_4uuy": "52",
+      ":@computed_region_q9nd_rr82": "10",
+      ":@computed_region_e9j2_6w3z": "60",
+      ":@computed_region_m2th_e4b7": "217",
+      ":@computed_region_rxpj_nzrk": "24",
+      ":@computed_region_xzeg_zdjk": "10"
+    },
+    {
+      "permit_type": "Plan Review",
+      "folder_type": "PR",
+      "sub_type": "R- 101 Single Family Houses",
+      "work_class": "New",
+      "permit_number": "2021-125681 PR",
+      "project_name": "WILLIAM HOLLAND AVE",
+      "folder_description": "jjk",
+      "folderrsn": "12760203",
+      "web_link": {
+        "url": "https://abc.austintexas.gov/web/permit/public-search-other?t_detail=1&t_selected_folderrsn=12760203"
+      },
+      "status_current": "Application Incomplete",
+      "status_date": "2021-08-14T14:20:46.000",
+      "other_full_name": "Vishwa Chandramouli",
+      "other_phone": "8328328322",
+      "condominium": "No",
+      "issued_in_last_30_days": true,
+      "applied_date": "2021-08-14T00:00:00.000",
+      "propertyrsn": "4011",
+      "update_date": "2026-08-14T12:06:51.4237441"
+    }
+  ]
+}

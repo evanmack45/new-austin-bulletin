@@ -1,0 +1,450 @@
+{
+  "domain": "data.texas.gov",
+  "dataset_id": "7hf9-qc9f",
+  "name": "TABC License Information",
+  "description": "The TABC License Information dataset includes valuable information associated with each primary license issued by TABC as the result of a successfully submitted, processed. and approved application for one of the twenty eight (28) primary license types for a given business entity.  Such information ",
+  "row_count": "125958",
+  "rows_updated_at": "2026-08-14T12:30:30+00:00",
+  "days_since_update": 0,
+  "fields": [
+    {
+      "name": "master_file_id",
+      "label": "Master File ID",
+      "type": "number",
+      "null_count": "203",
+      "non_null_count": "125958"
+    },
+    {
+      "name": "license_type",
+      "label": "License Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "license_id",
+      "label": "License ID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "primary_status",
+      "label": "Primary Status",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "secondary_status",
+      "label": "Secondary Status",
+      "type": "text",
+      "null_count": "122180",
+      "non_null_count": "3981"
+    },
+    {
+      "name": "license_status",
+      "label": "License Status",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "current_issued_date",
+      "label": "Current Issued Date",
+      "type": "calendar_date",
+      "null_count": "39",
+      "non_null_count": "126122"
+    },
+    {
+      "name": "status_change_date",
+      "label": "Status Change Date",
+      "type": "calendar_date",
+      "null_count": "1",
+      "non_null_count": "126160"
+    },
+    {
+      "name": "expiration_date",
+      "label": "Expiration Date",
+      "type": "calendar_date",
+      "null_count": "1",
+      "non_null_count": "126160"
+    },
+    {
+      "name": "expiration_year",
+      "label": "Expiration Year",
+      "type": "number",
+      "null_count": "1",
+      "non_null_count": "126160"
+    },
+    {
+      "name": "expiration_month",
+      "label": "Expiration Month",
+      "type": "number",
+      "null_count": "1",
+      "non_null_count": "126160"
+    },
+    {
+      "name": "expiration_day",
+      "label": "Expiration Day",
+      "type": "number",
+      "null_count": "1",
+      "non_null_count": "126160"
+    },
+    {
+      "name": "trade_name",
+      "label": "Trade Name",
+      "type": "text",
+      "null_count": "9698",
+      "non_null_count": "116463"
+    },
+    {
+      "name": "owner",
+      "label": "Owner",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "tbd_01",
+      "label": "TBD 01",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "tbd_02",
+      "label": "TBD 02",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "wine_percent",
+      "label": "Wine Percent",
+      "type": "text",
+      "null_count": "73862",
+      "non_null_count": "52299"
+    },
+    {
+      "name": "gun_sign",
+      "label": "Gun Sign",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "original_issue_date",
+      "label": "Original Issue Date",
+      "type": "calendar_date",
+      "null_count": "7",
+      "non_null_count": "126154"
+    },
+    {
+      "name": "tier",
+      "label": "Tier",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "subordinates",
+      "label": "Subordinates",
+      "type": "text",
+      "null_count": "101229",
+      "non_null_count": "24932"
+    },
+    {
+      "name": "bp",
+      "label": "BP",
+      "type": "number",
+      "null_count": "125847",
+      "non_null_count": "314"
+    },
+    {
+      "name": "sd",
+      "label": "SD",
+      "type": "number",
+      "null_count": "126089",
+      "non_null_count": "72"
+    },
+    {
+      "name": "e",
+      "label": "E",
+      "type": "number",
+      "null_count": "125932",
+      "non_null_count": "229"
+    },
+    {
+      "name": "fb",
+      "label": "FB",
+      "type": "number",
+      "null_count": "108282",
+      "non_null_count": "17879"
+    },
+    {
+      "name": "lh",
+      "label": "LH",
+      "type": "number",
+      "null_count": "116214",
+      "non_null_count": "9947"
+    },
+    {
+      "name": "lp",
+      "label": "LP",
+      "type": "number",
+      "null_count": "125031",
+      "non_null_count": "1130"
+    },
+    {
+      "name": "wp",
+      "label": "WP",
+      "type": "number",
+      "null_count": "126158",
+      "non_null_count": "3"
+    },
+    {
+      "name": "fc",
+      "label": "FC",
+      "type": "number",
+      "null_count": "126161",
+      "non_null_count": "0"
+    },
+    {
+      "name": "address",
+      "label": "Address",
+      "type": "text",
+      "null_count": "184",
+      "non_null_count": "125977"
+    },
+    {
+      "name": "address_2",
+      "label": "Address 2",
+      "type": "text",
+      "null_count": "115531",
+      "non_null_count": "10630"
+    },
+    {
+      "name": "city",
+      "label": "City",
+      "type": "text",
+      "null_count": "189",
+      "non_null_count": "125972"
+    },
+    {
+      "name": "state",
+      "label": "State",
+      "type": "text",
+      "null_count": "1055",
+      "non_null_count": "125106"
+    },
+    {
+      "name": "zip",
+      "label": "Zip",
+      "type": "text",
+      "null_count": "184",
+      "non_null_count": "125977"
+    },
+    {
+      "name": "phone",
+      "label": "Phone",
+      "type": "text",
+      "null_count": "126161",
+      "non_null_count": "0"
+    },
+    {
+      "name": "county",
+      "label": "County",
+      "type": "text",
+      "null_count": "10528",
+      "non_null_count": "115633"
+    },
+    {
+      "name": "country",
+      "label": "Country",
+      "type": "text",
+      "null_count": "395",
+      "non_null_count": "125766"
+    },
+    {
+      "name": "tbd_03",
+      "label": "TBD 03",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "tbd_04",
+      "label": "TBD 04",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "tbd_05",
+      "label": "TBD 05",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "126161"
+    },
+    {
+      "name": "mail_address",
+      "label": "Mail Address",
+      "type": "text",
+      "null_count": "333",
+      "non_null_count": "125828"
+    },
+    {
+      "name": "mail_address_2",
+      "label": "Mail Address 2",
+      "type": "text",
+      "null_count": "104672",
+      "non_null_count": "21489"
+    },
+    {
+      "name": "mail_city",
+      "label": "Mail City",
+      "type": "text",
+      "null_count": "330",
+      "non_null_count": "125831"
+    },
+    {
+      "name": "mail_state",
+      "label": "Mail State",
+      "type": "text",
+      "null_count": "652",
+      "non_null_count": "125509"
+    },
+    {
+      "name": "mail_zip",
+      "label": "Mail Zip",
+      "type": "text",
+      "null_count": "186",
+      "non_null_count": "125975"
+    },
+    {
+      "name": "mail_country",
+      "label": "Mail Country",
+      "type": "text",
+      "null_count": "4536",
+      "non_null_count": "121625"
+    },
+    {
+      "name": "legacy_clp",
+      "label": "Legacy CLP",
+      "type": "text",
+      "null_count": "47472",
+      "non_null_count": "78689"
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "master_file_id": "2100002125.0",
+      "license_type": "Q",
+      "license_id": "100000273.0",
+      "primary_status": "Expired - Original Required",
+      "license_status": "Expired - Original Required",
+      "current_issued_date": "2022-03-15T00:00:00.000",
+      "status_change_date": "2024-04-10T05:00:01.930",
+      "expiration_date": "2024-03-10T00:00:00.000",
+      "expiration_year": "2024",
+      "expiration_month": "3",
+      "expiration_day": "10",
+      "trade_name": "NEAL INC. #52",
+      "owner": "NEAL INC.",
+      "tbd_01": "",
+      "tbd_02": "",
+      "gun_sign": "BLUE",
+      "original_issue_date": "1987-03-11T00:00:00.000",
+      "tier": "Retail",
+      "address": "1600 10TH ST",
+      "city": "Floresville",
+      "state": "TX",
+      "zip": "781142412",
+      "county": "Wilson",
+      "country": "UNITED STATES",
+      "tbd_03": "",
+      "tbd_04": "",
+      "tbd_05": "",
+      "mail_address": "PO BOX 200427",
+      "mail_city": "San Antonio",
+      "mail_state": "TX",
+      "mail_zip": "782200427",
+      "legacy_clp": "Q 189591"
+    },
+    {
+      "master_file_id": "2100050776.0",
+      "license_type": "BG",
+      "license_id": "100000290.0",
+      "primary_status": "Active",
+      "license_status": "Active",
+      "current_issued_date": "2025-12-15T00:00:00.000",
+      "status_change_date": "2025-12-15T20:08:54.053",
+      "expiration_date": "2027-12-10T00:00:00.000",
+      "expiration_year": "2027",
+      "expiration_month": "12",
+      "expiration_day": "10",
+      "trade_name": "CROSS ROADS TAVERN",
+      "owner": "BONNIE HEGEMEYER",
+      "tbd_01": "",
+      "tbd_02": "",
+      "wine_percent": "Upto 17%",
+      "gun_sign": "BLUE",
+      "original_issue_date": "1987-12-11T00:00:00.000",
+      "tier": "Retail",
+      "address": "12716 FM 1094",
+      "city": "Sealy",
+      "state": "TX",
+      "zip": "774749870",
+      "county": "Austin",
+      "country": "United States",
+      "tbd_03": "",
+      "tbd_04": "",
+      "tbd_05": "",
+      "mail_address": "12716 FM 1094",
+      "mail_city": "Sealy",
+      "mail_state": "TX",
+      "mail_zip": "774749870",
+      "mail_country": "United States",
+      "legacy_clp": "BG227874"
+    },
+    {
+      "master_file_id": "2100000189.0",
+      "license_type": "MB",
+      "license_id": "100000351.0",
+      "primary_status": "Active",
+      "license_status": "Active",
+      "current_issued_date": "2025-06-20T00:00:00.000",
+      "status_change_date": "2025-06-20T21:39:27.877",
+      "expiration_date": "2027-06-06T00:00:00.000",
+      "expiration_year": "2027",
+      "expiration_month": "6",
+      "expiration_day": "6",
+      "trade_name": "TOP TIER CATERING AT TEXAS TECH UNIVERSITY",
+      "owner": "TEXAS TECH UNIVERSITY ADMINISTRATION & FINANCE",
+      "tbd_01": "",
+      "tbd_02": "",
+      "gun_sign": "BLUE",
+      "original_issue_date": "2001-06-07T00:00:00.000",
+      "tier": "Retail",
+      "subordinates": "LH",
+      "lh": "1",
+      "address": "3211 18TH ST",
+      "city": "Lubbock",
+      "state": "TX",
+      "zip": "794099822",
+      "county": "Lubbock",
+      "country": "UNITED STATES",
+      "tbd_03": "",
+      "tbd_04": "",
+      "tbd_05": "",
+      "mail_address": "PO Box 42184",
+      "mail_city": "Lubbock",
+      "mail_state": "TX",
+      "mail_zip": "794092184",
+      "mail_country": "United States",
+      "legacy_clp": "MB494696"
+    }
+  ]
+}
