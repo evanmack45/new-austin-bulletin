@@ -221,3 +221,26 @@ follow-on after Build Task 1 merges. Builder directed to unblock the report with
 the resolution attributed and dated, finish all eight P2s, pin numbers to one
 authoritative run, codex to clean, then push the branch and open the PR under the
 standing authorization. Roadmap updated.
+
+## 2026-08-15 — Session close (~11:25 CDT)
+
+Stale-fact corrections from Evan, verified and absorbed: OpenRouter key was DONE
+before this session started (repo secret set 08:13 CDT — briefing docs were stale);
+Cloudflare Pages confirmed NOT set up, approach revised to API-driven (builder
+executes; Evan's only step is creating an API token as a repo secret; queued after
+the Build Task 1 PR). Standing comms preferences set by Evan: builder speaks only
+to the PM, never to Evan in its terminal; PM escalations to Evan go via
+AskUserQuestion (phone ping), ranked options with a recommended default.
+
+**State at stop:** builder at `359b917` ("Close Build Task 1: enforce
+corroboration, pin one run, resolve section 9"), tree clean, 4 commits ahead of
+main, PR not yet open, final codex round in flight. Parking instruction sent:
+finish-and-PR if minutes away, else push the branch and send a parking note;
+nothing new started.
+
+**Next session picks up:** (1) builder's PR or parking note → PM audits the PR
+(incl. ~20-row mechanical re-adjudication from the verdict file); (2) after merge:
+brief Cloudflare Pages API task (send Evan the token click-path); (3) then the
+pipeline plan (§9 resolved: completeness is the claim); (4) LLM link-judge
+experiment is unblocked and Evan-approved, ~$5, brief it after the pipeline plan
+exists or alongside — PM's call next session.
