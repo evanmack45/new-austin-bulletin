@@ -103,3 +103,23 @@ Process incident, benign: the two sessions share one working tree, and the PM's
 Content was sanctioned and harmless; protocol set to prevent recurrence — builder
 works on branches only, direct-to-main commits announced in advance, and any push of
 main is preceded by a `git log origin/main..main` check for unannounced commits.
+
+## 2026-08-15 — Second shared-tree race; PM moves to an isolated worktree
+
+Minutes after the greenlight, the builder switched the shared tree to its new
+`build-task-1-address-matching` branch; the PM's next log commit (`6d7fa09`) landed
+on that branch instead of main — the announced pre-push check inspected
+`origin/main..main` but never checked which branch HEAD was on. Repaired without
+history rewriting: the branch carried no builder commits yet, so main was
+fast-forwarded over the stray commit (`git push origin 6d7fa09:main`, then
+`git fetch origin main:main`); the builder's branch tip now equals main and its
+eventual PR diff is unaffected. Builder's in-progress untracked files untouched.
+
+**Durable fix:** PM now commits from a dedicated worktree
+(`new-austin-bulletin-auto-pm/pm-worktree`, checked out to `main`) and never
+operates git in the builder's tree again. Because `main` is checked out in the PM
+worktree, git itself now refuses any checkout of `main` in the builder's tree —
+the no-local-main-commits rule is enforced structurally rather than by promise.
+Builder instructed to start future branches from `origin/main` directly.
+Build Task 1 execution is underway (matcher and measurement scripts appearing in
+the builder's tree).
