@@ -80,7 +80,17 @@ published table showed the labels, not the values. No shared code path exists, s
 corroboration rule 5b is not at risk from this bug. Plan of record locked
 2026-08-15: 24-month window (>= 2024-08-15), pool 1101, ~816 expected pairs,
 tolerance 8 (Wilson 0.50–1.92%), cohort breakout, absolute dates everywhere,
-every published number from committed code. Builder starts on Evan's go-ahead. Builder also self-reported a broken column-existence re-check (matched
+every published number from committed code. Builder starts on Evan's go-ahead.
+
+## 2026-08-15 — Greenlight given; Build Task 1 execution begins
+
+Evan pasted the go-ahead into the builder session ~09:35 CDT, including **standing
+authorization**: PM-directed work on this repo may be pushed as branches and opened
+as PRs without per-instance approval. Story-PR merges remain Evan's alone, every
+time — unchanged and untouchable. One checkpoint added: builder reports after the
+matcher + auto-classifier exist and the first ~50 verdict rows are written, before
+scaling to the full ~816-pair run; PM spot-checks method and file structure at that
+point. Next expected contact: that checkpoint. Builder also self-reported a broken column-existence re-check (matched
 "error" against responses saying "errorCode" — every column read EXISTS); redone
 with HTTP status + negative control, conclusions unchanged. Wilson table verified
 independently — all rows reproduce.
