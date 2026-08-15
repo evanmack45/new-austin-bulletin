@@ -60,3 +60,12 @@ $select column tests on both TABC datasets.
 **Outcome:** builder's execution correctly gated on Evan's go-ahead in its own session
 (it won't push to the public remote on PM say-so). Greenlight request sent to Evan,
 bundled with advance approval to push the branch and open the PR when done.
+
+**Same day — provenance fix landed and verified.** Builder committed `769e307` (spike
+script now computes all four tiers in one run; §9 provenance note; docstring fix).
+Verified by re-running: 51.9 / 66.7 / 74.1 / 81.5 all reproduce from committed code.
+Process incident, benign: the two sessions share one working tree, and the PM's
+`git push` carried the builder's not-yet-pushed main commit to the public remote.
+Content was sanctioned and harmless; protocol set to prevent recurrence — builder
+works on branches only, direct-to-main commits announced in advance, and any push of
+main is preceded by a `git log origin/main..main` check for unannounced commits.
