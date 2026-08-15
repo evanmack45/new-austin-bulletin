@@ -1,7 +1,11 @@
 # Build Task 1 — cross-source address matching
 
 **Date:** 2026-08-15
-**Status:** Complete, with one criterion **not** established — see §6.
+**Status:** Complete. Spec §9 resolved by the site owner — see §11.
+
+The false-link rate spec §3 asked for was **not** established (§6), and this report was held blocked on that. It unblocks because the criterion the rate was meant to decide has itself been resolved: the measured match rate falls far below the decision table's lowest branch on **any** reading, so no adjudication method could change the outcome.
+
+**All numbers below come from a single authoritative run** (see §2). Figures from earlier runs are superseded and do not appear.
 **Scripts:** `address_matcher.py`, `test_address_matcher.py`, `derive_route_table.py`, `build_task_1_measure.py`, `bt1_adjudicate.py`, `bt1_overmerge_test.py`
 **Data:** `bt1-verdicts.jsonl` (758 rows), `bt1-adjudicated.jsonl`, `bt1-overmerge.json`
 
@@ -21,25 +25,46 @@ A finding this report made in an earlier draft — that 41.5% of permits at a co
 
 ## 2. Sample
 
+**Authoritative run: 2026-08-15.** Every figure in this report comes from it. Intermediate runs during development produced different counts as the matcher was corrected; none of those numbers survive here.
+
 | | Value |
 |---|---|
 | TABC query | `county='Travis' AND original_issue_date >= '2024-08-15'` |
 | TABC licenses | 1,101 |
-| Permit corpus | `issue_date >= '2020-01-01'`, 151,783 distinct addresses |
-| Newest TABC record at run time | 2026-08-14 (feed current; run fails closed if stale) |
+| Permit corpus | `issue_date >= '2020-01-01'`, 151,783 distinct addresses, 120,098 canonical forms |
+| Newest TABC record | 2026-08-14 |
+| Newest permit record | 2026-08-14 (1 day old) |
+| Freshness gates | Both sources; run aborts if TABC >45d or permits >30d stale |
+
+### Field glossary for `bt1-verdicts.jsonl` / `bt1-adjudicated.jsonl`
+
+Published tables must be recomputable from the files as labeled, so the two fields that read like verdicts but are not are named here explicitly.
+
+| Field | Meaning |
+|---|---|
+| `outcome` | **Base-address resolution only**, not assertion. `resolved_sole_candidate`, `resolved_by_unit`, `unresolved`, `declined_unit_conflict`. Resolution is necessary but **not sufficient** for assertion |
+| `asserted` | The published match. True only when resolution succeeded **and** name corroboration holds. This is the field the §3 table is computed from |
+| `zip_city_consistency` | A **data-quality diagnostic**, not a premises verdict: `consistent` / `divergent` / `undecidable`. `divergent` means the two agencies recorded different ZIP or city for the same street address. It does **not** mean a false link — see §6 |
+| `corroboration` | `both` / `name` / `date` / `neither` |
+| `match_tier` | 1 raw exact, 2 canonical, 3 canonical directional-insensitive |
+| `unit_relation` | `agree` / `disagree` / `one_sided` / `absent` |
+
+Computing the §3 table from `outcome` rather than `asserted` yields 37.3%, not 4.8%. The difference is the corroboration requirement, and `outcome` alone does not encode it.
 
 ## 3. Match rates — spec §9 column 1
 
 | Outcome | n | Rate |
 |---|---|---|
-| **Asserted matches** | **416** | **37.8%** |
-| Undecided (needs corroboration) | 335 | 30.4% |
-| Declined (unit conflict) | 7 | 0.6% |
+| **Asserted matches** | **53** | **4.8%** |
+| Unresolved (needs corroboration) | 695 | 63.1% |
+| Declined (unit conflict) | 10 | 0.9% |
 | No base-address match | 343 | 31.2% |
 
-Tier among resolved pairs: tier 1 (raw exact) 486, tier 2 (canonical) 256, tier 3 (directional-insensitive) 9.
+Base-address resolution alone succeeds far more often — `resolved_sole_candidate` 378, `resolved_by_unit` 33, i.e. 37.3% — but **resolution is not assertion.** Requiring name corroboration, which §8 argues for and §7 shows is the only signal that discriminates, collapses the publishable rate to **4.8%**.
 
-The spike reported 51.9% raw / 66.7% normalized on 27 pending applications. Those are **not comparable** to 37.8%: the spike counted any base-address hit as a match, including pairings it had no basis to assert. The current figure counts only pairings the resolver will stand behind.
+That collapse is the single most decision-relevant number this task produced. Among asserted matches: corroboration `both` 39 / `name` 14; tiers 33/19/1; unit relation `absent` 48 / `agree` 5.
+
+The spike reported 51.9% raw / 66.7% normalized on 27 pending applications. Those are **not comparable**: the spike counted any base-address hit as a match, including pairings it had no basis to assert, and applied no corroboration requirement at all.
 
 ## 4. What the matcher does
 
@@ -65,7 +90,7 @@ Spec §9's decision table needs a false-link rate with a Wilson 95% CI against a
 
 **Comparing canonical address forms is circular.** The matcher asserts on canonical equality, so re-checking it re-runs the matcher against itself and returns "true" by construction. Caught before it produced a number.
 
-**Comparing ZIP and city looked independent and is not valid.** It flagged 11 of 416 asserted pairs — 2.64%, CI 1.48–4.67%. On inspection, **all 11 have identical street addresses**:
+**Comparing ZIP and city looked independent and is not valid.** On the authoritative run it flags 3 of 53 asserted pairs (5.66%). On inspection every flagged pair has an **identical street address**. Representative cases, drawn from a larger development run where the same pattern held across all 11 flags:
 
 | License | Permit | Flag |
 |---|---|---|
@@ -74,7 +99,7 @@ Spec §9's decision table needs a false-link rate with a Wilson 95% CI against a
 | `2700 W Pecan St` city Pflugerville | `2700 W PECAN ST` city Austin, same ZIP | ETJ city label |
 | `1200 W Howard Ln Suite K` ZIP 78753 | `1200 W HOWARD LN UNIT K` ZIP 78660 | units agree exactly |
 
-The two agencies record ZIP and city inconsistently. That 2.64% measures **inter-agency data variance, not premises identity.** Reporting it as a false-link rate would have been wrong, and it would have failed the §9 criterion on an artifact.
+The two agencies record ZIP and city inconsistently. This measures **inter-agency data variance, not premises identity.** Reporting it as a false-link rate would have been wrong, and it would have failed the §9 criterion on an artifact. The field is therefore named `zip_city_consistency`, not a verdict name, and the script no longer prints it against the 2% criterion.
 
 ### 6b. What could be tested
 
@@ -82,18 +107,19 @@ The two agencies record ZIP and city inconsistently. That 2.64% measures **inter
 
 | Measure | Value |
 |---|---|
-| Canonical bases used by asserted matches | 221 |
-| Bases with ≥2 distinct coordinates (testable) | **20** |
+| Bases with ≥2 distinct coordinates (testable) | **3** |
 | Bases exceeding 150 m spread | **0** |
 | Max observed spread | **0 m** |
-| Asserted pairs resting on an over-merged base | **0 / 416** |
-| Tier-3 asserted pairs outside this test's coverage | **5** |
+| Asserted pairs resting on an over-merged base | **0 / 53** |
+| Tier-3 asserted pairs outside this test's coverage | **1** |
 
-**No evidence of over-merging.** Stated with its limits: only 20 of 221 bases (9.0%) were testable, because most canonical forms map to a single raw address and offer nothing to compare; and the 5 tier-3 assertions join *two* canonical forms, so grouping by exact form excludes them from the numerator while they remain in the denominator. Low coverage is itself informative — the matcher rarely merges multiple raw addresses at all, so its merge-risk surface is small — but 20 bases cannot prove a rate below 2%.
+**No evidence of over-merging — and almost no power to detect it.** Only 3 bases were testable, because most canonical forms map to a single raw address and offer nothing to compare, and the corroboration requirement shrank the asserted set to 53. The 1 tier-3 assertion joins *two* canonical forms, so grouping by exact form excludes it from the numerator while it stays in the denominator.
 
-### 6c. Consequence for spec §9
+Three bases prove essentially nothing about a 2% rate. The finding is reported as what it is — an absence of contrary evidence at negligible statistical power — not as a clean bill of health. Low coverage is mildly informative in one direction only: the matcher rarely merges multiple raw addresses at all, so its merge-risk surface is inherently small.
 
-The decision table cannot be entered on this evidence. **This escalates.** The choice is between commissioning an independent adjudication method (geocoding TABC addresses through an external service would give a genuine distance test) and deciding §9's threading target on the qualitative finding in §7 instead.
+### 6c. Consequence for spec §9 — resolved
+
+The decision table could not be entered on a false-link rate. It did not need to be. **The match rate settles it on its own:** 4.8% asserted, or 37.3% counting bare base-address resolution. Both sit far below the table's lowest branch of 70%, so the third row fires on any reading, and an independent adjudication method could only have changed confidence in the 53 — never the branch. See §11.
 
 ## 7. Tenant attribution — a withdrawn finding, and what remains
 
@@ -167,12 +193,35 @@ The common thread, and the one worth carrying into the pipeline: *verifying that
 
 | | n |
 |---|---|
-| Declined outright (unit conflict) | 7 |
-| Undecided, not asserted | 335 |
-| Sampled undecided (seed 20260815, stratified) | 73 |
-| ...premises-consistent (would have been correct links) | **68 (93%)** |
-| ...premises-different (would have been false links) | 5 |
+| Declined outright (unit conflict) | 10 |
+| Unresolved, not asserted | 695 |
+| Sampled (seed 20260815, stratified, reproducible) | 63 |
+| ...ZIP/city-consistent | 54 (86%) |
+| ...ZIP/city-divergent | 9 |
 
-**The recall cost is real and quantified: 93% of sampled undecided pairs would have been correct links.** Declining them is not free, and the report does not pretend otherwise — it buys precision by discarding roughly nine correct threads for every one bad one avoided. Whether that trade is right is a §9 editorial decision, not a technical one.
+**The recall cost is large and is the price of the corroboration requirement**, not of unit-conflict declines, which are only 10 rows. 695 licenses resolve to a base address but carry no name corroboration and are therefore not published.
 
-The undecided stratum is 30.4% of licenses — a substantial cost, incurred deliberately. The checkpoint evidence for it being worthwhile is direct: before unit-aware resolution, **every one of the five pairs where both sides named a unit named a different unit** (Suite 107 → Unit 106, Suite 125 → Unit 135-A, Suite 120 → Unit 100, suite D → Unit C, Ste A-175 → Unit B175). After, none is asserted.
+The sampled figures are labeled as ZIP/city consistency, **not** as confirmed correct or false links — §6 establishes that this diagnostic cannot certify either. An earlier draft presented 93% as "would have been correct links"; that overstated what the diagnostic supports and has been corrected.
+
+The unresolved stratum is 63.1% of licenses — a substantial cost, incurred deliberately. The checkpoint evidence for it being worthwhile is direct: before unit-aware resolution, **every one of the five pairs where both sides named a unit named a different unit** (Suite 107 → Unit 106, Suite 125 → Unit 135-A, Suite 120 → Unit 100, suite D → Unit C, Ste A-175 → Unit B175). After, none is asserted.
+
+
+---
+
+## 11. Spec §9 resolution
+
+**Decided by Evan McMillan, 2026-08-15**, applying the decision table in spec §9 that was agreed before this measurement ran.
+
+The table's branches were keyed to a match rate and a false-link rate. The false-link rate was never established (§6). It did not need to be: **both honest readings of the match rate — 4.8% asserted, or 37.3% counting bare base-address resolution — fall far below the table's lowest branch of 70%.** The third row fires on any reading, so an independent adjudication method could only have changed confidence in the 53 asserted pairs, never the branch taken.
+
+**Resolution:**
+
+- The **threading criterion is dropped** as a spec §9 success criterion
+- The site's editorial claim **narrows to completeness of coverage** — reading every filing, not assembling every lifecycle
+- **Name-corroborated threads are presented as a bonus** where they exist. 53 of them exist in a 24-month license window, which is a real if modest number
+
+This is the outcome the pre-agreed table prescribed. Setting the branch in advance is what made it possible to accept an unwelcome result without renegotiating the standard after seeing the data.
+
+### Future work, not in scope here
+
+An LLM-based link judge, evaluated with this task's adjudication harness against the same under-2% bar and adopted only if it passes. Blocked on an unrelated setup step and briefed separately. Nothing in this PR anticipates it.

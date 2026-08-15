@@ -1,9 +1,9 @@
 {
   "threshold_m": 150.0,
-  "testable_bases": 20,
+  "testable_bases": 3,
   "overmerged_bases": 0,
-  "asserted_total": 416,
+  "asserted_total": 53,
   "asserted_on_overmerged_base": 0,
-  "tier3_untested": 5,
+  "tier3_untested": 1,
   "worst": []
 }

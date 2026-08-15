@@ -82,15 +82,15 @@ def adjudicate_premises(row):
     pzs = [z for z in (row.get("permit_zip5") or []) if z]
     if lz and pzs:
         if lz not in pzs:
-            return ("false", f"ZIP disagreement: license {lz} vs permit {sorted(set(pzs))}")
-        verdict, basis = "true_consistent", f"ZIP agrees ({lz})"
+            return ("divergent", f"ZIP disagreement: license {lz} vs permit {sorted(set(pzs))}")
+        verdict, basis = "consistent", f"ZIP agrees ({lz})"
     else:
         verdict, basis = "undecidable", "ZIP missing on one side"
 
     lc = (row.get("license_city") or "").upper().strip()
     pcs = row.get("permit_city") or []
     if lc and pcs and lc not in pcs:
-        return ("false", f"city disagreement: license {lc} vs permit {pcs}")
+        return ("divergent", f"city disagreement: license {lc} vs permit {pcs}")
 
     return (verdict, basis)
 
@@ -124,7 +124,7 @@ def adjudicate_tenant(row):
         mine = {w.upper() for w in re.findall(r"[A-Za-z]{3,}", name)}
         conflicting = {o for o in other if o not in mine}
         if conflicting:
-            return ("false", f"permit text names a different business: {sorted(conflicting)}")
+            return ("divergent", f"permit text names a different business: {sorted(conflicting)}")
 
     d = row.get("date_delta_days")
     if d is None:
@@ -142,7 +142,7 @@ def main():
     rows = [json.loads(line) for line in open(VERDICTS)]
     asserted = [r for r in rows if r.get("asserted")]
     undecided = [r for r in rows if not r.get("asserted") and r.get("match_tier")]
-    declined = [r for r in rows if r.get("outcome") == "decline_unit"]
+    declined = [r for r in rows if r.get("outcome") == "declined_unit_conflict"]
 
     print("BUILD TASK 1 — ADJUDICATION")
     print(f"  verdict rows      : {len(rows)}")
@@ -152,7 +152,7 @@ def main():
 
     for r in asserted:
         v, b = adjudicate_premises(r)
-        r["q1_premises"], r["q1_basis"] = v, b
+        r["zip_city_consistency"], r["zip_city_basis"] = v, b
         v2, b2 = adjudicate_tenant(r)
         r["q2_tenant"], r["q2_basis"] = v2, b2
         r["adjudicated_by"] = "deterministic-v1"
@@ -168,47 +168,37 @@ def main():
         sample.extend(group[:per_stratum])
     for r in sample:
         v, b = adjudicate_premises(r)
-        r["q1_premises"], r["q1_basis"] = v, b
+        r["zip_city_consistency"], r["zip_city_basis"] = v, b
         v2, b2 = adjudicate_tenant(r)
         r["q2_tenant"], r["q2_basis"] = v2, b2
         r["adjudicated_by"] = "deterministic-v1 (undecided sample)"
 
     # ---- Q1: the criterion figure -------------------------------------------
-    q1 = Counter(r["q1_premises"] for r in asserted)
+    q1 = Counter(r["zip_city_consistency"] for r in asserted)
     n = len(asserted)
-    k = q1.get("false", 0)
+    k = q1.get("divergent", 0)
     undec = q1.get("undecidable", 0)
     lo, hi = wilson(k, n)
-    print("(1) FALSE-LINK RATE ON ASSERTED MATCHES — Q1 premises identity")
-    print("    LOWER BOUND: detected via ZIP/city, evidence the matcher never uses.")
-    print("    False links between two addresses sharing a ZIP are invisible to it.")
+    print("(1) FALSE-LINK RATE ON ASSERTED MATCHES — NOT ESTABLISHED")
+    print("    The ZIP/city comparison below is NOT a false-link measure and is")
+    print("    NOT reported against the 2% criterion. Every pair it flags was")
+    print("    inspected and has an IDENTICAL street address; it detects")
+    print("    inter-agency ZIP and city recording variance. It is printed as a")
+    print("    data-quality diagnostic only. Producing a real false-link rate")
+    print("    needs independent adjudication this task could not obtain.")
     print(f"    asserted n      : {n}")
-    print(f"    false links     : {k}")
-    print(f"    point estimate  : {100 * k / n:.2f}%" if n else "    n/a")
+    print(f"    ZIP/city variance flags : {k}  (NOT false links)")
+    print(f"    variance rate   : {100 * k / n:.2f}%" if n else "    n/a")
     print(f"    Wilson 95% CI   : {100 * lo:.2f}% – {100 * hi:.2f}%")
     print(f"    ZIP-undecidable : {undec} (excluded from the bound)")
-    if n:
-        if hi < 0.02:
-            verdict = "CLEAN — proves <2%"
-        elif lo > 0.02:
-            verdict = "FAIL — proves >2%"
-        else:
-            verdict = "INDETERMINATE — CI straddles 2%"
-        print(f"    vs 2% criterion : {verdict}")
-        tol = -1
-        for kk in range(0, n + 1):
-            if wilson(kk, n)[1] < 0.02:
-                tol = kk
-            else:
-                break
-        print(f"    tolerance at this n: {tol} false links")
+    print("    vs 2% criterion : NOT APPLICABLE — see the note above")
 
     print("\n    by corroboration type:")
     per = defaultdict(lambda: [0, 0])
     for r in asserted:
         c = r.get("corroboration") or "neither"
         per[c][1] += 1
-        if r["q1_premises"] == "false":
+        if r["zip_city_consistency"] == "divergent":
             per[c][0] += 1
     for c in ("both", "name", "date", "neither"):
         kk, nn = per[c]
@@ -218,12 +208,12 @@ def main():
 
     # ---- Q2: tenant attribution ---------------------------------------------
     q2 = Counter(r["q2_tenant"] for r in asserted)
-    dec = q2.get("true", 0) + q2.get("false", 0)
+    dec = q2.get("true", 0) + q2.get("divergent", 0)
     print("\n(2) TENANT ATTRIBUTION — Q2, reported separately, NOT the criterion")
-    for kk in ("true", "false", "undecidable"):
+    for kk in ("true", "divergent", "undecidable"):
         print(f"    {kk:<12}{q2.get(kk, 0):>5}")
     if dec:
-        l, h = wilson(q2.get("false", 0), dec)
+        l, h = wilson(q2.get("divergent", 0), dec)
         print(f"    among decidable ({dec}): {100 * q2.get('false', 0) / dec:.2f}%  "
               f"CI {100 * l:.2f}–{100 * h:.2f}%")
     print(f"    undecidable share: {100 * q2.get('undecidable', 0) / max(1, len(asserted)):.1f}%")
@@ -232,13 +222,13 @@ def main():
     print("\n(3) RECALL COST OF DECLINING")
     print(f"    declined outright        : {len(declined)}")
     print(f"    undecided (not asserted) : {len(undecided)}")
-    s_true = sum(1 for r in sample if r.get("q1_premises") == "true_consistent")
+    s_true = sum(1 for r in sample if r.get("zip_city_consistency") == "consistent")
     print(f"    sampled undecided        : {len(sample)}")
-    print(f"      premises-identical     : {s_true}  "
-          f"({100 * s_true / max(1, len(sample)):.0f}% would have been correct links)")
-    s_false = sum(1 for r in sample if r.get("q1_premises") == "false")
-    print(f"      premises-different     : {s_false}  "
-          f"(would have been FALSE links — the posture earning its keep)")
+    print(f"      ZIP/city-consistent    : {s_true}  "
+          f"({100 * s_true / max(1, len(sample)):.0f}%)")
+    s_false = sum(1 for r in sample if r.get("zip_city_consistency") == "divergent")
+    print(f"      ZIP/city-divergent     : {s_false}  "
+          f"(agency recording variance, NOT confirmed false links)")
 
     with open(OUT, "w") as fh:
         for r in rows:

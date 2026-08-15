@@ -44,15 +44,31 @@ import re
 
 # Route number -> the type Austin permits use. Derived, see module docstring.
 ROUTE_TYPE = {
+    # Reproduced exactly by derive_route_table.py against its stated corpus
+    # (issue_date >= '2020-01-01'). 19 route numbers, zero ambiguity: every
+    # number resolved to a single type. Entries are NOT hand-added -- an earlier
+    # version carried 183A, 685, 1431 and 2769A that the script does not produce
+    # and omitted 130, 45, 1625 and 1327 that it does, so "derived" was not true
+    # of the committed table. Re-run the script to re-verify.
     "35": "IH",
     "620": "FM",
     "290": "US",
     "183": "US",
-    "183A": "US",
     "71": "SH",
-    "1626": "FM", "2222": "FM", "969": "FM", "2244": "FM", "1325": "FM",
-    "1825": "FM", "1826": "FM", "973": "FM", "812": "FM", "2769": "FM",
-    "685": "FM", "1431": "RM", "2769A": "FM",
+    "2222": "FM",
+    "969": "FM",
+    "1626": "FM",
+    "2244": "FM",
+    "812": "FM",
+    "1325": "FM",
+    "973": "FM",
+    "1825": "FM",
+    "1826": "FM",
+    "130": "SH",
+    "45": "SH",
+    "1625": "FM",
+    "2769": "FM",
+    "1327": "FM",
 }
 
 # Spellings that introduce a route number, mapped to a provisional type.
@@ -131,21 +147,31 @@ BUILDING_UNIT = re.compile(
 )
 
 
-def parse_unit(raw):
-    """Return the unit designator as a comparison token, or None.
+def _tok(m):
+    v = next((g for g in m.groups() if g), "").upper().replace("-", "")
+    return (v.lstrip("0") or "0") if v else None
 
-    Normalizes so "Ste A-175", "UNIT A175" and "#a175" compare equal: uppercase,
-    hyphens removed, leading zeros stripped. Returns None when no unit is stated,
-    which is absence of evidence and must not be treated as disagreement.
+
+def parse_unit(raw):
+    """Return the FULL space identifier, or None.
+
+    Returns a tuple (building, tenant_unit) so that "BLDG E UNIT 200" and
+    "BLDG D UNIT 200" do NOT compare equal. Unit numbers repeat across buildings
+    in Austin office parks and strip center, so comparing the tenant token alone
+    asserts matches across different buildings.
+
+    Normalizes so "Ste A-175", "UNIT A175" and "#a175" compare equal. Returns
+    None when no unit is stated at all -- absence of evidence, never disagreement.
     """
     if not raw:
         return None
-    m = TENANT_UNIT.search(raw) or BUILDING_UNIT.search(raw)
-    if not m:
+    t = TENANT_UNIT.search(raw)
+    b = BUILDING_UNIT.search(raw)
+    tenant = _tok(t) if t else None
+    building = _tok(b) if b else None
+    if tenant is None and building is None:
         return None
-    tok = next((g for g in m.groups() if g), "").upper().replace("-", "")
-    tok = tok.lstrip("0") or "0"
-    return tok or None
+    return (building, tenant)
 
 
 def unit_relation(a, b):
@@ -269,10 +295,15 @@ def resolve(license_addr, candidates):
     Returns (chosen_address_or_None, tier_or_None, outcome, unit_relation).
 
     outcome is one of:
-      assert_unit   units stated on both sides and equal
-      assert_unique exactly one candidate and no unit conflict
-      decline_unit  every candidate's unit contradicts the license's unit
-      undecided     base matches but the pairing is not determined by address alone
+      resolved_by_unit        units stated on both sides and equal
+      resolved_sole_candidate exactly one candidate and no unit conflict
+      declined_unit_conflict  every candidate's unit contradicts the license's
+      unresolved              base matches but the pairing is not determined by
+                              address alone
+
+    NOTE: these describe BASE-ADDRESS RESOLUTION only. Resolution is necessary
+    but not sufficient for assertion -- the measurement additionally requires
+    name corroboration. A row can be resolved_sole_candidate and NOT asserted.
 
     NEVER returns an arbitrary bucket member. The first checkpoint run selected
     candidates[0] and produced a 5/5 false-link rate on the checkable subset;
@@ -287,15 +318,15 @@ def resolve(license_addr, candidates):
         exact = [c for c in candidates if parse_unit(c) == lic_unit]
         if exact:
             chosen = exact[0]
-            return (chosen, match_tier(license_addr, chosen), "assert_unit", "agree")
+            return (chosen, match_tier(license_addr, chosen), "resolved_by_unit", "agree")
         stated = [c for c in candidates if parse_unit(c)]
         if stated and len(stated) == len(candidates):
             # Every candidate names a unit and none is ours: different tenant space.
-            return (None, None, "decline_unit", "disagree")
+            return (None, None, "declined_unit_conflict", "disagree")
         # Some candidate states no unit -- a shell or whole-building permit.
         bare = [c for c in candidates if not parse_unit(c)]
         chosen = bare[0]
-        return (chosen, match_tier(license_addr, chosen), "undecided", "one_sided")
+        return (chosen, match_tier(license_addr, chosen), "unresolved", "one_sided")
 
     # License states no unit.
     if len(candidates) == 1:
@@ -305,10 +336,10 @@ def resolve(license_addr, candidates):
             # Absence of evidence, not agreement: the business may sit in a
             # different unit that simply has no recent permit. Route to the
             # corroboration stratum rather than asserting.
-            return (c, match_tier(license_addr, c), "undecided", "one_sided")
-        return (c, match_tier(license_addr, c), "assert_unique", "absent")
+            return (c, match_tier(license_addr, c), "unresolved", "one_sided")
+        return (c, match_tier(license_addr, c), "resolved_sole_candidate", "absent")
 
     bare = [c for c in candidates if not parse_unit(c)]
     chosen = (bare or candidates)[0]
     rel = "absent" if bare else "one_sided"
-    return (chosen, match_tier(license_addr, chosen), "undecided", rel)
+    return (chosen, match_tier(license_addr, chosen), "unresolved", rel)

@@ -31,6 +31,7 @@ import argparse
 import json
 import re
 import sys
+import time
 import urllib.parse
 import urllib.request
 from collections import Counter
@@ -72,18 +73,31 @@ def screen_name(value):
     return v if ENTITY.search(v) else None
 
 
-def fetch(url, params, label):
+def fetch(url, params, label, attempts=4):
+    """Fetch with bounded retry on TRANSPORT failure only.
+
+    Retries 5xx and connection errors, which are Socrata being briefly
+    unavailable -- a 20-minute measurement should not die on one transient 500.
+    Does NOT retry 4xx, and does not soften any staleness or empty-result gate:
+    those still fail closed immediately. Retrying transport flakiness and
+    tolerating bad data are different things.
+    """
     q = urllib.parse.urlencode(params)
     full = f"{url}?{q}"
-    try:
-        with urllib.request.urlopen(full, timeout=180) as r:
-            if r.status != 200:
-                sys.exit(f"FAIL CLOSED [{label}]: HTTP {r.status}")
-            return json.load(r)
-    except urllib.error.HTTPError as e:
-        sys.exit(f"FAIL CLOSED [{label}]: HTTP {e.code} {e.read()[:200]!r}")
-    except Exception as e:  # noqa: BLE001 - abort on any transport failure
-        sys.exit(f"FAIL CLOSED [{label}]: {e}")
+    for attempt in range(1, attempts + 1):
+        try:
+            with urllib.request.urlopen(full, timeout=180) as r:
+                if r.status != 200:
+                    sys.exit(f"FAIL CLOSED [{label}]: HTTP {r.status}")
+                return json.load(r)
+        except urllib.error.HTTPError as e:
+            if e.code < 500 or attempt == attempts:
+                sys.exit(f"FAIL CLOSED [{label}]: HTTP {e.code} {e.read()[:200]!r}")
+        except Exception as e:  # noqa: BLE001 - transport failure
+            if attempt == attempts:
+                sys.exit(f"FAIL CLOSED [{label}] after {attempts} attempts: {e}")
+        time.sleep(2 * attempt)
+    sys.exit(f"FAIL CLOSED [{label}]: retries exhausted")
 
 
 def fetch_all(url, params, label, page=50000):
@@ -108,6 +122,18 @@ def load_permit_index():
     )
     if not rows:
         sys.exit("FAIL CLOSED [permit addresses]: zero rows under HTTP 200")
+    # Both sources get a freshness gate. A frozen permit feed would leave recent
+    # licenses unmatched and silently depress the measured rate.
+    pf = fetch(PERMITS, {"$select": "max(issue_date)"}, "permit freshness")
+    newest_permit = pf[0].get("max_issue_date") if pf else None
+    try:
+        page_age = (date.today() - date.fromisoformat(newest_permit[:10])).days
+    except (TypeError, ValueError):
+        sys.exit(f"FAIL CLOSED [permits]: unparseable max issue_date {newest_permit!r}")
+    if page_age > 30:
+        sys.exit(f"FAIL CLOSED [permits]: newest permit {newest_permit[:10]} is "
+                 f"{page_age} days old (limit 30)")
+    print(f"  permit newest issue_date: {newest_permit[:10]} ({page_age}d old)")
     index = {}
     for r in rows:
         raw = r.get("original_address1")
@@ -119,22 +145,64 @@ def load_permit_index():
     return index
 
 
-def permit_evidence(raw_address):
+def permit_evidence(raw_address, license_date=None):
+    """Permits at this address, closest BEFORE the license date first.
+
+    Ordering globally-newest-first let permits issued AFTER the license crowd
+    out the pre-license evidence corroboration() looks for: license 200190042
+    at 3500 E PARMER LN stored five later permits and a null date delta while
+    eligible 2026-04-16 permits existed inside the window.
+    """
+    where = (f"original_address1='{raw_address.replace(chr(39), chr(39) * 2)}' "
+             f"AND issue_date >= '{PERMIT_SINCE}'")
+    if license_date:
+        where += f" AND issue_date <= '{license_date}'"
     rows = fetch(
         PERMITS,
         {"$select": ("permit_number,original_address1,issue_date,description,"
                      "permit_location,tcad_id,permit_class_mapped,"
                      "original_zip,original_city,latitude,longitude"),
-         "$where": (f"original_address1='{raw_address.replace(chr(39), chr(39) * 2)}' "
-                    f"AND issue_date >= '{PERMIT_SINCE}'"),
-         "$order": "issue_date DESC", "$limit": "5"},
+         "$where": where, "$order": "issue_date DESC", "$limit": "5"},
         f"permit evidence {raw_address[:30]}",
     )
+    if not rows and license_date:
+        # No prior permit: fall back to any permit at the address so the pair is
+        # still recorded, with the absent-prior-evidence condition visible.
+        return fetch(PERMITS, {
+            "$select": ("permit_number,original_address1,issue_date,description,"
+                        "permit_location,tcad_id,permit_class_mapped,"
+                        "original_zip,original_city,latitude,longitude"),
+            "$where": (f"original_address1='{raw_address.replace(chr(39), chr(39) * 2)}' "
+                       f"AND issue_date >= '{PERMIT_SINCE}'"),
+            "$order": "issue_date ASC", "$limit": "5"},
+            f"permit evidence fallback {raw_address[:30]}")
     return rows
 
 
 def tokens(text):
-    return {t for t in re.findall(r"[A-Z0-9]{3,}", (text or "").upper())}
+    """Distinctive tokens only.
+
+    Any-token intersection admitted nonsense: "EAST VILLAGE MARKET" matched a
+    neighbouring tenant's permit reading "East elevation" on the token EAST.
+    Directions, ordinals, bare numbers and structural vocabulary carry no
+    identifying power and are excluded here as well as via STOP.
+    """
+    out = set()
+    for t in re.findall(r"[A-Z0-9]{4,}", (text or "").upper()):
+        if t.isdigit() or t in STOP or t in _NON_IDENTIFYING:
+            continue
+        out.add(t)
+    return out
+
+
+_NON_IDENTIFYING = {
+    "EAST", "WEST", "NORTH", "SOUTH", "NORTHEAST", "NORTHWEST", "SOUTHEAST",
+    "SOUTHWEST", "FIRST", "SECOND", "THIRD", "FOURTH", "FIFTH", "LEVEL",
+    "FLOOR", "ELEVATION", "AREA", "SPACE", "SITE", "ADDITION", "REPAIR",
+    "REPLACE", "INSTALL", "SIGN", "WALL", "ROOF", "SLAB", "WATER", "HEATER",
+    "ELECTRICAL", "PLUMBING", "MECHANICAL", "PARKING", "GARAGE", "PHASE",
+    "VILLAGE", "PLAZA", "SQUARE", "TOWER", "COMMONS", "CROSSING", "LANDING",
+}
 
 
 # Tokens that carry no identifying power. Business CATEGORY words belong here:
@@ -270,7 +338,7 @@ def main():
 
         chosen, tier, outcome, rel = resolve(addr, cands)
         outcome_counts[outcome] += 1
-        if outcome == "decline_unit" or chosen is None:
+        if outcome == "declined_unit_conflict" or chosen is None:
             # Declined: base address matched but the tenant space contradicts.
             # Recorded so the decline rate and its recall cost are measurable.
             verdicts.append({
@@ -285,8 +353,6 @@ def main():
                 "unit_relation": rel,
                 "corroboration": None,
                 "asserted": False,
-                "final_verdict": None,
-                "adjudicated_by": None,
             })
             if args.limit and len(verdicts) >= args.limit:
                 print(f"  [checkpoint] stopping at {args.limit} rows\n")
@@ -294,10 +360,16 @@ def main():
             continue
 
         tier_counts[tier] += 1
-        pev = permit_evidence(chosen)
+        pev = permit_evidence(chosen, (lic.get("original_issue_date") or "")[:10])
         corrob, name_ev, date_delta = corroboration(lic, pev)
         corrob_counts[corrob] += 1
-        asserted = outcome in ("assert_unit", "assert_unique")
+        # Corroboration is PART of the assertion rule, not an annotation beside
+        # it. An earlier version asserted on address resolution alone, so 184
+        # assertions carried no corroboration and 177 were date-only while the
+        # report simultaneously required name corroboration. The headline rate
+        # then described a rule nothing enforced.
+        asserted = (outcome in ("resolved_by_unit", "resolved_sole_candidate")
+                    and corrob in ("name", "both"))
         verdicts.append({
             "license_id": str(lic.get("license_id") or "").removesuffix(".0"),
             "license_name": screen_name(lic.get("trade_name") or lic.get("owner")),
@@ -323,8 +395,6 @@ def main():
             "name_evidence": name_ev,
             "date_delta_days": date_delta,
             "asserted": asserted,
-            "final_verdict": None,
-            "adjudicated_by": None,
         })
         if args.limit and len(verdicts) >= args.limit:
             print(f"  [checkpoint] stopping at {args.limit} rows\n")
@@ -336,7 +406,7 @@ def main():
 
     asserted = [v for v in verdicts if v["asserted"]]
     undecided = [v for v in verdicts if not v["asserted"] and v["match_tier"]]
-    declined = [v for v in verdicts if v["outcome"] == "decline_unit"]
+    declined = [v for v in verdicts if v["outcome"] == "declined_unit_conflict"]
 
     def pct(k):
         return f"{100 * k / considered:5.1f}%" if considered else "  n/a"
@@ -364,7 +434,7 @@ def main():
 
     print(f"\n  wrote {len(verdicts)} rows to {VERDICT_FILE}")
     print("\n  False-link rate and its Wilson CI are computed on ASSERTED matches")
-    print("  once final_verdict is adjudicated. The <2% criterion applies there,")
+    print("  once verdicts are adjudicated. The <2% criterion applies there,")
     print("  because asserted matches are the editorial exposure. The bound is")
     print("  re-derived at the actual asserted n, never treated as a quota.")
 

@@ -80,9 +80,9 @@ def main():
             failures += 1
             print(f"FAIL  {who}: expected unit 'disagree', got {rel!r}")
         chosen, _, outcome, _ = resolve(lic, [permit])
-        if outcome != "decline_unit" or chosen is not None:
+        if outcome != "declined_unit_conflict" or chosen is not None:
             failures += 1
-            print(f"FAIL  {who}: expected decline_unit/None, "
+            print(f"FAIL  {who}: expected declined_unit_conflict/None, "
                   f"got {outcome!r}/{chosen!r}")
 
     for a, b, why in UNIT_EQUIVALENCE:
@@ -95,9 +95,9 @@ def main():
         "9600 S Interstate 35",
         ["9600 S IH 35 SVRD SB UNIT 100", "9600 S IH 35 SVRD SB UNIT 200"],
     )
-    if outcome != "undecided":
+    if outcome != "unresolved":
         failures += 1
-        print(f"FAIL  multi-candidate bare license: expected undecided, got {outcome!r}")
+        print(f"FAIL  multi-candidate bare license: expected unresolved, got {outcome!r}")
 
     total = len(CASES) + len(UNIT_DISAGREEMENTS) * 2 + len(UNIT_EQUIVALENCE) + 1
     print(f"{total - failures}/{total} passed")
