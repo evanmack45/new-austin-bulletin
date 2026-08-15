@@ -61,6 +61,22 @@ $select column tests on both TABC datasets.
 (it won't push to the public remote on PM say-so). Greenlight request sent to Evan,
 bundled with advance approval to push the branch and open the PR when done.
 
+## 2026-08-15 — Sample-window ruling; builder date-arithmetic bug caught
+
+Builder proposed 30 months/~615 pairs as a compromise after reporting the 24-month
+pool as only 560 licenses. Verified the pool myself (Socrata count queries,
+`original_issue_date` cutoffs): the builder's windows were shifted 12 months — its
+"24 months" cutoff was 2025-08-15 (562 rows) and its "36 months" was 2024-08-15
+(1101 rows). True 24-month pool: **1101 licenses ≈ 816 matched pairs**, which
+tolerates 8 false links while proving <2% (Wilson 0.50–1.92%, verified). Ruled:
+24-month window, no compromise needed. Required: builder identifies the actual
+arithmetic bug (same code path may compute corroboration window N), all cutoffs
+stated as absolute dates in scripts and report, false links reported by license-age
+cohort. Builder also self-reported a broken column-existence re-check (matched
+"error" against responses saying "errorCode" — every column read EXISTS); redone
+with HTTP status + negative control, conclusions unchanged. Wilson table verified
+independently — all rows reproduce.
+
 **Same day — provenance fix landed and verified.** Builder committed `769e307` (spike
 script now computes all four tiers in one run; §9 provenance note; docstring fix).
 Verified by re-running: 51.9 / 66.7 / 74.1 / 81.5 all reproduce from committed code.
