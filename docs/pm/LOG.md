@@ -262,8 +262,11 @@ further below 70%); branch unchanged, no revisit. Notable P2: TABC `owner`
 tokenized for name evidence before the entity screen — an individual's surname can
 drive assertion; privacy-adjacent, fix early.
 
-**Pickup order (endorsed):** P1-b → owner-screen P2 → remaining P2s → re-run →
-regenerate report §3/§8 from new artifacts → codex round 4 to clean → echo → PR.
-PM suggested a structural fix for the recurring stale-table class: render every
-published number from artifacts by committed code. All five P1-a/P1-b example rows
-become permanent regression fixtures. Nothing new started; Cloudflare not begun.
+**Pickup order (final, builder-confirmed):** render step FIRST (report numbers
+generated from artifacts by committed code — adopted in scope for close-out,
+removing the recurring stale-table defect class structurally) → P1-b → owner-screen
+P2 → P1-a and remaining P2s → re-run → regenerate → codex round 4 to clean → echo →
+PR. The regenerated §3 will state the P1-b correction explicitly (resolution holds
+a fortiori) rather than silently swapping the figure. Permanent fixtures: St
+Stephens, Fleming, Courtyard Club, Rosewood Social Club, South Congress Hotel.
+Nothing new started; Cloudflare not begun. Both sessions parked.
