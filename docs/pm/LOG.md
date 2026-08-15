@@ -28,9 +28,35 @@ a reviewable file.
 
 **Verification finding (same day):** re-ran `address_match_spike.py` against live data.
 Tiers 1, 2, and the discarded substring tier reproduce exactly (51.9% / 66.7% / 81.5%,
-n=27). The script computes no directional-insensitive tier: the 74.1% headline in
-source-report §9 and spec §3 is hand-derivable from the script's failure detail
-(the two directional-only failures flip 18/27 → 20/27) but is not produced by the
-committed script, despite §9 presenting it as script-measured. Addendum sent to the
-builder: measurement scripts must compute every committed number; §9 gets a one-line
-provenance correction.
+n=27). The script computes no directional-insensitive tier, so the 74.1% headline in
+source-report §9 and spec §3 is not reproducible from the repo. **Corrected after
+builder pushback:** 74.1% was computed by an uncommitted script (`/tmp/tier2c.py`),
+which I re-ran myself — 20/27 = 74.1% reproduces. The number is sound; the defect is
+provenance only (uncommitted measurement). Addendum sent to the builder: measurement
+scripts must compute every committed number; §9 gets a provenance correction.
+
+## 2026-08-15 — Build Task 1 plan of record reviewed
+
+**Builder's plan:** false-link measurement on issued Travis TABC licenses (7hf9-qc9f,
+~230× larger pool than pendings) targeting 500 matched pairs — n justified by Wilson
+95% CIs against the 2% threshold (n=100 cannot resolve it; n=500 tolerates 3 observed
+false links and still proves <2%). Stratified verdict method (auto-true on name-in-
+description, auto-false on discriminating disagreement, hand-adjudicated ambiguous,
+10% audit of the auto tiers). Parcel-ID probe: no parcel field on either TABC dataset,
+so address text stays load-bearing for the TABC↔permits join; Austin-internal joins
+(permits↔plan review↔zoning↔site plans) can use parcel IDs instead.
+
+**Decision: approved with modifications.** (1) Sample restricted to licenses issued in
+the last 24 months — live input resemblance; (2) indeterminate CI result → report as-is
+and escalate §9, agreed in advance; (3) Tier-A/corroboration-rule entanglement must be
+stated, not laundered into "independently validated"; (4) column-absence claims must
+use $select-errors, not row sampling — Socrata omits null fields per row (verified:
+`trade_name` exists and is populated on 26/27 pending Travis apps despite being absent
+from a sampled row; TABC parcel-field absence confirmed the robust way).
+
+**Verified myself:** Wilson bounds spot-checked; /tmp/tier2c.py reproduces 74.1%;
+$select column tests on both TABC datasets.
+
+**Outcome:** builder's execution correctly gated on Evan's go-ahead in its own session
+(it won't push to the public remote on PM say-so). Greenlight request sent to Evan,
+bundled with advance approval to push the branch and open the PR when done.
