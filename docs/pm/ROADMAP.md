@@ -1,23 +1,31 @@
 # Roadmap — The Austin Bulletin
 
-Maintained by the PM session. Current as of 2026-08-15.
+Maintained by the PM session. Current as of 2026-08-15 (§9 resolved).
 
 ## Now
 
-- **Build Task 1 — cross-source address matching (blocking).** The spike measured match
-  rates (74.1% at tier 3, §9 of `sources/source-report.md`); the false-link rate is
-  unmeasured and decides the spec §9 threading target. Briefed to the builder 2026-08-15.
-  Nothing downstream starts until this reports. Completion = the five criteria in spec §3.
+- **Build Task 1 — close-out.** §9 resolved by Evan 2026-08-15: threading criterion
+  dropped per the spec's decision table (measured safe-assert rate 4.6% vs the 70%
+  line); editorial claim narrows to completeness; name-corroborated threads shown as
+  a bonus where they exist. Builder is finishing P2s, pinning numbers to one
+  authoritative run, and running the codex loop to a clean pass, then PR. PM audits
+  the PR (incl. ~20-row mechanical re-adjudication).
 
 ## Next
 
-- **Pipeline plan.** Unblocks when Build Task 1 reports. The §9 decision table sets the
-  threading target from the measured match rate and false-link rate.
-- **Evan-blocked foundation tasks:** OpenRouter API key as a repo secret with a per-key
-  spend limit (task 11), Cloudflare Pages setup (task 14). Both need his browser.
+- **Pipeline plan.** Unblocks when the Build Task 1 PR merges. Written against the
+  resolved §9: completeness is the claim; corroborated threads are garnish.
+- **LLM link-judge experiment** (Evan-approved 2026-08-15): measure an LLM linker
+  with the Build Task 1 adjudication harness against the same <2% false-link bar;
+  adopt only on a passing measurement. ~$5 one-time. Blocked on the OpenRouter key.
+- **Evan-blocked foundation tasks:** OpenRouter API key as a repo secret with a
+  per-key spend limit (task 11 — now also blocks the LLM experiment), Cloudflare
+  Pages setup (task 14). Both need his browser.
 
 ## Later
 
-- Collector → scorer → researcher → writer → checker implementation, per the pipeline plan.
+- Collector → scorer → researcher → writer → checker implementation, per the plan.
+- Frontend design pass (Evan involved — taste call), after the pipeline plan.
 - Site plan cases source: suspended, re-check due 2026-08-29.
-- Scorer observation period, then decide whether in-review plan cases carry their own stories.
+- Scorer observation period, then decide whether in-review plan cases carry their
+  own stories.

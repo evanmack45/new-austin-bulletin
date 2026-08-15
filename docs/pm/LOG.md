@@ -203,3 +203,21 @@ sit far below the decision table's 70% line, so the third branch — threading
 dropped as a criterion, claim narrowed to completeness — fires on any reading;
 independent adjudication (geocoding) cannot change the branch, only confidence in
 the 51. PM recommendation: accept the table's verdict.
+
+## 2026-08-15 — Evan resolves §9: criterion dropped; LLM link-judge approved
+
+Evan first asked whether an LLM could help the linking problem. PM assessment
+given: yes for coverage (name variants, unnamed-tenant permits — plausibly 1-in-20
+→ 1-in-5 stories with threads), no for the criterion (a third of licenses have no
+permit at the address; 70% is unreachable), with two cautions — it moves a link
+decision from structural rule to model judgment (mitigation: measure with the
+Build Task 1 adjudication harness against the same <2% bar, adopt only on a pass),
+and it requires the OpenRouter key plus ~$5 one-time.
+
+**Decision (Evan, via phone question):** drop the threading criterion per the
+spec's pre-agreed table; editorial claim narrows to completeness; name-corroborated
+threads remain as a bonus; commission the measured LLM link-judge experiment as a
+follow-on after Build Task 1 merges. Builder directed to unblock the report with
+the resolution attributed and dated, finish all eight P2s, pin numbers to one
+authoritative run, codex to clean, then push the branch and open the PR under the
+standing authorization. Roadmap updated.
