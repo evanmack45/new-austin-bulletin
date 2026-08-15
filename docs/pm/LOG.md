@@ -152,3 +152,26 @@ Wilson 95% on MATCHES ASSERTED, re-derived at the actual asserted n; "tolerance 
 is a planning number, never a quota. Report asserted-match rate, false-link rate
 with CI, and decline rate with per-rule recall cost. Remediation approved;
 builder re-runs the checkpoint at 60 and re-reports before any scaled run.
+
+## 2026-08-15 — Remediation re-audit passed; GO for scaled run
+
+Builder committed `00aaa3a` (unit-aware resolution: parse_unit/unit_relation/
+resolve; units set aside during canonicalization, compared separately, candidate
+selection never arbitrary). Checkpoint re-run at 60 rows: asserted 29 (33.3%),
+undecided 30, declined 1, no base match 27 — asserted rate fell from 69.0% by
+design, declined rather than guessed. PM re-audit verified independently: outcome
+counts, zero invariant violations (no asserted pair with unit disagreement or
+one-sided unit), corroboration strata exact, all five known-bad pairs correctly
+placed (Johnies hard-declined; Smoke & Liquor / Five Iron / Good Luck undecided;
+Mi Tradicion and Tokami now assert the CORRECT units), regression suite 29/29.
+Notable: name-only corroboration is empty at checkpoint — name never fires without
+date — so the eventual production rule choice is both-vs-date-vs-nothing. Eight
+asserted pairs carry no corroboration at all (single candidate, no units anywhere);
+their false-link rate gets reported separately as the highest-risk asserted stratum.
+
+**GO issued with two stipulations:** (1) adjudication bounded — all asserted pairs
+adjudicated, undecided stratum sampled at 80 stratified by corroboration type for
+recall cost; (2) pre-agreed contingency — an indeterminate-but-close result is
+remedied by widening the pool (30 then 36 months, absolute dates, drift stated),
+never by loosening the matcher; still-indeterminate escalates to Evan with the
+honest CI. Full run ≈ 20–25 min, executed once.
