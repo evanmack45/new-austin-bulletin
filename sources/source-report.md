@@ -17,9 +17,9 @@ Python invocation: `austin-bulletin/.venv/bin/python` (system pip is externally 
 | 1 | Issued construction permits | data.austintexas.gov | `3syk-w9eu` | **Daily** — 1 business-day lag | `permit_number` (unique 2,370,558/2,370,558) | **Yes** — but valuation is real on only 9.5% of building permits; collapse by `masterpermitnum` |
 | 2 | Zoning cases | data.austintexas.gov | `edir-dcnf` | **Daily** — filings 1 day old | `folderrsn` (unique 6,926/6,926) | **Yes** — low volume (~0.3 new/day); value is in status transitions |
 | 3 | Site plan cases | data.austintexas.gov | `mavg-96ck` | **SUSPENDED** — claims "Daily", frozen since 2026-07-23. **Re-check 2026-08-29** | `folderrsn` (unique 23,630/23,630) | **Suspended, not dead** — historical context now; may recover |
-| 4 | TABC licences — issued | data.texas.gov | `7hf9-qc9f` (**not** the spec's `kguh-7q9z`) | **Daily** — issuance 2 days old | `license_id` (unique 126,161/126,161; strip `.0`) | **Yes** — fires at issuance |
-| 4b | **TABC licences — pending applications** | data.texas.gov | **`mxm5-tdpj`** | **Daily** — submissions same-day | `applicationid` (unique 863/863; strip `.0`) | **Yes — adopted.** 27 Travis pending; **median 22 days' lead time** |
-| 5 | Food establishment inspections | data.austintexas.gov | `ecmv-9xxi` | **Bi-weekly by design; 85 days stale in practice** | **n/a — no unique key exists.** Must be synthesised by hashing the record | **Degraded** — researcher context only, not a daily trigger |
+| 4 | TABC licenses — issued | data.texas.gov | `7hf9-qc9f` (**not** the spec's `kguh-7q9z`) | **Daily** — issuance 2 days old | `license_id` (unique 126,161/126,161; strip `.0`) | **Yes** — fires at issuance |
+| 4b | **TABC licenses — pending applications** | data.texas.gov | **`mxm5-tdpj`** | **Daily** — submissions same-day | `applicationid` (unique 863/863; strip `.0`) | **Yes — adopted.** 27 Travis pending; **median 22 days' lead time** |
+| 5 | Food establishment inspections | data.austintexas.gov | `ecmv-9xxi` | **Bi-weekly by design; 85 days stale in practice** | **n/a — no unique key exists.** Must be synthesized by hashing the record | **Degraded** — researcher context only, not a daily trigger |
 | 6 | Mobile food vendors | data.austintexas.gov | **n/a — does not exist.** `rfdj-8sa2` is a `map` over `gebe-5qkn`, which holds 32 vending-*restriction* zones | **n/a** — static since 2020-03-11 (2,347 days) | **n/a** — no permit records to identify | **No — remove from spec** |
 | 7 | Certificates of occupancy | data.austintexas.gov | `f9mz-m6dy` — a filter view over `3syk-w9eu`, **not** a separate source | **Daily** — inherits parent | `permit_number` (inherited) | **Partial** — boolean `certificate_of_occupancy` flag only; no CO number or CO date exists anywhere |
 | 8 | **Plan review cases** | data.austintexas.gov | **`n8ck-xkda`** | **Daily** — applications 1 day old, freshest of all sources | `folderrsn` (unique 160,329/160,329) | **Yes — adopted.** ~27 applications/day, pre-issuance signal |
@@ -27,7 +27,7 @@ Python invocation: `austin-bulletin/.venv/bin/python` (system pip is externally 
 ### Sources by health
 
 - **Healthy daily triggers (4):** construction permits, zoning cases, TABC pending applications, plan review cases
-- **Healthy, later-stage signal (1):** TABC issued licences
+- **Healthy, later-stage signal (1):** TABC issued licenses
 - **Suspended, re-check 2026-08-29 (1):** site plan cases
 - **Degraded — context, not triggers (1):** food inspections
 - **Partial — a flag, not a feed (1):** certificates of occupancy
@@ -52,10 +52,10 @@ Discovered while probing; each one is a real inconsistency the collector must ab
 
 1. **`council_district` types differ** — `number` in permits and zoning, `text` in site plan cases. Cast on read.
 2. **`latitude`/`longitude` types differ** — `number` in permits and site plans, `text` in zoning.
-3. **Address shape differs per source** — `original_address1` (permits), `site_address` (zoning), five composed street parts (site plans), a single string with the city appended and inconsistent casing (food inspections), `address` + `address_2` (TABC). Each needs its own normaliser before addresses can be matched across sources.
+3. **Address shape differs per source** — `original_address1` (permits), `site_address` (zoning), five composed street parts (site plans), a single string with the city appended and inconsistent casing (food inspections), `address` + `address_2` (TABC). Each needs its own normalizer before addresses can be matched across sources.
 4. **TABC numeric IDs render as float strings** — `"200202829.0"`. Strip the trailing `.0` before keying.
 5. **`folderrsn` is reused as a field name across three Austin datasets** (zoning, site plans, plan review) but the values are **not** comparable between them. Namespace the dedup key by source.
-6. **The lifecycle thread that spec §5 describes cannot be built as written**, because the CO step does not exist as a dated event and site plan data is frozen. The achievable chain is: plan review case → construction permit (with CO flag) → TABC licence or food inspection at the same address.
+6. **The lifecycle thread that spec §5 describes cannot be built as written**, because the CO step does not exist as a dated event and site plan data is frozen. The achievable chain is: plan review case → construction permit (with CO flag) → TABC license or food inspection at the same address.
 
 ### Catalog discovery — the plan's method does not work
 
@@ -184,7 +184,7 @@ The headline "16.9% populated" was misleading, because it averages across permit
 | Mechanical Permit | 3,674 | 1 | 0.0% |
 | Driveway / Sidewalks | 367 | 0 | 0.0% |
 
-**This is not missing data — it is correct data modelling.** A trade sub-permit does not carry a job valuation; the parent building permit does. Roughly 77% of all permit records are trade sub-permits, which is what dragged the average down.
+**This is not missing data — it is correct data modeling.** A trade sub-permit does not carry a job valuation; the parent building permit does. Roughly 77% of all permit records are trade sub-permits, which is what dragged the average down.
 
 By class the split is milder and less informative: Residential 19.1% (2,371 of 12,437), Commercial 11.1% (526 of 4,741).
 
@@ -205,7 +205,7 @@ Distribution of the 2,894 building permits that carry a valuation:
 | $1M–9.9M | 44 | 1.5% |
 | $10M+ | 122 | 4.2% |
 
-**$0 and $1 together account for 87.2% of all populated valuations.** The near-total absence of values between $2 and $99 is the tell: a genuine currency field would show a smooth tail into small numbers. Two distinct sentinels sitting adjacent to an empty neighbouring range indicates two data-entry paths each writing its own "no value" marker — not real dollar amounts, and not a single consistent convention.
+**$0 and $1 together account for 87.2% of all populated valuations.** The near-total absence of values between $2 and $99 is the tell: a genuine currency field would show a smooth tail into small numbers. Two distinct sentinels sitting adjacent to an empty neighboring range indicates two data-entry paths each writing its own "no value" marker — not real dollar amounts, and not a single consistent convention.
 
 **Effective usable rate: 370 real values (>$1) out of 3,879 building permits — 9.5%.** Against all 17,178 permits it is **2.2%**.
 
@@ -227,7 +227,7 @@ Descriptions confirm a single large mixed-use development: "New Construction of 
 
 **It is one $830M project split across 77 permits, with the whole-project valuation stamped on every one.** Not a sentinel — but just as dangerous, because summing or ranking naively multiplies the project's value 77-fold.
 
-**This is a hard requirement, not an optimisation: the scorer must collapse permits by `masterpermitnum` before scoring.** Without it, a single development day-one produces 77 near-identical stories each claiming an $830M project — instantly exhausting the 6-story daily cap and the reviewer's patience. `masterpermitnum` is populated on 65.8% of records all-time; where null, fall back to `project_id` plus address.
+**This is a hard requirement, not an optimization: the scorer must collapse permits by `masterpermitnum` before scoring.** Without it, a single development day-one produces 77 near-identical stories each claiming an $830M project — instantly exhausting the 6-story daily cap and the reviewer's patience. `masterpermitnum` is populated on 65.8% of records all-time; where null, fall back to `project_id` plus address.
 
 ##### Q4. Is square footage better populated? — Yes, substantially
 
@@ -265,7 +265,7 @@ Sketched here so the pipeline plan starts from evidence. **Not final — the wei
 2. `total_new_add_sqft` / `remodel_repair_sqft` (44–54%) — floor area
 3. `total_job_valuation` **only when > $1** (9.5%) — treat as a bonus, never a requirement. When present and large it is the strongest single signal; it is simply usually absent
 
-Normalise scale against the record's own cohort — the `council_district` × `permit_class_mapped` distribution — rather than a citywide threshold, so a large East Austin project is not judged against downtown towers.
+Normalize scale against the record's own cohort — the `council_district` × `permit_class_mapped` distribution — rather than a citywide threshold, so a large East Austin project is not judged against downtown towers.
 
 **Category — deterministic, from fields that are ~100% populated:**
 - **Demolition:** `work_class` in (`Demolition`, `Demo`, `Interior Demo Non-Structural`), or `permit_class` matching the six demolition codes. Never a `description` keyword — that returns driveway false positives
@@ -278,7 +278,7 @@ Normalise scale against the record's own cohort — the `council_district` × `p
 
 **Cross-source lift — the strongest signal is not in this dataset.** A permit that matches a recent TABC application (`mxm5-tdpj`) or an existing plan review case at the same address is more newsworthy than any single-record property. Spec §5 already calls lifecycle continuation a scoring signal; on this evidence it should be weighted heavily, because it is the one signal competitors genuinely cannot assemble by hand.
 
-**What this means for spec §11 Open Item 3.** A residential naming threshold defined by permit valuation is not implementable — valuation is absent or `$1` on the overwhelming majority of residential permits, so the threshold would misclassify almost everything. Replace it with a non-valuation rule: treat `permit_class_mapped = 'Residential'` as never-named by default, and rely on organisation-name screening (source 3) for the rare residential filing made by a genuine entity.
+**What this means for spec §11 Open Item 3.** A residential naming threshold defined by permit valuation is not implementable — valuation is absent or `$1` on the overwhelming majority of residential permits, so the threshold would misclassify almost everything. Replace it with a non-valuation rule: treat `permit_class_mapped = 'Residential'` as never-named by default, and rely on organization-name screening (source 3) for the rare residential filing made by a genuine entity.
 
 ---
 
@@ -566,27 +566,27 @@ Sampled live Travis applications show the signal is exactly what spec §5 wanted
 | Primespot #42 | Bluebluff Ranch LLC | 11001 Parmer Ln | BQ | 2026-08-10 |
 | APHRODITE RESTAURANT & LOUNGE | APHRODITE RESTAURANT & LOUNGE, LLC | 621 E 7th St | MB | 2026-08-07 |
 
-Note "Ben and Lynn's" appears twice — one business filing two licence types on the same day. **The collector must group by address plus owner**, or a single opening generates duplicate stories.
+Note "Ben and Lynn's" appears twice — one business filing two license types on the same day. **The collector must group by address plus owner**, or a single opening generates duplicate stories.
 
-**Snapshot warning.** This is a point-in-time list of *currently pending* applications, not an append-only log. A row disappears once the application is approved or denied. Two consequences: the collector should key on `applicationid` and diff against its own store to catch new arrivals, and an application vanishing is itself a signal — it means the licence was granted or refused, resolvable by checking `7hf9-qc9f` for that `master_file_id`.
+**Snapshot warning.** This is a point-in-time list of *currently pending* applications, not an append-only log. A row disappears once the application is approved or denied. Two consequences: the collector should key on `applicationid` and diff against its own store to catch new arrivals, and an application vanishing is itself a signal — it means the license was granted or refused, resolvable by checking `7hf9-qc9f` for that `master_file_id`.
 
-`applicationid` renders as a float string (`"645542.0"`), the same normalisation issue as `license_id`.
+`applicationid` renders as a float string (`"645542.0"`), the same normalization issue as `license_id`.
 
-**Recommendation: adopt `mxm5-tdpj` alongside `7hf9-qc9f`.** Together they cover the full licence lifecycle — application filed → licence issued — and restore the earliest-public-signal premise the spec is built on.
+**Recommendation: adopt `mxm5-tdpj` alongside `7hf9-qc9f`.** Together they cover the full license lifecycle — application filed → license issued — and restore the earliest-public-signal premise the spec is built on.
 
-#### Status fields within `7hf9-qc9f` — issued licences only
+#### Status fields within `7hf9-qc9f` — issued licenses only
 
-Recorded because it explains why the issued-licence dataset alone is insufficient. All three status fields were enumerated. The complete set of values:
+Recorded because it explains why the issued-license dataset alone is insufficient. All three status fields were enumerated. The complete set of values:
 
 - `primary_status`: Active 78,118 · Expired - Original Required 33,074 · Surrendered 13,683 · Temporarily Surrendered 784 · Expired 314 · Suspended 116 · Cancelled 72
 - `secondary_status`: null 122,180 · **Renewal Pending 3,981**
 - `license_status`: Active 74,155 · Expired - Original Required 33,074 · Surrendered 13,683 · **Active - Renewal Pending 3,963** · Temporarily Surrendered 778 · Expired 314 · Suspended 107 · Cancelled 72 · Suspended - Renewal Pending 9 · Temporarily Surrendered - Renewal Pending 6
 
-**Within this dataset the only "pending" value is `Renewal Pending`** — an existing licence awaiting renewal, not a new application. Every status here describes a licence that already exists. This is why `mxm5-tdpj` above is necessary: the two datasets cover different lifecycle stages and neither substitutes for the other.
+**Within this dataset the only "pending" value is `Renewal Pending`** — an existing license awaiting renewal, not a new application. Every status here describes a license that already exists. This is why `mxm5-tdpj` above is necessary: the two datasets cover different lifecycle stages and neither substitutes for the other.
 
 Used on its own, `7hf9-qc9f` fires at **issuance**. The correct trigger field is `original_issue_date`, not `current_issued_date` (which moves on renewal).
 
-**Travis County volume: 120 licences with an `original_issue_date` in the preceding 90 days — roughly 1.3 per day.** Healthy for a signal source.
+**Travis County volume: 120 licenses with an `original_issue_date` in the preceding 90 days — roughly 1.3 per day.** Healthy for a signal source.
 
 #### Complete TABC inventory on data.texas.gov
 
@@ -594,10 +594,10 @@ Every TABC dataset on the domain was enumerated (13 catalog hits, domain-scoped)
 
 | Dataset | Name | Updated | Relevance |
 |---|---|---|---|
-| **`7hf9-qc9f`** | TABC License Information | 2026-08-15 | **Adopted** — issued licences, full status and dates |
+| **`7hf9-qc9f`** | TABC License Information | 2026-08-15 | **Adopted** — issued licenses, full status and dates |
 | **`mxm5-tdpj`** | Pending Original New … License Application(s) | 2026-08-15 | **Adopted** — pending applications |
 | `kguh-7q9z` | TABCLicenses | 2026-08-15 | Rejected — no status, no date fields |
-| `8f4g-cpk9` | Mixed Beverage Tax Permits | 2026-08-15 | Not adopted. Location and NAICS detail, `resp_begin_date`; overlaps the licence feeds |
+| `8f4g-cpk9` | Mixed Beverage Tax Permits | 2026-08-15 | Not adopted. Location and NAICS detail, `resp_begin_date`; overlaps the license feeds |
 | `naix-2893` | Mixed Beverage Gross Receipts | 2026-08-15 | Not adopted, but noted — **monthly alcohol revenue per venue.** Outside the permits beat, but a strong future signal for openings that failed and venues in decline. Candidate for spec §10 roadmap phase 3 |
 | `g5bj-yb6k` | Mixed Beverage Sales Receipts | 2026-07-15 | Not adopted — as above |
 | `ix8u-msb9` | Credit Law Delinquent List | 2026-08-15 | Not adopted — venues delinquent on supplier credit; a distress signal, outside beat |
@@ -613,8 +613,8 @@ Every TABC dataset on the domain was enumerated (13 catalog hits, domain-scoped)
 | Record identifier | `license_id` | number | 100% |
 | Business grouping key | `master_file_id` | number | 100% |
 | Business name | `trade_name` | text | 88.2% |
-| Licence holder | `owner` | text | 100% |
-| Licence type code | `license_type` | text | 100% |
+| License holder | `owner` | text | 100% |
+| License type code | `license_type` | text | 100% |
 | Status | `primary_status`, `secondary_status`, `license_status` | text | 100% |
 | First issued | `original_issue_date` | calendar_date | 100% |
 | Current issue | `current_issued_date` | calendar_date | 100% |
@@ -632,9 +632,9 @@ Ignore `tbd_01` through `tbd_05` and the single-letter numeric columns (`bp`, `s
 
 **`license_id` — confirmed unique.** 126,161 distinct of 126,161 rows.
 
-`master_file_id` is **not** unique (82,483 distinct) — it groups multiple licences held by one business, which makes it the right key for the researcher stage when linking a business's licence history, but wrong for deduplication.
+`master_file_id` is **not** unique (82,483 distinct) — it groups multiple licenses held by one business, which makes it the right key for the researcher stage when linking a business's license history, but wrong for deduplication.
 
-**Normalisation warning:** `license_id` is typed `number` and the API renders it as a float string — `"200202829.0"`, not `"200202829"`. The collector must strip the trailing `.0` before using it as a dedup key, or the same record will key differently across code paths. `master_file_id` has the same issue (`"2600096906.0"`).
+**Normalization warning:** `license_id` is typed `number` and the API renders it as a float string — `"200202829.0"`, not `"200202829"`. The collector must strip the trailing `.0` before using it as a dedup key, or the same record will key differently across code paths. `master_file_id` has the same issue (`"2600096906.0"`).
 
 #### Data quality
 
@@ -646,9 +646,9 @@ Sampled recent Travis issuances are clean and story-ready:
 | _(none)_ | Our lady of guadalupe catholic church | 1206 E 9th St | NT | 2026-08-03 |
 | Valverde | Heaven Seven LLC | 902 E 7th St | MB | 2026-08-04 |
 
-`owner` is consistently an organisation rather than a private individual, which suits the naming rule well. `trade_name` is the better display name but is null 11.8% of the time — fall back to `owner`.
+`owner` is consistently an organization rather than a private individual, which suits the naming rule well. `trade_name` is the better display name but is null 11.8% of the time — fall back to `owner`.
 
-**`license_type` is an unexplained code** — Travis distribution: MB 2,248 · BG 1,328 · BQ 1,012 · NT 736 · Q 299 · P 266 · S 88 · G 70 · BW 58 · W 36 · D 36 · BE 21. The dataset contains no description column. **Required task for the pipeline plan:** build a static code-to-description lookup so stories can say "mixed beverage permit" rather than "MB". This lookup must be hand-verified against TABC's published licence-type list, not inferred by a model.
+**`license_type` is an unexplained code** — Travis distribution: MB 2,248 · BG 1,328 · BQ 1,012 · NT 736 · Q 299 · P 266 · S 88 · G 70 · BW 58 · W 36 · D 36 · BE 21. The dataset contains no description column. **Required task for the pipeline plan:** build a static code-to-description lookup so stories can say "mixed beverage permit" rather than "MB". This lookup must be hand-verified against TABC's published license-type list, not inferred by a model.
 
 ---
 
@@ -720,7 +720,7 @@ The schema is thin — seven fields, no internal keys:
 
 **There is no separate city field.** The city is appended to the address string — `"1625 E 6th St Austin"`, `"104 Rex Kerwin Ct Pflugerville"` — with inconsistent casing (`Austin` 2,168 vs `AUSTIN` 353 in a 3,000-row sample) and the dataset covers surrounding Travis County towns (Pflugerville 210, Manor 43, Lakeway 32, and others). Any Austin-only filter must parse the trailing token case-insensitively, which is fragile. Multi-word city names ("Cave Creek", "Valle Vista") break naive last-token parsing outright.
 
-#### No stable record identifier — the pipeline must synthesise one
+#### No stable record identifier — the pipeline must synthesize one
 
 This source is the only one of the seven with **no usable unique key**:
 
@@ -730,7 +730,7 @@ This source is the only one of the seven with **no usable unique key**:
 | (`facility_id`, `inspection_date`) | 20,934 | 20,964 | **No — 30 collisions** |
 | (`facility_id`, `inspection_date`, `process_description`) | 20,939 | 20,964 | **No — 25 collisions** |
 
-The collector must synthesise a deduplication key by hashing the full record, and accept that genuine same-day repeat inspections at one facility are indistinguishable.
+The collector must synthesize a deduplication key by hashing the full record, and accept that genuine same-day repeat inspections at one facility are indistinguishable.
 
 #### New versus repeat establishments — CANNOT be distinguished
 
@@ -754,7 +754,7 @@ Given the 85-day lag and bi-weekly design, this source is **not viable as a dail
 | Measure | Value |
 |---|---|
 | Name | **"Mobile Food Vendors Map"** |
-| Catalog type | **`map`** — a visualisation, not a dataset |
+| Catalog type | **`map`** — a visualization, not a dataset |
 | `rows_updated_at` | **2020-03-11T20:08:47Z** |
 | `days_since_update` | **2,347** (over six years) |
 | Fields exposed | **0** |
@@ -774,7 +774,7 @@ Its actual content, enumerated in full:
 
 Sample rows: `20120628-138 / Stonegate NA`, `20100527-090 / Windsor Park NPA`, `20141106-086 / Westgate NPA`, `20080515-030 / Walnut Creek NA`.
 
-**This is a list of 32 neighbourhood associations and planning areas that passed ordinances restricting mobile food vending, with their boundary polygons.** The ordinance numbers date from 2008–2014. It contains no vendors, no permits, no permit dates, and no business names — the opposite of what spec §3 describes. It is a restriction-zone layer.
+**This is a list of 32 neighborhood associations and planning areas that passed ordinances restricting mobile food vending, with their boundary polygons.** The ordinance numbers date from 2008–2014. It contains no vendors, no permits, no permit dates, and no business names — the opposite of what spec §3 describes. It is a restriction-zone layer.
 
 #### Search performed before concluding unavailability
 
@@ -790,7 +790,7 @@ Moot, but recorded for completeness: `gebe-5qkn` has **no date field of any kind
 
 #### Consequence
 
-**Source 6 must be removed from the spec.** Austin's open data portal does not publish mobile food vendor permits. Mobile vendors do appear indirectly — a mobile food unit receives a TABC licence if it serves alcohol (source 4) and appears in food inspections (source 5) — so the beat retains partial coverage of the category, but there is no permit feed for it. See `spec-revisions.md`.
+**Source 6 must be removed from the spec.** Austin's open data portal does not publish mobile food vendor permits. Mobile vendors do appear indirectly — a mobile food unit receives a TABC license if it serves alcohol (source 4) and appears in food inspections (source 5) — so the beat retains partial coverage of the category, but there is no permit feed for it. See `spec-revisions.md`.
 
 ---
 
@@ -819,7 +819,7 @@ The view adds no CO number, no CO issue date, and no CO-specific column of any k
 
 Certificates of occupancy are **exposed only as the boolean `certificate_of_occupancy` flag on a construction permit**. As recorded in section 1, that flag also fires on residential additions, so it does not cleanly mark "a new business is cleared to open."
 
-**What the spec loses:** the lifecycle thread cannot pin a CO issuance date. The chain "demolished 2024 → site plan approved 2025 → CO issued 2026 → liquor licence applied 2026" from spec §5 must drop its CO link. The workable chain becomes: construction permit (with CO flag set) → first TABC licence or first food inspection at that address.
+**What the spec loses:** the lifecycle thread cannot pin a CO issuance date. The chain "demolished 2024 → site plan approved 2025 → CO issued 2026 → liquor license applied 2026" from spec §5 must drop its CO link. The workable chain becomes: construction permit (with CO flag set) → first TABC license or first food inspection at that address.
 
 Searches performed before concluding: `certificate of occupancy`, `occupancy`, and `certificate`, domain-scoped to the Austin portal. The only occupancy-related result was `f9mz-m6dy` above. No separate dataset was found.
 
@@ -855,3 +855,56 @@ Note it carries the same `*_full_name` / `*_organization_name` split as the site
 **Recommendation: adopt as a source.** It is fresher than every spec source, has a unique key, sits earlier in the lifecycle, and needs no new collector pattern. Decision deferred to the site owner — see `spec-revisions.md`.
 
 Other Austin permit datasets seen while searching, not evaluated in depth: `ac2h-ha3r` Issued Tree Permits (2026-08-15), `quv8-5ckq` Issued Building Permits (2026-08-08), `x6mf-sksh` Residential Demolitions (2026-04-09), `hyc6-zz9w` ATPW Right of Way Active Permits (2026-08-15), `ryu3-tuin` Sound Ordinance Permits (2026-08-14).
+
+---
+
+### 9. Cross-source address matching — MEASURED SPIKE
+
+Added 2026-08-15 after the first draft described address *formats* without measuring a *match rate*. Formats are not a measurement; this section supplies the number.
+
+**Script:** `sources/address_match_spike.py` (re-runnable)
+**Test:** every currently-pending Travis County TABC application (source 4, n=27) matched against issued construction permits (source 1).
+
+#### Measured match rates
+
+| Tier | Method | Matched | Rate |
+|---|---|---|---|
+| 1 | Raw exact string, case-insensitive | 14/27 | **51.9%** |
+| 2 | + normalization: suffix expansion, unit stripping, punctuation | 18/27 | **66.7%** |
+| 3 | + directional-insensitive comparison | 20/27 | **74.1%** |
+
+**Roughly half of cross-source address joins fail on raw strings.** Straightforward normalization recovers about a quarter of the failures; directional handling recovers a little more.
+
+A fourth, looser tier — matching on street number plus a street-name substring — reached 81.5%, **but it is unsafe and was discarded.** It matched `11910 US Highway 290 E` to `11910 CACTUS BND`, because the substring `US` occurs inside `CACTUS`. For a news product a false address match means publishing a story that links a business to the wrong building. **Recall bought by loosening the matcher is not free; it buys wrong stories.**
+
+#### What the failures actually are
+
+All 7 remaining failures, categorized:
+
+| Cause | n | Example |
+|---|---|---|
+| **Interstate highway naming** | 4 | TABC `9600 S Interstate 35` vs permit `9600 S IH 35 SVRD SB BLDG D UNIT 200` |
+| Roadway qualifier suffix | 1 | TABC `720 Bastrop Hwy` vs permit `720 BASTROP HWY SB` |
+| No permit exists at that address | 2 | `1971 San Jacinto Blvd` — an existing building with no recent permit is legitimate |
+
+**Highway addressing is the single biggest fixable bucket.** Permit spellings are consistent enough to alias: `S IH 35 SVRD SB` (72), `N IH 35 SVRD SB` (67), `N IH 35 SVRD NB` (51), `S IH 35 SVRD NB` (37), `S IH 35` (13). TABC writes `Interstate 35`, `Interstate Hwy 35`, or `US Highway 290`. A small alias table (`Interstate` ↔ `IH` ↔ `I`, `US Highway` ↔ `US`) plus stripping roadway qualifiers (`SVRD`, `SB`, `NB`, `EB`, `WB`) should close 5 of the 7.
+
+**Projected ceiling: about 92% (25/27)** — the remaining 2 have no permit to match, which is a correct negative rather than a failure.
+
+#### The precision problem is worse than the recall problem
+
+Recall is measurable and fixable. Precision is neither, and the first draft missed it entirely.
+
+`9600 S IH 35 SVRD SB` is not a building — it is a shopping center. Permits at that base address span buildings B, D, E, I, N, P, Q and S, with dozens of separate unit-level permits. Matching MOD Pizza's license application to "a permit at 9600 S IH 35" would link it to whichever tenant's buildout happened to match first.
+
+**A street address is not a unique key for a tenant space.** Any lifecycle thread built on address alone will silently over-link at multi-tenant addresses — strip malls, office parks, mixed-use ground floors — which is exactly where new bars and restaurants open. This is a publishable-error risk, not a data-quality nuisance.
+
+Mitigations to evaluate in the spike, none yet tested:
+- Match on `tcad_id` (parcel ID) where both sources expose it, rather than on address text
+- Preserve and compare unit/suite designators instead of stripping them
+- Require a second corroborating signal — date proximity, or business-name similarity between TABC `trade_name` and permit `description` — before asserting a thread
+- Have the checker stage treat any address-derived claim as unsupported unless the match is exact
+
+#### Why this is now blocking
+
+Spec §9 sets "stories threading 2+ records at one address" as a success criterion. At a raw 51.9% join rate with an unquantified false-link rate, that criterion is not currently achievable, and the failure mode is publishing wrong information rather than publishing nothing. The design work has no owner and no plan. See spec §3, Build Task 1.
