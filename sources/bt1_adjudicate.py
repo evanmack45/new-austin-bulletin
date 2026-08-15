@@ -32,11 +32,13 @@ import math
 import random
 import re
 from collections import Counter, defaultdict
+from pathlib import Path
 
 from address_matcher import canonical, directionless, parse_unit
 
-VERDICTS = "bt1-verdicts.jsonl"
-OUT = "bt1-adjudicated.jsonl"
+_HERE = Path(__file__).resolve().parent
+VERDICTS = str(_HERE / "bt1-verdicts.jsonl")
+OUT = str(_HERE / "bt1-adjudicated.jsonl")
 SEED = 20260815  # fixed so the sample is reproducible; stated, not hidden
 UNDECIDED_SAMPLE = 80
 
@@ -93,9 +95,15 @@ def adjudicate_premises(row):
     return (verdict, basis)
 
 
+# Named operators only. An earlier version also matched category words
+# (RESTAURANT, CAFE, BAR, ...). Every one of the 45 "different business"
+# verdicts it produced came from a category token and NOT ONE from a business
+# identifier: a permit reading "restaurant buildout" for a restaurant license is
+# evidence of a restaurant, not of a different tenant. That defect made the
+# report's 41.5% wrong-business figure unsupported; it has been withdrawn.
 BUSINESSY = re.compile(
-    r"\b(LLC|INC|CORP|RESTAURANT|GRILL|CAFE|BAR|KITCHEN|BREWING|TAVERN|PIZZA|"
-    r"BAKERY|MARKET|STORE|SALON|CLINIC|HEB|WALMART|TARGET|STARBUCKS|MCDONALD)\b",
+    r"\b(HEB|H-E-B|WALMART|TARGET|COSTCO|STARBUCKS|MCDONALD|WENDY|SUBWAY|"
+    r"CHIPOTLE|WHATABURGER|TORCHY|CVS|WALGREENS|RANDALL|KROGER)\b",
     re.I,
 )
 
@@ -122,6 +130,12 @@ def adjudicate_tenant(row):
     if d is None:
         return ("undecidable", "no permit within the 730-day window")
     return ("undecidable", f"date proximity only ({d}d); does not identify a tenant")
+
+
+# Q2 is decidable only when a NAMED operator appears on one side and not the
+# other, or when the license name itself appears in permit text. Everything else
+# is undecidable, and the honest report says so rather than inferring intent
+# from category vocabulary.
 
 
 def main():
@@ -218,7 +232,7 @@ def main():
     print("\n(3) RECALL COST OF DECLINING")
     print(f"    declined outright        : {len(declined)}")
     print(f"    undecided (not asserted) : {len(undecided)}")
-    s_true = sum(1 for r in sample if r.get("q1_premises") == "true")
+    s_true = sum(1 for r in sample if r.get("q1_premises") == "true_consistent")
     print(f"    sampled undecided        : {len(sample)}")
     print(f"      premises-identical     : {s_true}  "
           f"({100 * s_true / max(1, len(sample)):.0f}% would have been correct links)")

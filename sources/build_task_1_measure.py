@@ -34,6 +34,7 @@ import sys
 import urllib.parse
 import urllib.request
 from collections import Counter
+from pathlib import Path
 from datetime import date
 
 from address_matcher import canonical, directionless, match_tier, resolve
@@ -43,7 +44,7 @@ PERMITS = "https://data.austintexas.gov/resource/3syk-w9eu.json"
 
 TABC_WHERE = "county='Travis' AND original_issue_date >= '2024-08-15'"
 PERMIT_SINCE = "2020-01-01"
-VERDICT_FILE = "bt1-verdicts.jsonl"
+VERDICT_FILE = str(Path(__file__).resolve().parent / "bt1-verdicts.jsonl")
 
 ENTITY = re.compile(
     r"\b(LLC|L\.L\.C|INC|CORP|CO|COMPANY|LP|L\.P|LLP|PLLC|LTD|TRUST|PARTNERS|"
@@ -56,21 +57,19 @@ PERSONAL = re.compile(r"^[A-Z][a-z]+\s+[A-Z][a-z]+$")
 
 
 def screen_name(value):
-    """Return a printable business name, or None if it looks like an individual.
+    """Return a printable business name, or None if it is not provably an entity.
 
-    TABC `owner` holds an individual's name for sole proprietorships, so it gets
-    the same treatment as any organization field (spec section 7).
+    POSITIVE SCREEN ONLY. An earlier version rejected two title-case words and
+    passed everything else, so "JOHN SMITH" and "Mary Jane Watson" were written
+    into the verdict file beside a license ID and street address. Rejecting
+    known-bad shapes cannot enforce a privacy boundary -- anything unanticipated
+    passes. This admits a name only on positive evidence that it is an
+    organization (spec section 7 naming rule).
     """
     if not value:
         return None
     v = value.strip()
-    if ENTITY.search(v):
-        return v
-    if PERSONAL.match(v):
-        return None
-    if len(v.split()) <= 2 and v == v.title():
-        return None
-    return v
+    return v if ENTITY.search(v) else None
 
 
 def fetch(url, params, label):
@@ -138,9 +137,17 @@ def tokens(text):
     return {t for t in re.findall(r"[A-Z0-9]{3,}", (text or "").upper())}
 
 
+# Tokens that carry no identifying power. Business CATEGORY words belong here:
+# a permit reading "restaurant buildout" and a license named "Tokami Restaurant"
+# share the word RESTAURANT and that is not evidence they are the same tenant.
+# Treating category overlap as name corroboration admitted unrelated tenants.
 STOP = {"THE", "AND", "FOR", "NEW", "LLC", "INC", "AUSTIN", "TEXAS", "SUITE",
         "UNIT", "BLDG", "REMODEL", "INTERIOR", "BUILDING", "CONSTRUCTION",
-        "TENANT", "FINISH", "OUT", "EXISTING", "PERMIT", "PLAN", "REVIEW"}
+        "TENANT", "FINISH", "OUT", "EXISTING", "PERMIT", "PLAN", "REVIEW",
+        "RESTAURANT", "CAFE", "BAR", "GRILL", "KITCHEN", "MARKET", "STORE",
+        "BAKERY", "TAVERN", "PIZZA", "SALON", "CLINIC", "BREWING", "HOTEL",
+        "LOUNGE", "CLUB", "SHOP", "FOOD", "DRIVE", "CENTER", "CENTRE", "SUITES",
+        "COMPANY", "GROUP", "HOLDINGS", "SERVICES", "PARTNERS", "ENTERPRISES"}
 
 
 DATE_WINDOW_DAYS = 730  # permit up to 24 months before the license; reported, not tuned
@@ -213,8 +220,16 @@ def main():
     fresh = fetch(TABC, {"$select": "max(original_issue_date)",
                          "$where": "county='Travis'"}, "TABC freshness")
     newest = fresh[0].get("max_original_issue_date") if fresh else None
-    if not newest or newest < "2026-07-01":
-        sys.exit(f"FAIL CLOSED [TABC]: newest license {newest} looks stale")
+    # Age against the RUN date, not a hardcoded cutoff: a frozen feed would pass
+    # a fixed date forever and silently regenerate stale measurements.
+    MAX_AGE_DAYS = 45
+    try:
+        age = (date.today() - date.fromisoformat(newest[:10])).days
+    except (TypeError, ValueError):
+        sys.exit(f"FAIL CLOSED [TABC]: unparseable newest license date {newest!r}")
+    if age > MAX_AGE_DAYS:
+        sys.exit(f"FAIL CLOSED [TABC]: newest license {newest[:10]} is {age} days "
+                 f"old (limit {MAX_AGE_DAYS})")
     print(f"  TABC newest original_issue_date: {newest[:10]}")
 
     index = load_permit_index()
@@ -241,11 +256,14 @@ def main():
         c = canonical(addr)
         cands = list(index.get(c) or [])
         if not cands:
+            # Collect EVERY directional variant, not the first one found. If
+            # permits exist at both "621 E 7TH ST" and "621 W 7TH ST", handing
+            # resolve() only the first makes the answer depend on dict ordering
+            # and asserts a coin-flip as unique. Passing both lets it decline.
             d = directionless(c)
             for cand_c, raws in index.items():
                 if directionless(cand_c) == d and match_tier(addr, raws[0]):
-                    cands = list(raws)
-                    break
+                    cands.extend(raws)
         if not cands:
             unmatched += 1
             continue

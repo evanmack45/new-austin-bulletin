@@ -40,6 +40,7 @@ import math
 import urllib.parse
 import urllib.request
 from collections import defaultdict
+from pathlib import Path
 
 from address_matcher import canonical
 
@@ -68,7 +69,8 @@ def fetch(params):
 
 
 def main():
-    rows = [json.loads(line) for line in open("bt1-adjudicated.jsonl")]
+    here = Path(__file__).resolve().parent
+    rows = [json.loads(line) for line in open(here / "bt1-adjudicated.jsonl")]
     asserted = [r for r in rows if r.get("asserted")]
     bases = sorted({r["canonical_base"] for r in asserted})
     print("OVER-MERGE TEST — does canonicalization merge distinct places?")
@@ -101,6 +103,10 @@ def main():
             by_canon[c].append(pt)
 
     target = set(bases)
+    # Tier-3 assertions join two DIFFERENT canonical forms (one omits a
+    # directional), so grouping by exact canonical() silently excludes them
+    # while they stay in the denominator. Count them and report as untested.
+    tier3 = [r for r in asserted if r.get("match_tier") == 3]
     checked = overmerged = 0
     spreads = []
     worst = []
@@ -131,7 +137,9 @@ def main():
     # How many ASSERTED pairs sit on an over-merged base -- the exposure figure.
     bad_bases = {c for _, c, _ in worst}
     exposed = [r for r in asserted if r["canonical_base"] in bad_bases]
-    print(f"\n  ASSERTED pairs resting on an over-merged base: {len(exposed)}/{len(asserted)}"
+    print(f"\n  tier-3 asserted pairs NOT covered by this test: {len(tier3)}"
+          f"  (they join two canonical forms; grouping is by exact form)")
+    print(f"  ASSERTED pairs resting on an over-merged base: {len(exposed)}/{len(asserted)}"
           f"  ({100 * len(exposed) / max(1, len(asserted)):.2f}%)")
 
     if worst:
@@ -139,13 +147,14 @@ def main():
         for mx, c, n in sorted(worst, reverse=True)[:8]:
             print(f"    {mx:>8.0f} m  {n:>3} coords  {c}")
 
-    with open("bt1-overmerge.json", "w") as fh:
+    with open(here / "bt1-overmerge.json", "w") as fh:
         json.dump({
             "threshold_m": THRESHOLD_M,
             "testable_bases": checked,
             "overmerged_bases": overmerged,
             "asserted_total": len(asserted),
             "asserted_on_overmerged_base": len(exposed),
+            "tier3_untested": len(tier3),
             "worst": [{"spread_m": round(m, 1), "canonical": c, "coords": n}
                       for m, c, n in sorted(worst, reverse=True)[:50]],
         }, fh, indent=2)

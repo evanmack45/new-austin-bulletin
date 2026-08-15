@@ -11,9 +11,11 @@ Every number below states the query or script that produced it. Cutoffs are abso
 
 ## 1. Headline
 
-**The matcher works. The measurement that was supposed to validate it does not, and the reason is worth more than the number would have been.**
+**The matcher works as far as it can be tested. The false-link rate spec §9 needs was not established, and the honest report is why.**
 
-Address matching turned out **not** to be the main risk to spec §9's threading criterion. The matcher's own error mode — merging two distinct places into one address — shows **no evidence** in testing. The real risk is **tenant attribution**: at a correctly matched address, deciding whether a given permit pertains to *this* business rather than a previous or neighboring occupant. That is not an address-normalization problem and no amount of normalizer work fixes it.
+Address matching shows **no evidence** of the matcher's own error mode — merging two distinct places into one address. But neither of the two adjudication methods available from these datasets can measure a false-link rate to the precision the §9 decision table requires. **This escalates rather than resolving.**
+
+A finding this report made in an earlier draft — that 41.5% of permits at a correctly matched address belong to a different business — **has been withdrawn.** It was an artifact of matching business *category* words. Corrected, the figure is 0 of 55 decidable cases. §7 records what happened, because the retraction is more instructive than the claim was.
 
 ---
 
@@ -30,20 +32,20 @@ Address matching turned out **not** to be the main risk to spec §9's threading 
 
 | Outcome | n | Rate |
 |---|---|---|
-| **Asserted matches** | **413** | **37.5%** |
-| Undecided (needs corroboration) | 338 | 30.7% |
+| **Asserted matches** | **416** | **37.8%** |
+| Undecided (needs corroboration) | 335 | 30.4% |
 | Declined (unit conflict) | 7 | 0.6% |
 | No base-address match | 343 | 31.2% |
 
 Tier among resolved pairs: tier 1 (raw exact) 486, tier 2 (canonical) 256, tier 3 (directional-insensitive) 9.
 
-The spike reported 51.9% raw / 66.7% normalized on 27 pending applications. Those are **not comparable** to 37.5%: the spike counted any base-address hit as a match, including pairings it had no basis to assert. The current figure counts only pairings the resolver will stand behind.
+The spike reported 51.9% raw / 66.7% normalized on 27 pending applications. Those are **not comparable** to 37.8%: the spike counted any base-address hit as a match, including pairings it had no basis to assert. The current figure counts only pairings the resolver will stand behind.
 
 ## 4. What the matcher does
 
 Route references are canonicalized to `<TYPE> <NUM>` using a table **derived from the permit corpus** (`derive_route_table.py`), not invented. Each route number mapped to exactly one type; no ambiguity was found. `INTERSTATE`/`INTERSTATE HWY`/`IH` → `IH`; `RANCH RD 620` → `FM 620`. Roadway qualifiers (`SVRD`, `NB`/`SB`/`EB`/`WB`) and unit designators are stripped from the base; a trailing directional is moved to the front.
 
-**Units are parsed and kept, never discarded.** This is the correction that matters most — see §7.
+**Units are parsed and kept, never discarded.** This is the correction that matters most — see §9.
 
 Named Austin highways are **deliberately not aliased** to route numbers. `RESEARCH BLVD` is US 183 and `BEN WHITE BLVD` is SH 71/US 290 by local knowledge that cannot be derived from these datasets. A license written "Loop 360" will not match a permit written "N CAPITAL OF TEXAS HWY". Declining is correct; guessing produces false links.
 
@@ -63,7 +65,7 @@ Spec §9's decision table needs a false-link rate with a Wilson 95% CI against a
 
 **Comparing canonical address forms is circular.** The matcher asserts on canonical equality, so re-checking it re-runs the matcher against itself and returns "true" by construction. Caught before it produced a number.
 
-**Comparing ZIP and city looked independent and is not valid.** It flagged 11 of 413 asserted pairs — 2.66%, CI 1.49–4.71%. On inspection, **all 11 have identical street addresses**:
+**Comparing ZIP and city looked independent and is not valid.** It flagged 11 of 416 asserted pairs — 2.64%, CI 1.48–4.67%. On inspection, **all 11 have identical street addresses**:
 
 | License | Permit | Flag |
 |---|---|---|
@@ -72,7 +74,7 @@ Spec §9's decision table needs a false-link rate with a Wilson 95% CI against a
 | `2700 W Pecan St` city Pflugerville | `2700 W PECAN ST` city Austin, same ZIP | ETJ city label |
 | `1200 W Howard Ln Suite K` ZIP 78753 | `1200 W HOWARD LN UNIT K` ZIP 78660 | units agree exactly |
 
-The two agencies record ZIP and city inconsistently. That 2.66% measures **inter-agency data variance, not premises identity.** Reporting it as a false-link rate would have been wrong, and it would have failed the §9 criterion on an artifact.
+The two agencies record ZIP and city inconsistently. That 2.64% measures **inter-agency data variance, not premises identity.** Reporting it as a false-link rate would have been wrong, and it would have failed the §9 criterion on an artifact.
 
 ### 6b. What could be tested
 
@@ -80,33 +82,50 @@ The two agencies record ZIP and city inconsistently. That 2.66% measures **inter
 
 | Measure | Value |
 |---|---|
-| Canonical bases used by asserted matches | 219 |
-| Bases with ≥2 distinct coordinates (testable) | **19** |
+| Canonical bases used by asserted matches | 221 |
+| Bases with ≥2 distinct coordinates (testable) | **20** |
 | Bases exceeding 150 m spread | **0** |
 | Max observed spread | **0 m** |
-| Asserted pairs resting on an over-merged base | **0 / 413** |
+| Asserted pairs resting on an over-merged base | **0 / 416** |
+| Tier-3 asserted pairs outside this test's coverage | **5** |
 
-**No evidence of over-merging.** Stated with its limit: only 19 of 219 bases (8.7%) were testable, because most canonical forms map to a single raw address and offer nothing to compare. Low coverage is itself informative — the matcher rarely merges multiple raw addresses at all, so its merge-risk surface is small — but 19 bases cannot prove a rate below 2%.
+**No evidence of over-merging.** Stated with its limits: only 20 of 221 bases (9.0%) were testable, because most canonical forms map to a single raw address and offer nothing to compare; and the 5 tier-3 assertions join *two* canonical forms, so grouping by exact form excludes them from the numerator while they remain in the denominator. Low coverage is itself informative — the matcher rarely merges multiple raw addresses at all, so its merge-risk surface is small — but 20 bases cannot prove a rate below 2%.
 
 ### 6c. Consequence for spec §9
 
 The decision table cannot be entered on this evidence. **This escalates.** The choice is between commissioning an independent adjudication method (geocoding TABC addresses through an external service would give a genuine distance test) and deciding §9's threading target on the qualitative finding in §7 instead.
 
-## 7. The finding that matters more — tenant attribution
+## 7. Tenant attribution — a withdrawn finding, and what remains
 
-Adjudicating whether a permit pertains to *this* business, at an address that matches correctly:
+An earlier draft of this report led with a measured claim: that among decidable cases, **41.5% of permits at a correctly matched address pertain to a different business.** That claim was wrong and is withdrawn.
+
+**What produced it.** The adjudicator declared "different business" whenever permit text contained a commercial term absent from the license name. Its vocabulary included business *category* words. Checking the 45 verdicts it produced:
+
+| Token that triggered the verdict | Count |
+|---|---|
+| CAFE | 20 |
+| RESTAURANT | 14 |
+| BAR | 6 |
+| STORE | 5 |
+| MARKET | 3 |
+| KITCHEN | 2 |
+| BAKERY, PIZZA | 2 |
+
+**Every verdict came from a category word. Not one came from a business identifier.** A permit reading "restaurant buildout" filed against a restaurant's liquor license is evidence of a restaurant — which is what the license is for — and not evidence of a different tenant.
+
+**Corrected figures**, with the vocabulary restricted to named operators (HEB, Walmart, Starbucks and similar):
 
 | Q2 verdict | n |
 |---|---|
-| True (license name appears in permit text) | 62 |
-| **False (permit text names a different business)** | **44** |
-| Undecidable from the records | 307 |
+| True (license name appears in permit text) | 55 |
+| False (permit text names a different operator) | **0** |
+| Undecidable from the records | 361 |
 
-Among the 106 decidable cases, **41.5%** are wrong business (CI 32.6–51.0%). **74.3% of asserted pairs are undecidable at all.**
+**0 of 55 decidable cases**, and **86.8% undecidable**. The honest position is that tenant attribution is overwhelmingly *undecidable* from a permit description and a license record, not that it is frequently wrong.
 
-That decidable subset is biased — a case becomes decidable largely when permit text names *some* business, which over-samples mismatches — so 41.5% is not the population rate. But the direction is unambiguous and the mechanism is plain: a correctly matched address routinely carries permits belonging to a previous tenant, a neighboring unit, or the landlord. The original checkpoint surfaced this concretely, with a sushi restaurant matched to a permit reading *"install one hub drain for the meat drying area at HEB."*
+The concrete case that motivated the original claim was real — a sushi restaurant matched to a permit reading *"install one hub drain for the meat drying area at HEB"* — but that pairing came from the arbitrary-bucket defect (§9) and no longer occurs. One vivid example is not a rate.
 
-**This is the actual threat to the §9 threading criterion**, and it is not an address problem. Perfect address normalization would not move it.
+**The residual concern stands and is unquantified:** a correctly matched address can carry permits belonging to a previous tenant or the landlord, and these records rarely say so. That is a real limitation on threading. This task did not measure its size, and this report does not claim to.
 
 ## 8. Rules for the pipeline
 
@@ -149,7 +168,11 @@ The common thread, and the one worth carrying into the pipeline: *verifying that
 | | n |
 |---|---|
 | Declined outright (unit conflict) | 7 |
-| Undecided, not asserted | 338 |
-| Sampled undecided (seed 20260815, stratified) | 76 |
+| Undecided, not asserted | 335 |
+| Sampled undecided (seed 20260815, stratified) | 73 |
+| ...premises-consistent (would have been correct links) | **68 (93%)** |
+| ...premises-different (would have been false links) | 5 |
 
-The undecided stratum is where recall was traded for precision. It is 30.7% of licenses — a substantial cost, incurred deliberately. The checkpoint evidence for it being worthwhile is direct: before unit-aware resolution, **every one of the five pairs where both sides named a unit named a different unit** (Suite 107 → Unit 106, Suite 125 → Unit 135-A, Suite 120 → Unit 100, suite D → Unit C, Ste A-175 → Unit B175). After, none is asserted.
+**The recall cost is real and quantified: 93% of sampled undecided pairs would have been correct links.** Declining them is not free, and the report does not pretend otherwise — it buys precision by discarding roughly nine correct threads for every one bad one avoided. Whether that trade is right is a §9 editorial decision, not a technical one.
+
+The undecided stratum is 30.4% of licenses — a substantial cost, incurred deliberately. The checkpoint evidence for it being worthwhile is direct: before unit-aware resolution, **every one of the five pairs where both sides named a unit named a different unit** (Suite 107 → Unit 106, Suite 125 → Unit 135-A, Suite 120 → Unit 100, suite D → Unit C, Ste A-175 → Unit B175). After, none is asserted.

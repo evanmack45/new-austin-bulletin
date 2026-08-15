@@ -17,7 +17,8 @@ TIERS
 CANONICALIZATION, in order
   uppercase -> collapse whitespace -> strip punctuation
   split off the house number (preserving "1/2" half-addresses)
-  strip unit designators (STE/UNIT/BLDG/APT/#/FL/RM) and everything after
+  strip unit designators (STE/UNIT/BLDG/APT/#/FL) and everything after
+    -- NOT RM, which is Ranch-to-Market in Texas addressing, not 'room'
   strip roadway qualifiers (SVRD, SERVICE RD, FRONTAGE, ACCESS, and trailing
     NB/SB/EB/WB) -- these appear in Austin permit addresses and never in TABC
   canonicalize route references to "<TYPE> <NUM>" using ROUTE_TYPE
@@ -97,8 +98,12 @@ DIRECTION = {
 DIRECTION_VALUES = set(DIRECTION.values())
 
 # Everything from a unit designator onward is dropped.
+# NOTE: "RM" is deliberately ABSENT. In Texas addressing RM is Ranch-to-Market
+# (RM 620, RM 1431), not "room". Treating it as a unit designator deleted the
+# route number and collapsed "100 N RM 620" and "100 N RM 1431" both to
+# "100 NORTH", matching them at tier 2 -- a false-link generator.
 UNIT = re.compile(
-    r"\b(STE|SUITE|UNIT|APT|APARTMENT|BLDG|BUILDING|RM|ROOM|FL|FLOOR|LOT)\b.*$|#.*$",
+    r"\b(STE|SUITE|UNIT|APT|APARTMENT|BLDG|BUILDING|ROOM|FL|FLOOR|LOT)\b.*$|#.*$",
     re.I,
 )
 
@@ -114,10 +119,15 @@ HOUSE_NUM = re.compile(r"^(\d+(?:\s+1/2)?[A-Z]?)\s+(.*)$")
 # during base canonicalization and compared separately -- it is the only field
 # that can discriminate tenants at a multi-tenant address, and discarding it is
 # what produced a 5/5 false-link rate in the first checkpoint run.
-UNIT_CAPTURE = re.compile(
-    r"\b(?:STE|SUITE|UNIT|APT|APARTMENT|BLDG|BUILDING|RM|ROOM|FL|FLOOR|LOT)\s*\.?\s*"
-    r"([A-Z0-9][A-Z0-9-]*)|#\s*([A-Z0-9][A-Z0-9-]*)",
+# Tenant-level designators, checked BEFORE building-level ones: "BLDG D UNIT 200"
+# must yield 200 (the tenant space), not D (the building).
+TENANT_UNIT = re.compile(
+    r"\b(?:STE|SUITE|UNIT|APT|APARTMENT|ROOM)\s*\.?\s*([A-Z0-9][A-Z0-9-]*)"
+    r"|#\s*([A-Z0-9][A-Z0-9-]*)",
     re.I,
+)
+BUILDING_UNIT = re.compile(
+    r"\b(?:BLDG|BUILDING|FL|FLOOR|LOT)\s*\.?\s*([A-Z0-9][A-Z0-9-]*)", re.I,
 )
 
 
@@ -130,10 +140,10 @@ def parse_unit(raw):
     """
     if not raw:
         return None
-    m = UNIT_CAPTURE.search(raw)
+    m = TENANT_UNIT.search(raw) or BUILDING_UNIT.search(raw)
     if not m:
         return None
-    tok = (m.group(1) or m.group(2) or "").upper().replace("-", "")
+    tok = next((g for g in m.groups() if g), "").upper().replace("-", "")
     tok = tok.lstrip("0") or "0"
     return tok or None
 
