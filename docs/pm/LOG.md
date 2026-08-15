@@ -70,9 +70,17 @@ pool as only 560 licenses. Verified the pool myself (Socrata count queries,
 (1101 rows). True 24-month pool: **1101 licenses ≈ 816 matched pairs**, which
 tolerates 8 false links while proving <2% (Wilson 0.50–1.92%, verified). Ruled:
 24-month window, no compromise needed. Required: builder identifies the actual
-arithmetic bug (same code path may compute corroboration window N), all cutoffs
-stated as absolute dates in scripts and report, false links reported by license-age
-cohort. Builder also self-reported a broken column-existence re-check (matched
+arithmetic bug, all cutoffs stated as absolute dates in scripts and report, false
+links reported by license-age cohort.
+
+**Root cause (builder-confirmed, corrects the PM's code-path guess):** no code
+computed the dates — the builder hand-typed literal cutoff strings paired with
+hand-written labels in a shell loop and mis-subtracted the years mentally; the
+published table showed the labels, not the values. No shared code path exists, so
+corroboration rule 5b is not at risk from this bug. Plan of record locked
+2026-08-15: 24-month window (>= 2024-08-15), pool 1101, ~816 expected pairs,
+tolerance 8 (Wilson 0.50–1.92%), cohort breakout, absolute dates everywhere,
+every published number from committed code. Builder starts on Evan's go-ahead. Builder also self-reported a broken column-existence re-check (matched
 "error" against responses saying "errorCode" — every column read EXISTS); redone
 with HTTP status + negative control, conclusions unchanged. Wilson table verified
 independently — all rows reproduce.
