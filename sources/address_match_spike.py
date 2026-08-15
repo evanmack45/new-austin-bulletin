@@ -3,10 +3,18 @@
 Takes every currently-pending Travis County TABC application (source 4) and
 attempts to find a construction permit (source 1) at the same address.
 
-Reports three tiers so the gap between them shows what normalization buys:
-  1. raw      - exact string equality, case-insensitive
-  2. normalized - after suffix/directional expansion and unit stripping
-  3. number+street - match on street number and first street-name token only
+Reports four tiers so the gap between them shows what normalization buys:
+  1. raw          - exact string equality, case-insensitive
+  2. normalized   - after suffix EXPANSION (N -> NORTH), unit stripping, punctuation
+  3. directional-insensitive - as (2) but directional tokens DROPPED from both sides
+  4. number+street - street number + a street-name substring. UNSAFE, reported for
+                     contrast only: it matches "11910 US Highway 290 E" to
+                     "11910 CACTUS BND" because "US" occurs inside "CACTUS".
+
+Tiers 2 and 3 are different operations and were conflated in an earlier version of
+this docstring: (2) expands a directional abbreviation, (3) ignores directionals
+entirely. Tier 3 is the one that recovers "1600 Wells Branch Pkwy" ->
+"1600 W WELLS BRANCH PKWY".
 
 Run: austin-bulletin/.venv/bin/python austin-bulletin/sources/address_match_spike.py
 """
@@ -70,6 +78,11 @@ def normalize(raw):
     return " ".join(out).strip()
 
 
+def strip_directionals(norm):
+    """Drop directional tokens entirely, for tier-3 comparison."""
+    return " ".join(t for t in norm.split() if t not in DIRECTION.values())
+
+
 def street_key(norm):
     """(street number, first non-directional street token)."""
     toks = norm.split()
@@ -91,7 +104,7 @@ def main():
     })
     print(f"Pending Travis TABC applications: {len(apps)}\n")
 
-    tiers = {"raw": 0, "normalized": 0, "number_street": 0}
+    tiers = {"raw": 0, "normalized": 0, "dirless": 0, "number_street": 0}
     failures = []
 
     for a in apps:
@@ -107,13 +120,12 @@ def main():
             "$limit": "3",
         })
         if raw_hits:
-            tiers["raw"] += 1
-            tiers["normalized"] += 1
-            tiers["number_street"] += 1
+            for t in tiers:
+                tiers[t] += 1
             continue
 
-        # Tier 3 query: number + street token (broadest); normalize client-side
-        matched_norm = False
+        # Candidate pull: number + street token. Client-side comparison decides
+        # which tier each candidate satisfies.
         cand = []
         if key:
             num, tok = key
@@ -123,19 +135,28 @@ def main():
                     f"starts_with(original_address1,'{num} ') AND "
                     f"upper(original_address1) like '%{tok}%'"
                 ),
-                "$limit": "25",
+                "$limit": "40",
             })
-            for c in cand:
-                if normalize(c.get("original_address1")) == norm:
-                    matched_norm = True
-                    break
 
-        if matched_norm:
+        exact = [c for c in cand if normalize(c.get("original_address1")) == norm]
+        dirless = [
+            c for c in cand
+            if strip_directionals(normalize(c.get("original_address1")))
+            == strip_directionals(norm)
+        ]
+
+        if exact:
             tiers["normalized"] += 1
+            tiers["dirless"] += 1
             tiers["number_street"] += 1
+        elif dirless:
+            tiers["dirless"] += 1
+            tiers["number_street"] += 1
+            failures.append(("recovered by tier 3 (directional)", name, addr,
+                             dirless[0].get("original_address1")))
         elif cand:
             tiers["number_street"] += 1
-            failures.append(("number+street only", name, addr,
+            failures.append(("tier 4 only — UNSAFE, likely false", name, addr,
                              cand[0].get("original_address1")))
         else:
             failures.append(("no permit found", name, addr, None))
@@ -145,10 +166,11 @@ def main():
     for tier, label in [
         ("raw", "1. raw exact string"),
         ("normalized", "2. after normalization"),
-        ("number_street", "3. street number + street name only"),
+        ("dirless", "3. + directional-insensitive"),
+        ("number_street", "4. number + street substring (UNSAFE)"),
     ]:
         c = tiers[tier]
-        print(f"  {label:<38} {c:>3}/{n}  {100 * c / n:5.1f}%")
+        print(f"  {label:<40} {c:>3}/{n}  {100 * c / n:5.1f}%")
 
     print("\nFAILURE DETAIL")
     for kind, name, addr, got in failures:

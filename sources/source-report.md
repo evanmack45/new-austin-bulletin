@@ -865,6 +865,12 @@ Added 2026-08-15 after the first draft described address *formats* without measu
 **Script:** `sources/address_match_spike.py` (re-runnable)
 **Test:** every currently-pending Travis County TABC application (source 4, n=27) matched against issued construction permits (source 1).
 
+> **Provenance correction, 2026-08-15.** As first committed, this script computed only tiers 1, 2 and 4. **The tier-3 figure of 74.1% was not reproducible from the repository** — it was produced by a separate script that was never committed. The number itself was correct (that script re-runs to exactly 20/27), but a published figure that cannot be regenerated from committed code is a defect regardless of whether it happens to be right. The tier-3 comparison has since been folded into the script, and all four rates below now reproduce from a single run.
+>
+> A related wording defect is also fixed: the original docstring described tier 2 as "suffix/directional expansion", conflating two different operations. Tier 2 *expands* a directional abbreviation (`N` → `NORTH`); tier 3 *ignores* directionals entirely. Only tier 3 recovers `1600 Wells Branch Pkwy` → `1600 W WELLS BRANCH PKWY`. The conflation is what made the missing tier easy to overlook.
+>
+> **Standing rule going forward: every number appearing in a committed table must be computed by committed code.**
+
 #### Measured match rates
 
 | Tier | Method | Matched | Rate |
