@@ -24,4 +24,13 @@ the decision table's 2% threshold. The false-link measurement must run on a samp
 large enough to distinguish under-2% from over-2%, with per-pair verdicts recorded in
 a reviewable file.
 
-**Outcome:** brief sent 2026-08-15. Awaiting the builder's PR.
+**Outcome:** brief sent 2026-08-15. Awaiting the builder's plan of record, then PR.
+
+**Verification finding (same day):** re-ran `address_match_spike.py` against live data.
+Tiers 1, 2, and the discarded substring tier reproduce exactly (51.9% / 66.7% / 81.5%,
+n=27). The script computes no directional-insensitive tier: the 74.1% headline in
+source-report §9 and spec §3 is hand-derivable from the script's failure detail
+(the two directional-only failures flip 18/27 → 20/27) but is not produced by the
+committed script, despite §9 presenting it as script-measured. Addendum sent to the
+builder: measurement scripts must compute every committed number; §9 gets a one-line
+provenance correction.
