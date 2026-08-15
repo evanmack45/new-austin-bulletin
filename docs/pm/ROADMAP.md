@@ -21,8 +21,12 @@ Maintained by the PM session. Current as of 2026-08-15 (§9 resolved).
 - **Foundation task 11 — OpenRouter key: DONE.** Verified 2026-08-15: repo secret
   `OPENROUTER_API_KEY` set 2026-08-15 08:13 CDT (`gh secret list`). Spend limit on
   the key not verifiable from here — lives in Evan's OpenRouter dashboard.
-- **Foundation task 14 — Cloudflare Pages: status being confirmed with Evan.**
-  No deployments or webhooks on the GitHub repo as of 2026-08-15 10:59 CDT.
+- **Foundation task 14 — Cloudflare Pages: not set up** (Evan confirmed
+  2026-08-15). Revised approach, Evan-agreed: builder drives it via the Cloudflare
+  API — Pages project creation plus deploy-on-merge from GitHub Actions (wrangler),
+  the vendor-documented direct-upload path. Evan's only step: create a Cloudflare
+  API token and add it as a repo secret (exact click-path to be sent when queued).
+  Queued as the builder's next task after the Build Task 1 PR closes.
 
 ## Later
 
