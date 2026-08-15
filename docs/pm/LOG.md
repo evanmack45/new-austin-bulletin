@@ -123,3 +123,32 @@ the no-local-main-commits rule is enforced structurally rather than by promise.
 Builder instructed to start future branches from `origin/main` directly.
 Build Task 1 execution is underway (matcher and measurement scripts appearing in
 the builder's tree).
+
+## 2026-08-15 — Checkpoint at 60 pairs: harness defect caught before scale
+
+The 50-row checkpoint gate paid off. Builder halted at 60 matched pairs (60/87,
+69.0%) with a self-diagnosed harness defect: candidate selection took `hit[0]` —
+the first raw address in a canonical bucket — so units were never matched at all.
+On the only directly checkable subset (5 pairs with a unit designator on both
+sides), unit disagreement was 5/5: a 100% false-link rate where the answer is
+knowable. 33/60 pairs carry a unit on at least one side; 44/60 matched addresses
+have multiple recent permits. Scaling first would have produced ~816 arbitrary
+pairings and a meaningless hand-adjudicated verdict file. Second finding: the
+auto-classifier could confirm only TRUE, so 48/60 (80%) piled into hand-adjudication
+— infeasible at scale; the unit-disagreement rule doubles as the missing
+confirm-false rule.
+
+**PM audit:** all counts independently reproduced from `bt1-verdicts.jsonl` (5/5
+disagreements, 28 one-sided, tiers 16/44/0, 48 ambiguous, 44 multi-permit). New
+finding from the audit: 0/60 pairs have >1 `tcad_id` across matched permits —
+parcels are property-level, so parcel ID cannot resolve tenant spaces; deliverable
+3's answer upgraded accordingly.
+
+**Rulings:** (1) one-sided-unit pairs: corroboration can rescue, but false-link
+rate is measured PER corroboration type (name / date / both / neither) and the
+production rule is set from those measured rates — date-only corroboration is
+presumptively weakest at multi-tenant addresses. (2) The criterion is <2% at
+Wilson 95% on MATCHES ASSERTED, re-derived at the actual asserted n; "tolerance 8"
+is a planning number, never a quota. Report asserted-match rate, false-link rate
+with CI, and decline rate with per-rule recall cost. Remediation approved;
+builder re-runs the checkpoint at 60 and re-reports before any scaled run.
