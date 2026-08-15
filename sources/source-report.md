@@ -10,26 +10,35 @@ Python invocation: `austin-bulletin/.venv/bin/python` (system pip is externally 
 
 **The quarterly-refresh worry in spec §3 was unfounded.** No probed dataset refreshes quarterly.
 
-**But four of the six specified sources are not what the spec assumed.** Two are healthy, two are degraded, one is a flag rather than a feed, and one does not exist.
+**But four of the six specified sources are not what the spec assumed** — one does not exist, one is suspended, one is stale, and one had the wrong dataset ID. Two additions (adopted 2026-08-15) more than compensate.
 
 | # | Source | Domain | Dataset ID | Cadence | Record ID field | Usable |
 |---|---|---|---|---|---|---|
-| 1 | Issued construction permits | data.austintexas.gov | `3syk-w9eu` | **Daily** — 1 business-day lag | `permit_number` (unique 2,370,558/2,370,558) | **Yes** — but valuation unusable on 83% of records |
+| 1 | Issued construction permits | data.austintexas.gov | `3syk-w9eu` | **Daily** — 1 business-day lag | `permit_number` (unique 2,370,558/2,370,558) | **Yes** — but valuation is real on only 9.5% of building permits; collapse by `masterpermitnum` |
 | 2 | Zoning cases | data.austintexas.gov | `edir-dcnf` | **Daily** — filings 1 day old | `folderrsn` (unique 6,926/6,926) | **Yes** — low volume (~0.3 new/day); value is in status transitions |
-| 3 | Site plan cases | data.austintexas.gov | `mavg-96ck` | **STALLED** — claims "Daily", frozen since 2026-07-23 (23 days) | `folderrsn` (unique 23,630/23,630) | **Degraded** — historical context only, not a live trigger |
-| 4 | TABC licences | data.texas.gov | `7hf9-qc9f` (**not** the spec's `kguh-7q9z`) | **Daily** — issuance 2 days old | `license_id` (unique 126,161/126,161; strip `.0`) | **Yes** — but fires at issuance; no pending applications exist |
+| 3 | Site plan cases | data.austintexas.gov | `mavg-96ck` | **SUSPENDED** — claims "Daily", frozen since 2026-07-23. **Re-check 2026-08-29** | `folderrsn` (unique 23,630/23,630) | **Suspended, not dead** — historical context now; may recover |
+| 4 | TABC licences — issued | data.texas.gov | `7hf9-qc9f` (**not** the spec's `kguh-7q9z`) | **Daily** — issuance 2 days old | `license_id` (unique 126,161/126,161; strip `.0`) | **Yes** — fires at issuance |
+| 4b | **TABC licences — pending applications** | data.texas.gov | **`mxm5-tdpj`** | **Daily** — submissions same-day | `applicationid` (unique 863/863; strip `.0`) | **Yes — adopted.** 27 Travis pending; **median 22 days' lead time** |
 | 5 | Food establishment inspections | data.austintexas.gov | `ecmv-9xxi` | **Bi-weekly by design; 85 days stale in practice** | **n/a — no unique key exists.** Must be synthesised by hashing the record | **Degraded** — researcher context only, not a daily trigger |
 | 6 | Mobile food vendors | data.austintexas.gov | **n/a — does not exist.** `rfdj-8sa2` is a `map` over `gebe-5qkn`, which holds 32 vending-*restriction* zones | **n/a** — static since 2020-03-11 (2,347 days) | **n/a** — no permit records to identify | **No — remove from spec** |
 | 7 | Certificates of occupancy | data.austintexas.gov | `f9mz-m6dy` — a filter view over `3syk-w9eu`, **not** a separate source | **Daily** — inherits parent | `permit_number` (inherited) | **Partial** — boolean `certificate_of_occupancy` flag only; no CO number or CO date exists anywhere |
-| 8 | **Plan review cases** *(recommended addition, not in spec)* | data.austintexas.gov | `n8ck-xkda` | **Daily** — applications 1 day old, freshest of all sources | `folderrsn` (unique 160,329/160,329) | **Yes — recommended.** ~27 applications/day, pre-issuance signal |
+| 8 | **Plan review cases** | data.austintexas.gov | **`n8ck-xkda`** | **Daily** — applications 1 day old, freshest of all sources | `folderrsn` (unique 160,329/160,329) | **Yes — adopted.** ~27 applications/day, pre-issuance signal |
 
 ### Sources by health
 
-- **Healthy and usable as daily triggers (2 of 6 specified):** construction permits, zoning cases
-- **Degraded — usable as context, not triggers (2 of 6):** site plan cases, food inspections
-- **Usable with a reduced signal (1 of 6):** TABC — issuance rather than application
-- **Non-existent (1 of 6):** mobile food vendors
-- **Recommended addition (1 new):** plan review cases
+- **Healthy daily triggers (4):** construction permits, zoning cases, TABC pending applications, plan review cases
+- **Healthy, later-stage signal (1):** TABC issued licences
+- **Suspended, re-check 2026-08-29 (1):** site plan cases
+- **Degraded — context, not triggers (1):** food inspections
+- **Partial — a flag, not a feed (1):** certificates of occupancy
+- **Non-existent (1):** mobile food vendors
+
+**Net position: the beat is in better shape than the specified source list alone would give it.** The two adopted additions — TABC pending applications and plan review cases — both sit *earlier* in the lifecycle than anything the spec listed, which is where the project's editorial claim actually lives.
+
+### Correction log
+
+- **2026-08-15 — TABC pending applications.** An earlier draft stated pending applications were not exposed. **Wrong.** That was true of `7hf9-qc9f` alone; the search had not enumerated every TABC dataset on the domain. `mxm5-tdpj` carries live pending applications with same-day freshness. Corrected in section 4.
+- **2026-08-15 — valuation coverage.** An earlier draft reported "16.9% populated, 83% missing". Both true and misleading. The correct framing: valuation is absent *by design* on trade sub-permits, present on 74.6% of building permits, but **87.2% of those values are the placeholders `$0` or `$1`** — leaving a real usable rate of **9.5%**, worse than first reported. Corrected in section 1.
 
 ### Rate limits and authentication
 
@@ -159,21 +168,117 @@ It carries no CO number and no CO issue date, and it fires on residential additi
 
 Task 8 must search for a dedicated dataset.
 
-#### Data-quality warning — valuation is largely unusable
+#### Valuation — full investigation
 
-This materially affects the scorer and is the most important finding in this section.
+The most consequential finding in this report. Spec §5 makes valuation the scorer's first-listed signal; it cannot carry that weight. Below is what the field actually contains and why.
 
-Of the 17,178 permits issued after 2026-05-01, only **2,897 (16.9%) carry a non-null `total_job_valuation`**. Among those present, the values are heavily polluted with placeholders:
+##### Q1. Is the populated 17% skewed, or random? — Skewed, and the skew is structural
 
-- Residential p50, p75 and p90 are all **$1**; the field only becomes meaningful above p95 ($9,227) and p99 ($150,000)
-- `total_job_valuation = 1` appears 29,246 times all-time; `= 0` appears 25,195 times
-- Commercial p75 through p99 all read **$830,000,000** — that exact value repeats across 77 records
+The headline "16.9% populated" was misleading, because it averages across permit types that are not comparable. Broken out over the 17,178 permits issued after 2026-05-01:
 
-No alternative valuation field is better: `total_valuation_remodel` 12.3%, `building_valuation_remodel` 12.7%, `building_valuation` 2.5%.
+| `permit_type_desc` | Permits | With valuation | Rate |
+|---|---|---|---|
+| **Building Permit** | 3,879 | 2,894 | **74.6%** |
+| Electrical Permit | 4,779 | 1 | 0.0% |
+| Plumbing Permit | 4,479 | 1 | 0.0% |
+| Mechanical Permit | 3,674 | 1 | 0.0% |
+| Driveway / Sidewalks | 367 | 0 | 0.0% |
 
-**Consequence:** spec §5's first scorer signal — "valuation substantially above the norm for that address's neighborhood" — cannot be computed for roughly 83% of permits, and is untrustworthy on a large share of the remainder. The scorer must treat valuation as an optional bonus signal and lean primarily on fields that are actually populated: `description` (100%), `original_address1` (100%), `council_district` (94.7%), `permit_class`/`work_class` (98%), `contractor_company_name` (92.3%), `housing_units` (69.6%), and the square-footage fields (~35–39%).
+**This is not missing data — it is correct data modelling.** A trade sub-permit does not carry a job valuation; the parent building permit does. Roughly 77% of all permit records are trade sub-permits, which is what dragged the average down.
 
-This also blocks spec §11 Open Item 3 as written: a residential naming threshold defined by permit valuation is not implementable, because the valuation is absent or `$1` on most residential permits. An alternative rule is required — see `spec-revisions.md`.
+By class the split is milder and less informative: Residential 19.1% (2,371 of 12,437), Commercial 11.1% (526 of 4,741).
+
+**The right denominator is Building Permits.** Everything below is measured on those 3,879 records.
+
+##### Q2. Is `$1` a placeholder, a default, or real? — A placeholder, and there are two of them
+
+Distribution of the 2,894 building permits that carry a valuation:
+
+| Value | Count | Share |
+|---|---|---|
+| **exactly $0** | 1,354 | **46.8%** |
+| **exactly $1** | 1,170 | **40.4%** |
+| $2–99 | 1 | 0.0% |
+| $100–9,999 | 55 | 1.9% |
+| $10k–99k | 76 | 2.6% |
+| $100k–999k | 72 | 2.5% |
+| $1M–9.9M | 44 | 1.5% |
+| $10M+ | 122 | 4.2% |
+
+**$0 and $1 together account for 87.2% of all populated valuations.** The near-total absence of values between $2 and $99 is the tell: a genuine currency field would show a smooth tail into small numbers. Two distinct sentinels sitting adjacent to an empty neighbouring range indicates two data-entry paths each writing its own "no value" marker — not real dollar amounts, and not a single consistent convention.
+
+**Effective usable rate: 370 real values (>$1) out of 3,879 building permits — 9.5%.** Against all 17,178 permits it is **2.2%**.
+
+This is materially worse than the 16.9% first reported. Non-null does not mean populated.
+
+##### Q3. What is the $830,000,000 pattern? — One megaproject, not a sentinel
+
+Resolved conclusively. All 77 records at exactly $830,000,000:
+
+| Property | Value |
+|---|---|
+| Distinct addresses | 42 — **all at 6915 Bridge Point Pkwy** (BLDG 1–16, various `UNIT GAR`) |
+| Records not at that address | **0** |
+| `issue_date` | **2026-06-08 for all 77** |
+| Distinct `project_id` | 77 — one per permit |
+| Distinct `masterpermitnum` | **1 — `13107658` for all 77** |
+
+Descriptions confirm a single large mixed-use development: "New Construction of a Multi-Story Mixed Use Multi-Family Bldg with Parking", "New Construction of Parking Garage — Module F", "Pergola Residential Units".
+
+**It is one $830M project split across 77 permits, with the whole-project valuation stamped on every one.** Not a sentinel — but just as dangerous, because summing or ranking naively multiplies the project's value 77-fold.
+
+**This is a hard requirement, not an optimisation: the scorer must collapse permits by `masterpermitnum` before scoring.** Without it, a single development day-one produces 77 near-identical stories each claiming an $830M project — instantly exhausting the 6-story daily cap and the reviewer's patience. `masterpermitnum` is populated on 65.8% of records all-time; where null, fall back to `project_id` plus address.
+
+##### Q4. Is square footage better populated? — Yes, substantially
+
+Measured on the same 3,879 building permits:
+
+| Field | Present | Greater than 0 | Useful rate |
+|---|---|---|---|
+| `total_job_valuation` (>$1) | 2,894 | **370** | **9.5%** |
+| `total_new_add_sqft` | 1,816 | 1,704 | **43.9%** |
+| `remodel_repair_sqft` | 2,176 | 2,079 | **53.6%** |
+| `housing_units` | 3,865 | 3,618 | **93.3%** |
+
+**Square footage is 4.6–5.6× better populated than valuation, and `housing_units` is better than both at 93.3%.**
+
+Square footage also discriminates properly across the range — unlike valuation, it has a real distribution rather than two spikes:
+
+| Percentile | `total_new_add_sqft` |
+|---|---|
+| p50 | 1,870 sq ft |
+| p75 | 2,974 sq ft |
+| p90 | 4,747 sq ft |
+| p99 | 99,090 sq ft |
+| max | 364,250 sq ft |
+
+p50 at ~1,870 sq ft is a typical single-family house; the p99 break to ~99,000 sq ft cleanly separates commercial-scale work. That is exactly the separation the scorer needs and valuation fails to provide.
+
+##### Proposed scorer shape
+
+Sketched here so the pipeline plan starts from evidence. **Not final — the weights below are a starting point to be tuned against the rejection log, which spec §9 already makes a primary artifact.**
+
+**Stage 0 — collapse, then filter.** Group by `masterpermitnum` and keep one representative record per project. Then score only `permit_type_desc = 'Building Permit'`; trade sub-permits carry no independent news value and are 77% of the volume. These two steps alone cut ~17,000 records/quarter to ~2,000 and remove the 77-story duplication hazard.
+
+**Scale — replace valuation as the primary axis.** Use the best-populated signal available per record, in order:
+1. `housing_units` (93.3%) — unit count is the most legible scale measure for a development story and the best populated
+2. `total_new_add_sqft` / `remodel_repair_sqft` (44–54%) — floor area
+3. `total_job_valuation` **only when > $1** (9.5%) — treat as a bonus, never a requirement. When present and large it is the strongest single signal; it is simply usually absent
+
+Normalise scale against the record's own cohort — the `council_district` × `permit_class_mapped` distribution — rather than a citywide threshold, so a large East Austin project is not judged against downtown towers.
+
+**Category — deterministic, from fields that are ~100% populated:**
+- **Demolition:** `work_class` in (`Demolition`, `Demo`, `Interior Demo Non-Structural`), or `permit_class` matching the six demolition codes. Never a `description` keyword — that returns driveway false positives
+- **New construction:** `work_class = 'New'`
+- **Commercial vs residential:** `permit_class_mapped` (100% populated)
+
+**Text — `description` is 100% populated and is the richest untapped signal.** It is free text written by staff and carries what no structured field does: "Multi-Story Mixed Use Multi-Family", "SHELL ONLY", "ePlan: Expedited Review". This is the field best suited to a model rather than a rule, and it is available on every record. It should carry substantial weight precisely because it never goes missing.
+
+**Actor — `contractor_company_name` (92.3%) is the repeat-filer signal.** Spec §5 asks for "an applicant entity that has filed repeatedly across the city in recent months". `applicant_org` is only 21.3% populated and cannot support that; `contractor_company_name` at 92.3% can. Note it names the builder rather than the developer, which is a weaker but far more available proxy — a caveat the writer must respect, since "X is building" and "X is developing" are different claims.
+
+**Cross-source lift — the strongest signal is not in this dataset.** A permit that matches a recent TABC application (`mxm5-tdpj`) or an existing plan review case at the same address is more newsworthy than any single-record property. Spec §5 already calls lifecycle continuation a scoring signal; on this evidence it should be weighted heavily, because it is the one signal competitors genuinely cannot assemble by hand.
+
+**What this means for spec §11 Open Item 3.** A residential naming threshold defined by permit valuation is not implementable — valuation is absent or `$1` on the overwhelming majority of residential permits, so the threshold would misclassify almost everything. Replace it with a non-valuation rule: treat `permit_class_mapped = 'Residential'` as never-named by default, and rely on organisation-name screening (source 3) for the rare residential filing made by a genuine entity.
 
 ---
 
@@ -287,7 +392,25 @@ The pattern — an identically-schemaed empty dataset created and touched daily 
 
 **Verdict: keep `mavg-96ck`.** It is the only candidate with both a usable schema and real data. Its 23,630 historical records remain fully valuable to the researcher stage for assembling lifecycle threads. But it **cannot be relied on as a daily new-record feed** while frozen.
 
-**Recommended handling:** treat site plan cases as a research/context source rather than a collection trigger, and have the collector emit a health warning when `max(status_date)` falls more than 7 days behind. Re-probe `qa7j-3tey` periodically — if it populates, it becomes the live source with no schema change required. This is a spec deviation; see `spec-revisions.md`.
+#### This freeze may be temporary — do not treat it as permanent
+
+**23 days of silence is not proof of a dead feed.** The evidence is equally consistent with an ongoing City IT problem or an in-progress migration: the schema is intact, the publisher still advertises "Daily", and an identically-schemaed replacement (`qa7j-3tey`) is being touched every day. A stalled ETL job that someone restarts would restore this source with no work on our side.
+
+**Re-check date: 2026-08-29** (two weeks from this report). At that point:
+
+| Observation on re-check | Conclusion |
+|---|---|
+| `mavg-96ck` `max(status_date)` has advanced | Feed recovered — restore to live-source status, no spec change needed |
+| `qa7j-3tey` `count(*) > 0` | Migration completed — switch to it; the schema is identical, so only the dataset ID changes |
+| Both unchanged (37+ days frozen) | Escalate. At that duration it is a sustained outage, and the spec should be revised to drop site plans as a live source |
+
+Re-check command:
+```
+curl -s "https://data.austintexas.gov/resource/mavg-96ck.json?\$select=max(status_date)"
+curl -s "https://data.austintexas.gov/resource/qa7j-3tey.json?\$select=count(*)"
+```
+
+**Recommended handling in the meantime:** treat site plan cases as a research/context source rather than a collection trigger, and have the collector emit a health warning when `max(status_date)` falls more than 7 days behind. The spec should record this as a **suspended** source pending the 2026-08-29 re-check — **not** as a removed one. See `spec-revisions.md`.
 
 #### Exact field names
 
@@ -403,21 +526,85 @@ Both candidates exist and both are fresh, so the choice came down to schema:
 
 **Travis County: 6,297 licenses.** Statewide the field has 10,528 nulls (8.3%), which would normally be a concern for a county filter — but only **4** rows carry `city = 'Austin'` with a null county, against 5,636 Austin rows total. The county filter loses effectively nothing. Filtering on county rather than city is also the right choice, because it correctly picks up Travis County addresses outside Austin city limits.
 
-#### Pending applications — NOT EXPOSED
+#### Pending applications — EXPOSED, IN A SEPARATE DATASET
 
-This resolves spec §3 Build Task 0 item 2 and spec §11 Open Item 1.
+**Correction, 2026-08-15.** An earlier draft of this report concluded that pending applications were not available. **That conclusion was wrong.** It was accurate about `7hf9-qc9f` specifically — that dataset genuinely holds no pre-issuance state — but the search stopped at the chosen dataset instead of enumerating every TABC dataset on `data.texas.gov`. A dedicated pending-applications feed exists and is live.
 
-All three status fields were enumerated. The complete set of values:
+**Dataset:** `data.texas.gov` / **`mxm5-tdpj`** — "Pending Original New Primary and Subordinate License Application(s)"
+
+| Measure | Value |
+|---|---|
+| `rows_updated_at` | 2026-08-15T11:55:03Z |
+| `days_since_update` | **0** |
+| `max(submission_date)` | **2026-08-15 — same day** |
+| `min(submission_date)` | 2025-02-25 |
+| Rows (statewide) | 863 |
+| **Travis County pending** | **27** |
+| `applicationid` uniqueness | 863 of 863 — unique |
+
+`applicationstatus` has exactly two values: **`Pending – In Review`** (822) and **`Received`** (41). Both are genuine pre-issuance states.
+
+Fields: `applicationid`, `master_file_id`, `license_type`, `applicationstatus`, `primary_license_id`, `subordinate_license_id`, `submission_date`, `trade_name` (96.8%), `owner` (100%), `address`, `address_2`, `city`, `state`, `zip`, `county` (98.1%), `country`, `wine_percent`, `gun_sign`. `phone` is 100% null — ignore it.
+
+**Lead time this buys — measured, not assumed.** Age of the 27 Travis applications currently pending, as of 2026-08-15:
+
+| Measure | Days since submission |
+|---|---|
+| Newest | 3 |
+| **Median** | **22** |
+| Oldest | 113 |
+| Submitted within 30 days | 17 of 27 |
+| Submitted within 90 days | 25 of 27 |
+
+**The median pending application has been waiting 22 days.** That is the advance warning this feed provides over the issuance signal — roughly three weeks, and often more. It reconciles with the issuance rate found below: 27 pending against ~1.3 issuances/day is about a 20-day queue.
+
+Sampled live Travis applications show the signal is exactly what spec §5 wanted — a new restaurant is visible here before it is announced:
+
+| trade_name | owner | address | type | submitted |
+|---|---|---|---|---|
+| Ben and Lynn's | Ben & Lynn's Chicken Austin, LLC | 2600 E Cesar Chavez Street | MB, FB | 2026-08-12 |
+| Primespot #42 | Bluebluff Ranch LLC | 11001 Parmer Ln | BQ | 2026-08-10 |
+| APHRODITE RESTAURANT & LOUNGE | APHRODITE RESTAURANT & LOUNGE, LLC | 621 E 7th St | MB | 2026-08-07 |
+
+Note "Ben and Lynn's" appears twice — one business filing two licence types on the same day. **The collector must group by address plus owner**, or a single opening generates duplicate stories.
+
+**Snapshot warning.** This is a point-in-time list of *currently pending* applications, not an append-only log. A row disappears once the application is approved or denied. Two consequences: the collector should key on `applicationid` and diff against its own store to catch new arrivals, and an application vanishing is itself a signal — it means the licence was granted or refused, resolvable by checking `7hf9-qc9f` for that `master_file_id`.
+
+`applicationid` renders as a float string (`"645542.0"`), the same normalisation issue as `license_id`.
+
+**Recommendation: adopt `mxm5-tdpj` alongside `7hf9-qc9f`.** Together they cover the full licence lifecycle — application filed → licence issued — and restore the earliest-public-signal premise the spec is built on.
+
+#### Status fields within `7hf9-qc9f` — issued licences only
+
+Recorded because it explains why the issued-licence dataset alone is insufficient. All three status fields were enumerated. The complete set of values:
 
 - `primary_status`: Active 78,118 · Expired - Original Required 33,074 · Surrendered 13,683 · Temporarily Surrendered 784 · Expired 314 · Suspended 116 · Cancelled 72
 - `secondary_status`: null 122,180 · **Renewal Pending 3,981**
 - `license_status`: Active 74,155 · Expired - Original Required 33,074 · Surrendered 13,683 · **Active - Renewal Pending 3,963** · Temporarily Surrendered 778 · Expired 314 · Suspended 107 · Cancelled 72 · Suspended - Renewal Pending 9 · Temporarily Surrendered - Renewal Pending 6
 
-**The only "pending" value is `Renewal Pending`, which is an existing license awaiting renewal — not a new application.** Every status describes a license that already exists. There is no pre-issuance application state anywhere in this dataset.
+**Within this dataset the only "pending" value is `Renewal Pending`** — an existing licence awaiting renewal, not a new application. Every status here describes a licence that already exists. This is why `mxm5-tdpj` above is necessary: the two datasets cover different lifecycle stages and neither substitutes for the other.
 
-**Consequence, stated plainly as the plan requires:** the liquor-license signal fires at **issuance**, not at application. This is later in the lifecycle than the spec hoped — the earliest-public-signal advantage described in spec §5 does not materialise from this source. It remains usable: a first-ever license at an address is still a strong "new bar or restaurant is opening" marker, and it still typically precedes a business's own public announcement. The correct trigger field is `original_issue_date`, not `current_issued_date` (which moves on renewal).
+Used on its own, `7hf9-qc9f` fires at **issuance**. The correct trigger field is `original_issue_date`, not `current_issued_date` (which moves on renewal).
 
 **Travis County volume: 120 licences with an `original_issue_date` in the preceding 90 days — roughly 1.3 per day.** Healthy for a signal source.
+
+#### Complete TABC inventory on data.texas.gov
+
+Every TABC dataset on the domain was enumerated (13 catalog hits, domain-scoped) so the pending-application question is settled on evidence rather than a single dataset's schema:
+
+| Dataset | Name | Updated | Relevance |
+|---|---|---|---|
+| **`7hf9-qc9f`** | TABC License Information | 2026-08-15 | **Adopted** — issued licences, full status and dates |
+| **`mxm5-tdpj`** | Pending Original New … License Application(s) | 2026-08-15 | **Adopted** — pending applications |
+| `kguh-7q9z` | TABCLicenses | 2026-08-15 | Rejected — no status, no date fields |
+| `8f4g-cpk9` | Mixed Beverage Tax Permits | 2026-08-15 | Not adopted. Location and NAICS detail, `resp_begin_date`; overlaps the licence feeds |
+| `naix-2893` | Mixed Beverage Gross Receipts | 2026-08-15 | Not adopted, but noted — **monthly alcohol revenue per venue.** Outside the permits beat, but a strong future signal for openings that failed and venues in decline. Candidate for spec §10 roadmap phase 3 |
+| `g5bj-yb6k` | Mixed Beverage Sales Receipts | 2026-07-15 | Not adopted — as above |
+| `ix8u-msb9` | Credit Law Delinquent List | 2026-08-15 | Not adopted — venues delinquent on supplier credit; a distress signal, outside beat |
+| `yqpn-9vyh` | Tax Assessor-Collector Licenses/Permits Issued | 2026-08-08 | Not relevant |
+| `2cjh-3vae` | Approved Product Label Search | 2022-09-15 | Not relevant, stale |
+| `3j53-reqt` | Monthly Per Capita Consumption | 2026-04-30 | Not relevant |
+| `qwhc-yxgg`, `s5av-n7yr`, `4ud6-gcrf` | — | — | Catalog type `story`, not datasets |
 
 #### Exact field names
 

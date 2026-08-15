@@ -1,0 +1,194 @@
+{
+  "domain": "data.texas.gov",
+  "dataset_id": "mxm5-tdpj",
+  "name": "Pending Original New Primary and Subordinate License Application(s)",
+  "description": "The TABC Pending Original (New) Primary and Subordinate License Application dataset includes information for certain submitted applications for new licenses. These records include original (new) applications with the status of \u201cReceived\u201d or \u201cIn Review\u201d by the agency and as found in the Alcohol Indus",
+  "row_count": "280",
+  "rows_updated_at": "2026-08-15T11:55:03+00:00",
+  "days_since_update": 0,
+  "fields": [
+    {
+      "name": "master_file_id",
+      "label": "Master File ID",
+      "type": "number",
+      "null_count": "583",
+      "non_null_count": "280"
+    },
+    {
+      "name": "applicationid",
+      "label": "ApplicationID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "license_type",
+      "label": "License Type",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "applicationstatus",
+      "label": "ApplicationStatus",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "primary_license_id",
+      "label": "Primary License ID",
+      "type": "number",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "subordinate_license_id",
+      "label": "Subordinate License ID",
+      "type": "number",
+      "null_count": "615",
+      "non_null_count": "248"
+    },
+    {
+      "name": "submission_date",
+      "label": "Submission Date",
+      "type": "calendar_date",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "trade_name",
+      "label": "Trade Name",
+      "type": "text",
+      "null_count": "28",
+      "non_null_count": "835"
+    },
+    {
+      "name": "owner",
+      "label": "Owner",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "wine_percent",
+      "label": "Wine Percent",
+      "type": "text",
+      "null_count": "552",
+      "non_null_count": "311"
+    },
+    {
+      "name": "gun_sign",
+      "label": "Gun Sign",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "address",
+      "label": "Address",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "address_2",
+      "label": "Address 2",
+      "type": "text",
+      "null_count": "691",
+      "non_null_count": "172"
+    },
+    {
+      "name": "city",
+      "label": "City",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "state",
+      "label": "State",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "zip",
+      "label": "ZIP",
+      "type": "text",
+      "null_count": "0",
+      "non_null_count": "863"
+    },
+    {
+      "name": "phone",
+      "label": "Phone",
+      "type": "text",
+      "null_count": "863",
+      "non_null_count": "0"
+    },
+    {
+      "name": "county",
+      "label": "County",
+      "type": "text",
+      "null_count": "16",
+      "non_null_count": "847"
+    },
+    {
+      "name": "country",
+      "label": "Country",
+      "type": "text",
+      "null_count": "1",
+      "non_null_count": "862"
+    }
+  ],
+  "sample_status": 200,
+  "sample": [
+    {
+      "applicationid": "585211.0",
+      "license_type": "NT",
+      "applicationstatus": "Pending \u2013 In Review",
+      "primary_license_id": "200190354.0",
+      "submission_date": "2026-03-10T00:00:00.000",
+      "owner": "One Hundred Club of San Antonio",
+      "gun_sign": "",
+      "address": "24405 Wilderness Oak",
+      "city": "San Antonio",
+      "state": "TX",
+      "zip": "782607874",
+      "county": "Bexar",
+      "country": "United States"
+    },
+    {
+      "master_file_id": "2600095133.0",
+      "applicationid": "622553.0",
+      "license_type": "NT",
+      "applicationstatus": "Pending \u2013 In Review",
+      "primary_license_id": "200200173.0",
+      "submission_date": "2026-06-05T00:00:00.000",
+      "owner": "Vietnamese Community of Houston & Vicinities, Inc",
+      "gun_sign": "",
+      "address": "13915 Bellaire Blvd",
+      "city": "Houston",
+      "state": "TX",
+      "zip": "770831720",
+      "county": "Harris",
+      "country": "United States"
+    },
+    {
+      "master_file_id": "2500090576.0",
+      "applicationid": "630753.0",
+      "license_type": "NT",
+      "applicationstatus": "Pending \u2013 In Review",
+      "primary_license_id": "200202388.0",
+      "submission_date": "2026-08-13T00:00:00.000",
+      "owner": "St. John Catholic Church ",
+      "gun_sign": "",
+      "address": "624 E Hopkins St",
+      "city": "San Marcos",
+      "state": "TX",
+      "zip": "786666314",
+      "county": "Hays",
+      "country": "United States"
+    }
+  ]
+}
