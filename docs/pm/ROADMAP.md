@@ -17,10 +17,12 @@ Maintained by the PM session. Current as of 2026-08-15 (§9 resolved).
   resolved §9: completeness is the claim; corroborated threads are garnish.
 - **LLM link-judge experiment** (Evan-approved 2026-08-15): measure an LLM linker
   with the Build Task 1 adjudication harness against the same <2% false-link bar;
-  adopt only on a passing measurement. ~$5 one-time. Blocked on the OpenRouter key.
-- **Evan-blocked foundation tasks:** OpenRouter API key as a repo secret with a
-  per-key spend limit (task 11 — now also blocks the LLM experiment), Cloudflare
-  Pages setup (task 14). Both need his browser.
+  adopt only on a passing measurement. ~$5 one-time. UNBLOCKED — key exists.
+- **Foundation task 11 — OpenRouter key: DONE.** Verified 2026-08-15: repo secret
+  `OPENROUTER_API_KEY` set 2026-08-15 08:13 CDT (`gh secret list`). Spend limit on
+  the key not verifiable from here — lives in Evan's OpenRouter dashboard.
+- **Foundation task 14 — Cloudflare Pages: status being confirmed with Evan.**
+  No deployments or webhooks on the GitHub repo as of 2026-08-15 10:59 CDT.
 
 ## Later
 
