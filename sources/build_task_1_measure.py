@@ -124,7 +124,8 @@ def permit_evidence(raw_address):
     rows = fetch(
         PERMITS,
         {"$select": ("permit_number,original_address1,issue_date,description,"
-                     "permit_location,tcad_id,permit_class_mapped"),
+                     "permit_location,tcad_id,permit_class_mapped,"
+                     "original_zip,original_city,latitude,longitude"),
          "$where": (f"original_address1='{raw_address.replace(chr(39), chr(39) * 2)}' "
                     f"AND issue_date >= '{PERMIT_SINCE}'"),
          "$order": "issue_date DESC", "$limit": "5"},
@@ -291,6 +292,11 @@ def main():
             "permit_dates": [(p.get("issue_date") or "")[:10] for p in pev],
             "permit_tcad_ids": sorted({p.get("tcad_id") for p in pev if p.get("tcad_id")}),
             "permit_text_sample": (pev[0].get("description") or "")[:200] if pev else "",
+            "license_zip5": (lic.get("zip") or "")[:5],
+            "license_city": lic.get("city"),
+            "permit_zip5": [str(p.get("original_zip") or "")[:5] for p in pev],
+            "permit_city": sorted({(p.get("original_city") or "").upper() for p in pev if p.get("original_city")}),
+            "permit_latlon": [(p.get("latitude"), p.get("longitude")) for p in pev][:1],
             "canonical_base": c,
             "match_tier": tier,
             "outcome": outcome,
