@@ -175,3 +175,31 @@ recall cost; (2) pre-agreed contingency — an indeterminate-but-close result is
 remedied by widening the pool (30 then 36 months, absolute dates, drift stated),
 never by loosening the matcher; still-indeterminate escalates to Evan with the
 honest CI. Full run ≈ 20–25 min, executed once.
+
+## 2026-08-15 — Scaled run and codex rounds land the real verdict; §9 escalated
+
+Full run over 1,101 licenses (24-month window). Through two codex review rounds
+(10 + 9 findings) the builder converged on the honest result: **enforcing the
+report's own rule — no thread without name corroboration — collapses the asserted
+match rate from 37.8% to 4.6%** (51 of 1,101; corroboration both=37, name=14).
+The internally-measurable false-link checks proved invalid (canonical comparison
+is circular; ZIP/city comparison measures inter-agency recording variance — the
+flagged pairs are same-street, name-evidenced ZIP-boundary cases). The matcher's
+own merge-error mode shows zero evidence in a lat/lon over-merge test (0 of 19
+testable bases). The report's larger finding: the threat to threading was never
+address matching but tenant attribution — at correctly matched addresses, permits
+routinely belong to prior tenants, neighbors, or the landlord (41.5% wrong-business
+on the decidable-but-biased subset in run 2).
+
+**PM audit of run 3:** verified 51 asserted all name-corroborated, q2_tenant 51/51
+true (definitional caveat attached), row arithmetic. Four schema P2s sent: outcome
+field diverged from asserted (411 assert_* labels vs 51 asserted), q1_premises
+mislabels the ZIP diagnostic as a premises verdict on 3 rows, dead final_verdict
+field, and three versions of the pre-corroboration count (411/413/416) needing one
+authoritative run. Provenance correction: round-2 findings came from codex, not PM.
+
+**§9 escalated to Evan** (AskUserQuestion, phone ping): both honest match numbers
+sit far below the decision table's 70% line, so the third branch — threading
+dropped as a criterion, claim narrowed to completeness — fires on any reading;
+independent adjudication (geocoding) cannot change the branch, only confidence in
+the 51. PM recommendation: accept the table's verdict.
