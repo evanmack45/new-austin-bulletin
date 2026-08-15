@@ -244,3 +244,26 @@ brief Cloudflare Pages API task (send Evan the token click-path); (3) then the
 pipeline plan (§9 resolved: completeness is the claim); (4) LLM link-judge
 experiment is unblocked and Evan-approved, ~$5, brief it after the pipeline plan
 exists or alongside — PM's call next session.
+
+## 2026-08-15 — Builder parked (11:34): codex round 3 dirty, two P1s frozen
+
+Round 3 surfaced 7 findings (rounds: 10, 9, 7 — reporting/consistency defects
+recurring even as code defects shrink). No PR. Branch pushed — PM verified
+origin/build-task-1-address-matching == local == `359b917`. Committed close-out
+run says 53 asserted / 4.8% (vs 51/4.6% at PM's run-3 audit; live-data drift
+plus fixes).
+
+**Frozen P1s:** (a) unit designators prefix-match without word boundaries — "STE"
+inside "Stephens" invents tenant unit "PHENS", one row wrongly declined; (b) name
+corroboration matches ADDRESS tokens via `permit_location` (COURTYARD / ROSEWOOD /
+CONGRESS asserted on street-name tokens) — **the 4.8% headline is overstated by an
+unmeasured amount.** Error direction makes the §9 resolution safer (true rate even
+further below 70%); branch unchanged, no revisit. Notable P2: TABC `owner`
+tokenized for name evidence before the entity screen — an individual's surname can
+drive assertion; privacy-adjacent, fix early.
+
+**Pickup order (endorsed):** P1-b → owner-screen P2 → remaining P2s → re-run →
+regenerate report §3/§8 from new artifacts → codex round 4 to clean → echo → PR.
+PM suggested a structural fix for the recurring stale-table class: render every
+published number from artifacts by committed code. All five P1-a/P1-b example rows
+become permanent regression fixtures. Nothing new started; Cloudflare not begun.
